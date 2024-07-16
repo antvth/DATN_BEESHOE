@@ -1,0 +1,36 @@
+.next-input {
+  border: 1px solid #e3e9ed;
+  color: #212121;
+  font-size: 14px;
+  padding: 10px;
+  height: 40px;
+  border-radius: 4px;
+  line-height: 18px;
+  display: block;
+  width: 100%;
+  transition: all 0.2s ease-out;
+  outline: none;
+}
+.shadow-textarea textarea.form-control::placeholder {
+  font-weight: 300;
+}
+.shadow-textarea textarea.form-control {
+  padding-left: 0.8rem;
+}
+.header-title {
+  color: #202223;
+  font-size: 14px;
+  line-height: 18px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+select.form-select {
+  width: 70px;
+  margin-top: 25px;
+}
+.form-check {
+  margin-left: 16px;
+}
+body {
+  font-family: "Times New Roman", Times, seArialrif;
+}

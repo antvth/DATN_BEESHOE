@@ -1,0 +1,366 @@
+<style>
+  input[type="checkbox"] {
+    height: 0;
+    width: 0;
+    visibility: hidden;
+  }
+
+  label {
+    margin-right: 40px;
+    margin-top: -20px;
+    cursor: pointer;
+    text-indent: -9999px;
+    width: 60px;
+    height: 30px;
+    background: grey;
+    display: block;
+    border-radius: 100px;
+    position: relative;
+  }
+
+  label:after {
+    content: "";
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    width: 20px;
+    height: 20px;
+    background: #fff;
+    border-radius: 50px;
+    transition: 0.3s;
+  }
+
+  input:checked+label {
+    background: #bada55;
+  }
+
+  input:checked+label:after {
+    left: calc(100% - 5px);
+    transform: translateX(-100%);
+  }
+
+  label:active:after {
+    width: 130px;
+  }
+
+  tr.order_selected.ng-scope.selected {
+    background-color: #c6eb34;
+  }
+
+  .selected {
+    background-color: #bada55;
+  }
+
+  .omni-layout-card--item-stack-cover{
+    margin-top: unset !important;
+  }
+</style>
+<div class="row">
+ 
+
+  <!-- Thông tin sản phẩm -->
+  <div class="col-6">
+    <div class="row">
+      <div class="col-lg-6">
+        <h5 class="card-title fw-semibold">
+          <span>Giỏ hàng</span>
+          <p>
+            {{orderDetailCounter.maHoaDon}}
+          </p>
+        </h5>
+      </div>
+      <div class="col-lg-6 text-end">
+        <button style="background: linear-gradient(96deg, #f15a22 32.96%, #fdb913 100.17%);" class="btn btn-danger me-4"
+          ng-click="openVoucherModal()" data-bs-toggle="modal" data-bs-target="#exampleModal">
+          Chọn sản phẩm
+        </button>
+        <a href="" data-bs-toggle="modal" style="height: 20px;" data-bs-target="#exampleModal-qrcode"><img
+            src="/assets/images/QR .png" width="40px" alt="" /></a>
+        <div class="modal fade" id="exampleModal-qrcode" tabindex="-1" aria-labelledby="exampleModalLabel"
+          aria-hidden="true">
+          <div class="modal-dialog modal-lg" style="width: 448px; margin-left: 600px">
+            <div class="modal-content custom-modal-content">
+              <div class="modal-header">
+                <span class="card-title fw-semibold">Quét mã QR</span>
+              </div>
+              <div class="modal-body">
+                <video id="preview"></video>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                  Đóng
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <div ng-if="listCart.length === 0">
+      <div class="text-center">
+        <img src="/assets/images/empty_cart.png" alt="Empty Cart" class="mx-auto">
+        <p class="mb-0 mt-3">Không có sản phẩm trong giỏ.</p>
+      </div>
+    </div>
+    <div class="box" ng-if="listCart.length !== 0">
+      <div style="height: 350px; overflow-y: auto;">
+        <table class="table table-borderless">
+          <thead>
+            <tr style="background: linear-gradient(96deg, #e6774e 32.96%, #fdb913 100.17%);">
+              <th scope="col">Ảnh</th>
+              <th scope="col">Tên sản phẩm</th>
+              <th scope="col">Số lượng</th>
+              <th scope="col">Đơn giá</th>
+              <th scope="col">Tổng tiền</th>
+              <th scope="col">Thao tác</th>
+            </tr>
+          </thead>
+          <tbody ng-repeat="lc in listCart" style="border: 1px solid #ccc">
+            <tr>
+              <td class="align-middle">
+                <div class="d-flex justify-content-center align-items-center" style="height: 150px;">
+                  <img src="/assets/ảnh giày/{{lc.image}}" alt="Ảnh sản phẩm" class="img-fluid" width="150px" />
+                </div>
+              </td>
+              <td class="align-middle" style="vertical-align: middle;">
+                <span>{{lc.tenSanPham}}</span>
+                <br />
+                <span>Size: {{lc.size}}</span>
+                <br />
+                <span>Chất liệu: {{lc.chatLieu}}</span>
+                <br />
+                <span>Màu sắc: {{lc.mauSac}}</span>
+              </td>
+              <td class="align-middle" style="vertical-align: middle;">
+                <div class="quantity">
+                  <input style="width: 70px" type="number"
+                    class="next-input text-left min-width-100px position-relative" ng-value="lc.soLuong" min="1"
+                    ng-model="soLuong" ng-change="updateCart(lc.idGioHang, soLuong, lc.idSanPhamChiTiet)" />
+                </div>
+              </td>
+              <td class="align-middle" style="vertical-align: middle;">
+                <div ng-show="lc.giaBan != lc.giaGiam">
+                  <span>{{lc.giaGiam.toLocaleString('vi-VN')}}đ</span>
+                  <span><strike style="color: #dd2222">{{lc.giaBan.toLocaleString('vi-VN')}}đ</strike></span>
+                </div>
+                <div ng-show="lc.giaBan == lc.giaGiam">
+                  <span> {{lc.giaBan.toLocaleString('vi-VN')}}đ</span>
+                </div>
+              </td>
+              <td class="align-middle" style="vertical-align: middle;">
+                <span>{{lc.tongTien.toLocaleString('vi-VN')}}đ</span>
+              </td>
+              <td class="align-middle" style="vertical-align: middle;">
+                <button class="btn btn-outline-danger" ng-click="deleteProduct($index)"><img
+                    src="/assets/images/Shopping-Cart-.png" style="height: 24px;" alt=""></button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content custom-modal-content">
+          <div class="modal-header">
+            <span class="card-title mb-9 fw-semibold">Thông tin sản phẩm</span>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-lg-8">
+                <input ng-model="searchKeyName" class="form-control" placeholder="Tìm kiếm sản phẩm" />
+              </div>
+              <div class="col-lg-4 d-flex justify-content-start">
+                <button style="background: linear-gradient(96deg, #f15a22 32.96%, #fdb913 100.17%);"
+                  ng-click="searchSanPham()" type="button" class="btn btn-danger">
+                  Tìm kiếm
+                </button>
+                <button type="button" ng-click="lamMoiSanPhamTaiQuay()" class="btn btn-outline-warning"
+                  style="margin-left: 10px">
+                  <img src="/assets/images/reload.png" style="height: 20px;">
+                </button>
+              </div>
+            </div>
+            <br />
+            <div class="row text-center">
+              <div class="form-group col-md-3">
+                <span>Thương hiệu:</span>
+                <select style="color: #e6774e" class="custom-select" ng-model="brand" ng-change="filterBrand()">
+                  <option value="">Tất cả</option>
+                  <option ng-repeat="th in listThuongHieu" value="{{th.tenThuongHieu}}">
+                    {{th.tenThuongHieu}}
+                  </option>
+                </select>
+              </div>
+              <div class="form-group col-md-3">
+                <span>Danh mục:</span>
+                <select style="color: #e6774e" class="custom-select" ng-model="locCategory" ng-change="filterBrand()">
+                  <option value="">Tất cả</option>
+                  <option ng-repeat="dm in listDanhMuc" value="{{dm.tenDanhMuc}}">
+                    {{dm.tenDanhMuc}}
+                  </option>
+                </select>
+              </div>
+              <div class="form-group col-md-3">
+                <span>Xuất xứ:</span>
+                <select style="color: #e6774e" class="custom-select" ng-model="locOrigin" ng-change="filterBrand()">
+                  <option value="">Tất cả</option>
+                  <option ng-repeat="xx in listXuatXu" value="{{xx.tenXuatXu}}">
+                    {{xx.tenXuatXu}}
+                  </option>
+                </select>
+              </div>
+              <div class="form-group col-md-3">
+                <span>Kiểu đế:</span>
+                <select style="color: #e6774e" class="custom-select" ng-model="locSole" ng-change="filterBrand()">
+                  <option value="">Tất cả</option>
+                  <option ng-repeat="kd in listKieuDe" value="{{kd.tenDe}}">
+                    {{kd.tenDe}}
+                  </option>
+                </select>
+              </div>
+              <div class="form-group col-md-4">
+                <br />
+                <span>Màu sắc:</span>
+                <select style="color: #e6774e" class="custom-select" ng-model="locMauSac" ng-change="filterBrand()">
+                  <option value="">Tất cả</option>
+                  <option ng-repeat="ms in listMauSac" value="{{ms.tenMauSac}}">
+                    {{ms.tenMauSac}}
+                  </option>
+                </select>
+              </div>
+              <div class="form-group col-md-4">
+                <br />
+                <span>Size:</span>
+                <select style="color: #e6774e" class="custom-select" ng-model="locSize" ng-change="filterBrand()">
+                  <option value="">Tất cả</option>
+                  <option ng-repeat="s in listSize" value="{{s.size}}">
+                    {{s.size}}
+                  </option>
+                </select>
+              </div>
+              <div class="form-group col-md-4">
+                <br />
+                <span>Chất liệu:</span>
+                <select style="color: #e6774e" class="custom-select" ng-model="locMaterial" ng-change="filterBrand()">
+                  <option value="">Tất cả</option>
+                  <option ng-repeat="cl in listChatLieu" value="{{cl.tenChatLieu}}">
+                    {{cl.tenChatLieu}}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <br />
+            <div class="box">
+              <span ng-if="listSanPhamTaiQuay.length === 0" style="margin-left: 500px;">Không có sản phẩm
+                nào</span>
+              <table class="table table-borderless" ng-if="listSanPhamTaiQuay.length !== 0">
+                <thead>
+                  <tr class="text-center" style="background: linear-gradient(96deg, #e6774e 32.96%, #fdb913 100.17%);">
+                    <!-- <th scope="col">STT</th> -->
+                    <th scope="col">Ảnh</th>
+                    <th scope="col">Tên sản phẩm</th>
+                    <th scope="col">Số lượng</th>
+                    <th scope="col" style="width: 120px">Giá</th>
+                    <th scope="col">Thao tác</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr style="border: 1px solid #ccc" class="text-center" ng-repeat="sptq in listSanPhamTaiQuay">
+                    <!-- <td style="padding-top: 55px">
+                      <span>{{$index + 1 + (pageNumberSp * pageSizeSp)}}</span>
+                    </td> -->
+                    <td>
+                      <div class="d-flex justify-content-center ">
+                        <img src="/assets/ảnh giày/{{sptq.imgage}}" alt="Ảnh sản phẩm" class="img-fluid "
+                          style="max-width: 100px; max-height: 100px" />
+                      </div>
+                    </td>
+                    <td style="padding-top: 25px">
+                      <span>{{sptq.tenSanPham}} <span>
+                          <br />
+                          <span>Size:</span>
+                          <span>{{sptq.size}}</span>
+                          <br />
+                          <span>Màu sắc:</span>
+                          <span>{{sptq.mauSac}}</span>
+                          <br />
+                          <span>Chất liệu:</span>
+                          <span>{{sptq.chatLieu}}</span>
+                    </td>
+                    <td style="padding-top: 55px">
+                      <div class="quantity">
+                        <input ng-model="soLuongSanPham" min="1" max="{{sptq.soLuong}}" type="number"
+                          class="next-input text-left min-width-100px position-relative quantity-decimal" />
+                      </div>
+                      <h6 style="margin-left: 0px; padding-top: 5px" ng-if="sptq.soLuong > 0">
+                        <span>Còn {{sptq.soLuong}} sản phẩm</span>
+                      </h6>
+                    </td>
+                    <td style="padding-top: 55px">
+                      <small class="mb-0 text-muted h6" ng-show="sptq.giaGiamGia != sptq.giaBan">
+                        <strong>
+                          <span class="text-danger">
+                            {{sptq.giaGiamGia < 0 ? 0: sptq.giaGiamGia.toLocaleString('vi-VN')}}đ </span>
+                              <strike class="text-danger">
+                                {{sptq.giaBan.toLocaleString('vi-VN')}}đ
+                              </strike>
+                        </strong>
+                      </small>
+                      <small class="mb-0 text-muted h6" ng-show="sptq.giaGiamGia == sptq.giaBan">
+                        <strong>
+                          <span class="text-danger">
+                            {{sptq.giaBan.toLocaleString('vi-VN')}}đ
+                          </span>
+                        </strong>
+                      </small>
+                    </td>
+                    <td style="padding-top: 55px" ng-if="sptq.soLuong > 0">
+                      <button type="button" class="btn btn-outline-info"
+                        ng-click="themSanPhamCart(sptq.idSanPhamChiTiet, soLuongSanPham)">
+                        <img src="/assets/images/Shopping-Cart+.png" style="height: 24px;" alt="">
+                      </button>
+                    </td>
+                    <td style="padding-top: 55px" ng-if="sptq.soLuong <= 0">
+                      <span
+                        style=" background-color: #cceeff; color: #fc5e03;padding: 4px 8px;border-radius: 4px;display: inline-block;">Đã
+                        hết hàng
+                      </span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <nav aria-label="Page navigation example" style="margin-left: 550px" ng-if="listSanPhamTaiQuay.length != 0">
+            <ul class="pagination">
+              <li class="page-item" ng-show="pageNumberSp > 0">
+                <a class="page-link" href="" ng-click="previousPageSp()"><img src="/assets/images/chevron-left.svg"
+                    height="15px" alt=""></a>
+              </li>
+              <li class="page-item">
+                <a class="page-link">{{pageNumberSp + 1}}</a>
+              </li>
+              <li class="page-item" ng-show="showNextButton">
+                <a class="page-link" href="" ng-click="nextPageSp()"><img src="/assets/images/chevron-right.svg"
+                    height="15px" alt=""></a>
+              </li>
+            </ul>
+          </nav>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+              Đóng
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<br>
+<hr>
+

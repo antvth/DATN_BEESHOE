@@ -1,0 +1,94 @@
+.text-customs {
+  text-align: center;
+  padding-top: 90px;
+}
+.layout-card {
+  background: white;
+  border-radius: 20px;  
+  margin-top: 20px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+.layout-card--header.line-bottom {
+  padding-bottom: 10px;
+}
+.layout-card--header {
+  padding: 16px 16px 0;
+}
+.header-title {
+  font-size: 0.85rem;
+  color: black;
+  font-weight: bold;
+}
+.layout-card--section {
+  padding: 16px;
+  margin-bottom: 20px;
+}
+.layout-card--section .row {
+  margin-top: -16px;
+}
+.layout-card--section .row .col,
+.layout-card--section .row [class^="col-"] {
+  margin-top: 16px;
+}
+
+/**/
+.omni-layout-card--item-stack-cover {
+  margin-top: -16px;
+  margin-left: -16px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+}
+.omni-layout-card--item-stack.fill {
+  flex: 1 1 auto;
+}
+
+.omni-layout-card--item-stack {
+  margin-top: 16px;
+  margin-left: 16px;
+  max-width: 100%;
+}
+.text-right {
+  text-align: right !important;
+}
+.omni-layout-card--section-section + .omni-layout-card--section-section {
+  padding-top: 16px;
+}
+.form-voucher {
+  max-width: 400px;
+  width: 100%;
+  margin-right: auto;
+}
+.form-input-voucher {
+  display: flex;
+  align-items: center;
+  height: 36px;
+  margin-top: 0px;
+  margin-bottom: 20px;
+}
+.input-voucher {
+  flex-grow: 1;
+  padding: 0 16px;
+  height: 100%;
+  border: none;
+  background: #eee;
+  border-radius: 36px 0 0 36px;
+  outline: none;
+  width: 100%;
+  color: #342e37;
+}
+.search-btn-voucher {
+  width: 36px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #3c91e6;
+  color: #f9f9f9;
+  font-size: 18px;
+  border: none;
+  outline: none;
+  border-radius: 0 36px 36px 0;
+  cursor: pointer;
+}

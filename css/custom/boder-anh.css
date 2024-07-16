@@ -1,0 +1,27 @@
+.image-container {
+  width: 350px; /* Điều chỉnh kích thước của hình tròn tại đây */
+  height: 350px; /* Điều chỉnh kích thước của hình tròn tại đây */
+  border: 2px solid #1e98e9; /* Điều chỉnh màu và độ rộng của đường viền tại đây */
+  border-radius: 50%; /* Tạo hình dạng hình tròn */
+  overflow: hidden; /* Đảm bảo rằng hình ảnh không bị tràn ra khỏi đường viền hình tròn */
+}
+
+.image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Đảm bảo rằng hình ảnh bên trong đường viền được thay đổi kích thước mà không bị bóp méo */
+}
+.small-popup {
+  font-size: 10px; 
+}
+span {
+  color: black;
+  font-weight: bold;
+}
+a.sidebar-link {
+  color: black;
+  font-weight: bold;
+}
+table.table {
+  color: black;
+}

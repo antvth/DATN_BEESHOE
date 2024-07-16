@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myModule">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BEE SHOE</title>
+  <link rel="shortcut icon" type="image/png"
+    href="/assets/images/tile.png" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css" />
+  <link rel="stylesheet" href="/assets/css/feather.css" />
+  <link rel="stylesheet" href="/assets/css/dropzone.css" />
+  <link rel="stylesheet" href="/assets/css/select2.css" />
+  <link rel="stylesheet" href="/assets/css/styles.min.css" />
+  <link rel="stylesheet" href="/css/custom/hinh-thuc-thah-toan.css" />
+  <link rel="stylesheet" href="/css/custom/create-ctkm.css" />
+  <link rel="stylesheet" href="/css/custom/combobox.css" />
+  <link rel="stylesheet" href="/css/custom/trang-thai-hdct.css" />
+  <link rel="stylesheet" href="/css/custom/boder-anh.css" />
+</head>
+
+<body>
+  
+  <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+    data-sidebar-position="fixed" data-header-position="fixed">
+    <aside class="left-sidebar">
+      <div>
+        <div class="brand-logo d-flex align-items-center justify-content-between">
+          <a href="./index.html" class="text-nowrap logo-img">
+            <img src="/assets/images/z4754468708043_e3218b27549165452a995a7d4cbe6705_preview_rev_1.png" width="130"
+              alt="" />
+          </a>
+          <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
+            <i class="ti ti-x fs-8"></i>
+          </div>
+        </div>
+        <br>
+        <nav class="sidebar-nav scroll-sidebar" data-simplebar="">
+          <ul id="sidebarnav">
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="#/order-counter" aria-expanded="false">
+                <span>
+                  <img src="/assets/images/shopping-cart-plus.png" width="180" alt=""
+                    style="width: 21px; height: 21px" />
+                </span>
+                <span class="hide-menu">Bán tại quầy</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="#" aria-expanded="false">
+                <span>
+                  <img src="/assets/images/receipt.png" width="180" alt="" style="width: 21px; height: 21px" />
+                </span>
+                <span class="hide-menu">Hóa đơn</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="#/promotion" aria-expanded="false">
+                <span>
+                  <img src="/assets/images/shopping-bag.png" width="180" alt="" style="width: 21px; height: 21px" />
+                </span>
+                <span class="hide-menu">Đợt giảm giá</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="#/voucher" aria-expanded="false">
+                <span>
+                  <img src="/assets/images/ticket.png" width="180" alt="" style="width: 21px; height: 21px" />
+                </span>
+                <span class="hide-menu">Phiếu giảm giá</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="#/dashboard" aria-expanded="false">
+                <span>
+                  <img src="/assets/images/trend.png" width="180" alt="" style="width: 21px; height: 21px" />
+                </span>
+                <span class="hide-menu">Thống kê</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a href="#pageSubmenu" class="dropdown-toggle collapsed sidebar-link" data-bs-toggle="collapse"
+                data-bs-target="#pageSubmenu1">
+                <span>
+                  <img src="/assets/images/product.png" width="180" style="width: 21px; height: 21px" />
+                </span>
+                <span class="hide-menu">Quản lý sản phẩm</span>
+              </a>
+              <ul class="list-unstyled collapse" id="pageSubmenu1">
+                <li class="sidebar-item" style="margin-left: 37px">
+                  <a class="sidebar-link" href="#/product" style="font-weight: bold;">Sản phẩm</a>
+                </li>
+             
+              </ul>
+            </li>
+            <li class="sidebar-item">
+              <a href="#pageSubmenu" class="dropdown-toggle collapsed sidebar-link" data-bs-toggle="collapse"
+                data-bs-target="#pageSubmenu">
+                <span>
+                  <img src="/assets/images/group.png" width="180" style="width: 21px; height: 21px" />
+                </span>
+                <span class="hide-menu">Quản lý tài khoản</span>
+              </a>
+          
+              </ul>
+            </li>
+            
+          </ul>
+        </nav>
+      </div>
+    </aside>
+    <div class="body-wrapper">
+      <header class="app-header">
+        <nav class="navbar navbar-expand-lg navbar-light">
+          <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
+            <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
+              <li class="nav-item dropdown">
+                <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown"
+                  aria-expanded="false">
+                  <img src="/assets/images/profile/user-1.jpg" alt="" width="35" height="35" class="rounded-circle" />
+                </a>
+                <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
+                  <div class="message-body">
+                    <div ng-controller="loginController">
+                      <div ng-if="!isLoggedIn">
+                        <a href="#/admin/login" class="btn btn-outline-primary mx-3 mt-2 d-block">
+                          Đăng nhập
+                        </a>
+                      </div>
+                      <div ng-if="isLoggedIn">
+                        <a ng-click="logout()" class="btn btn-outline-primary mx-3 mt-2 d-block">Đăng xuất</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </header>
+      <div class="container-fluid">
+        <div ng-view class=""></div>
+      </div>
+    </div>
+  </div>
+  <!-- Cấu hình -->
+  <script src="/lib/angular.js"></script>
+  <script src="/lib/angular-route.js"></script>
+  <script src="./app-admin.js"></script>
+  <script src="./routes-admin.js"></script>
+  <script type="text/javascript" src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- Cấu hình -->
+
+  <!-- Controlller -->
+
+  <script src="controller/ban-tai-quay-controller.js"></script>
+ 
+  
+
+  <!-- Controlller -->
+
+  <!-- Service -->
+  
+  <script src="service/ban-tai-quay-service.js"></script>
+  
+  <!-- Service -->
+  <script src="/js/custom/create-km.js"></script>
+  <script src="/js/custom/modal.js"></script>
+  <!-- js -->
+
+  <script src="/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+</body>
+
+</html>
