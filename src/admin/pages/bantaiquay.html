@@ -51,12 +51,71 @@
     background-color: #bada55;
   }
 
-  .omni-layout-card--item-stack-cover{
+  .omni-layout-card--item-stack-cover {
     margin-top: unset !important;
   }
 </style>
 <div class="row">
- 
+  <!-- Thông tin hóa đơn -->
+  <div class="col-6">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-12">
+          <h5 class="card-title fw-semibold" style="color: black;">Thông tin hóa đơn</h5>
+        </div>
+        <div class="col-lg-6">
+          <input class="form-control" placeholder="Tìm kiếm hóa đơn" ng-model="kyHoaDonTaiQuay"
+            ng-change="searchOrder(kyHoaDonTaiQuay)" />
+        </div>
+        <div class="col-lg-6 d-flex justify-content-end align-items-center">
+          <button style="background: linear-gradient(96deg, #f15a22 32.96%, #fdb913 100.17%);" type="button"
+            class="btn btn-danger me-2" ng-click="createHoaDon()">
+            <img src="/assets/images/++.png" style="height: 20px;">
+          </button>
+          <button type="button" class="btn btn-outline-warning" ng-click="lamMoiHoaDon()">
+            <img src="/assets/images/reload.png" style="height: 20px;">
+          </button>
+        </div>
+      </div>
+      <hr />
+      <span ng-if="listHoaDonTaiQuay.length === 0">Không có hóa đơn nào</span>
+      <div style="height: 350px; overflow-y: auto;">
+        <table class="table table-borderless" ng-if="listHoaDonTaiQuay.length !== 0">
+          <thead>
+            <tr style="background: linear-gradient(96deg, #e6774e 32.96%, #fdb913 100.17%);">
+              <!-- <th scope="col">STT</th> -->
+              <th scope="col">Mã hóa đơn</th>
+              <th scope="col">Nhân viên</th>
+              <th scope="col">Ngày tạo</th>
+              <!-- <th scope="col">Khách hàng</th> -->
+              <th scope="col">Trạng thái</th>
+              <th scope="col">Thao tác</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="order" ng-repeat="hd in listHoaDonTaiQuay" ng-class="{ 'selected': hd.isSelected }">
+              <!-- <td>{{$index + 1 + (pageNumber * pageSize)}}</td> -->
+              <td>{{hd.maHoaDon}}</td>
+              <td>{{hd.tenNhanVien}}</td>
+              <td>{{hd.ngayTao | date:'MM/dd/yyyy - h:mm:ss a'}}</td>
+              <!-- <td>{{hd.tenKhachHang}}</td> -->
+              <td>{{hd.trangThai == 1 ? "Chờ thanh toán" : "Thành công"}}</td>
+              <td>
+                <button style="background: linear-gradient(96deg, #f15a22 32.96%, #fdb913 100.17%); margin-bottom: 5px;"
+                  class="btn btn-danger" ng-click="selectOrder(hd.id, hd.idKhachHang)">
+                  Chọn
+                </button>
+                <button class="btn btn-danger" ng-click="deleteOrder(hd.id)">
+                  Hủy
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
 
   <!-- Thông tin sản phẩm -->
   <div class="col-6">
@@ -160,7 +219,7 @@
         </table>
       </div>
     </div>
-    
+
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-lg">
         <div class="modal-content custom-modal-content">
@@ -360,7 +419,594 @@
   </div>
 </div>
 
-
 <br>
 <hr>
+<div class="row" ng-show="listHoaDonTaiQuay.length !== 0">
+  <div class="row">
 
+    <div class="card overflow-hidden">
+      <div class="card-body p-4">
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="row">
+              <h5 class="card-title mb-9 fw-semibold">
+                <div class="col-lg-12">
+                  <span>Thông tin khách hàng</span>
+                  <p style="margin-left: 200px;margin-top:-20px;">
+                    {{orderDetailCounter.maHoaDon}}
+                  </p>
+                </div>
+              </h5>
+              <div class="col-lg-6" style="margin-left: -175px">
+                <!-- SHOW KHÁCH AND  Thêm khách -->
+                <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel"
+                  aria-hidden="true">
+                  <div class="modal-dialog modal-lg">
+                    <div class="modal-content custom-modal-content">
+                      <div class="modal-header card-title fw-semibold">
+                        <span>Tìm kiếm khách hàng</span>
+                      </div>
+                      <div class="modal-body">
+                        <div class="row">
+                          <div class="col-lg-8">
+                            <input ng-model="searchKeyword" class="form-control" placeholder="Tìm kiếm khách hàng" />
+                          </div>
+                          <div class="col-lg-4 d-flex justify-content-start">
+                            <button ng-click="searchKhach()" class="btn btn-primary">
+                              Tìm kiếm
+                            </button>
+                            <button type="button" ng-click="lamMoiKhachHang()" class="btn btn-info"
+                              style="margin-left: 10px">
+                              Làm mới
+                            </button>
+                            <!-- <button style="margin-left: 10px" type="button" class="btn btn-danger"
+                              data-bs-toggle="modal" data-bs-target="#exampleModal3">
+                              Thêm khách hàng
+                            </button> -->
+                          </div>
+                        </div>
+                        <br />
+                        <div class="box">
+                          <span ng-if="listKhachHang.length === 0" style="margin-left: 465px;">Không có khách hàng
+                            nào</span>
+                          <table class="table table-borderless table-hover" ng-if="listKhachHang.length !== 0">
+                            <thead>
+                              <tr style="background: linear-gradient(96deg, #e6774e 32.96%, #fdb913 100.17%);">
+                                <th scope="col">STT</th>
+                                <th scope="col">Tên khách hàng</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Số điện thoại</th>
+                                <th scope="col">Địa chỉ</th>
+                                <th scope="col">Thao tác</th>
+                              </tr>
+                            </thead>
+                            <tbody ng-repeat="kh in listKhachHang">
+                              <tr>
+                                <th scope="row">{{$index + 1}}</th>
+                                <td>{{kh.ten}}</td>
+                                <td>{{kh.email}}</td>
+                                <td>{{kh.soDienThoai}}</td>
+                                <td>
+                                  {{kh.diaChi}}
+                                </td>
+                                <td>
+                                  <button ng-click="updateKhachHang(kh.id)" type="button" class="btn btn-primary">
+                                    Chọn
+                                  </button>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <nav aria-label="Page navigation example" style="margin-left: 550px"
+                          ng-if="listKhachHang.length != 0">
+                          <ul class="pagination">
+                            <li class="page-item" ng-show="showNextButtonKhach">
+                              <a class="page-link" ng-click="previousPageKhach()"><img
+                                  src="/assets/images/chevron-left.svg" height="15px" alt=""></a>
+                            </li>
+                            <li class="page-item">
+                              <a class="page-link">{{pageNumberSp + 1}}</a>
+                            </li>
+                            <li class="page-item" ng-show="showNextButtonKhach">
+                              <a class="page-link" ng-click="nextPageKhach()"><img
+                                  src="/assets/images/chevron-right.svg" height="15px" alt=""></a>
+                            </li>
+                          </ul>
+                        </nav>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                          Đóng
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal fade" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModalLabel"
+                  aria-hidden="true">
+                  <div class="modal-dialog modal-lg">
+                    <div class="modal-content custom-modal-content" style="
+                          width: 620px;
+                          margin: auto;
+                          margin-left: 80px;
+                          height: 530px;
+                        ">
+                      <div class="modal-body">
+                        <span style="font-size: 20px;">Thêm khách hàng</span>
+                        <div class="row">
+                          <div class="col-lg-12">
+                            <span class="header-title"><span style="color: red">*</span>
+                              <span>Họ và tên</span></span>
+                            <span style="color: red">{{errorHoTen}}</span>
+                            <input class="form-control" style="margin-bottom: 25px;" placeholder="Nhập họ tên khách"
+                              ng-model="newKhachHang.hoTen" />
+                          </div>
+                          <div class="col-lg-12">
+                            <span class="header-title"><span style="color: red">*</span>
+                              <span>Số điện thoại</span></span>
+                            <span style="color: red">{{errorSoDienThoai}}</span>
+                            <input type="number" min="0" oninput="this.value = Math.max(0, this.value)"
+                              ng-model="newKhachHang.soDienThoai" style="margin-bottom: 25px;" class="form-control"
+                              placeholder="Nhập số điện thoại" />
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-lg-12">
+                            <span class="header-title"><span style="color: red">*</span>
+                              <span>Email</span></span> <span style="color: red">{{errorEmail}}</span>
+                            <input class="form-control" style="margin-bottom: 25px;" ng-model="newKhachHang.email"
+                              placeholder="Nhập email" />
+                          </div>
+                          <div class="col-lg-12">
+                            <span class="header-title"><span style="color: red">*</span>
+                              <span>Ngày sinh</span></span>
+                            <span style="color: red">{{errorNgaySinh}}</span>
+                            <input type="date" style="margin-bottom: 25px;" ng-model="newKhachHang.ngaySinh"
+                              class="form-control" />
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-lg-12">
+                            <span class="header-title"><span style="color: red">*</span>
+                              <span>Địa chỉ</span></span>
+                            <span style="color: red">{{errorDiaChi}}</span>
+                            <input class="form-control" placeholder="Nhập địa chỉ" ng-model="newKhachHang.diaChi" />
+                          </div>
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                          Đóng
+                        </button>
+                        <button type="button" class="btn btn-secondary" ng-click="createKhachHang()">
+                          Thêm
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!--SHOW KHÁCH AND  Thêm khách -->
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <h5 class="card-title mb-9 fw-semibold">
+              <div class="row">
+                <div class="col-lg-6">Thông tin thanh toán</div>
+                <div class="col-lg-6">
+                  <p style="margin-left: -56px">
+                    {{orderDetailCounter.maHoaDon}}
+                  </p>
+                </div>
+              </div>
+            </h5>
+          </div>
+        </div>
+
+        <div class="layout-card--section">
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-6">
+                <div style="margin-left: -30px;">
+                  <div class="row">
+                    <div class="col-lg-7">
+                      <input type="text" disabled class="form-control hidden-input"
+                        ng-value="orderDetailCounter.tenKhach" placeholder="Vui lòng chọn/tạo hóa đơn" />
+                    </div>
+                    <div class="col-lg-5">
+                      <a style="background: linear-gradient(96deg, #f15a22 32.96%, #fdb913 100.17%);"
+                        data-bs-toggle="modal" data-bs-target="#exampleModal2" class="btn btn-danger">
+                        Chọn khách hàng
+                      </a>
+                    </div>
+                  </div>
+                </div>
+                <br>
+                <div ng-show="!showInput">
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <span style="margin-left: -30px" class="header-title"><span style="color: red">*</span>
+                        <span>Họ và tên</span></span>
+                      <input ng-model="orderDetailCounter.tenKhach" type="text" class="form-control hidden-input"
+                        style="margin-left: -30px" placeholder="Nhập họ và tên khách" />
+                      <span style="color: red;margin-left: -25px;">{{errorhoTen}}</span>
+                    </div>
+                    <div class="col-lg-6">
+                      <span style="margin-left: -30px" class="header-title"><span style="color: red">*</span>
+                        <span>Số điện thoại</span></span>
+                      <input ng-model="orderDetailCounter.soDienThoai" type="text" min="0"
+                        oninput="this.value = Math.max(0, this.value)" class="form-control hidden-input"
+                        style="margin-left: -30px" placeholder="Nhập số điện thoại" />
+                      <span style="color: red;margin-left: -25px;">{{errorsoDienThoai}}</span>
+                    </div>
+                  </div>
+                  <span style="margin-left: -30px" class="header-title"><span style="color: red">*</span>
+                    <span>Email</span></span>
+                  <input ng-model="orderDetailCounter.email" type="text" class="form-control hidden-input"
+                    style="margin-left: -30px" placeholder="Nhập email" />
+                  <span style="color: red;margin-left: -25px;">{{erroremail}}</span>
+                  <br>
+                  <span style="margin-left: -25px" class="header-title"><span style="color: red">*</span>
+                    <span>Địa chỉ</span></span>
+                  <input ng-model="orderDetailCounter.diaChi" type="text" class="form-control hidden-input"
+                    style="margin-left: -30px;" placeholder="Nhập địa chỉ" />
+                  <span style="color: red;margin-left: -25px;">{{errordiaChi}}</span>
+                </div>
+              </div>
+
+              <div class="col-sm-6 col-12">
+                <div class="row">
+                  <div class="col-lg-5" style="width: 350px;">
+                    <span class="header-title">Chọn phương thức thanh toán</span>
+                  </div>
+                  <div style="width: 100%;display: flex;justify-content: space-between;margin-top: 10px;">
+                    <button style="width: 49%;font-size: 14px;" class="btn btn-outline-warning"
+                      ng-click="createTransaction2()">
+                      <span style="display: inline-block;transform: translateY(-4px);">
+                        <i class="ti ti-cash"
+                          style="font-size: 30px;display: inline-block; transform: translateY(4px)"></i>
+                        Tiền mặt
+                      </span>
+                    </button>
+                    <!-- ng-click="Vnpay(tienCuoiCungCuaDon + (tienGiao ? + tienGiao : 0))" -->
+                    <button style="width: 49%;font-size: 14px;" class="btn btn-outline-warning">
+                      <img style="   
+                     width: 50%;
+                    transform: translateY(-2px);" src="https://sandbox.vnpayment.vn/paymentv2/Images/brands/logo.svg">
+                      Chuyển khoản
+                    </button>
+                  </div>
+                  <div style="width: 100%;display: flex;justify-content: space-between;margin-top: 5px;">
+                    <button style="width: 100%;font-size: 14px;padding: 15px;" class="btn btn-outline-warning"
+                      ng-click="choosePaymentMethod(2)" ng-if="listCart.length !== 0" data-bs-toggle="modal"
+                      data-bs-target="#exampleModal5">
+                      <span style="display: inline-block;transform: translateY(-5px);">
+                        <i class="ti ti-cash"
+                          style="font-size: 30px; transform: translateY(4px);display: inline-block;"></i>
+                        Tiền mặt và
+                        <img style="   
+                     width: 35%;
+                    transform: translateY(-2px);" src="https://sandbox.vnpayment.vn/paymentv2/Images/brands/logo.svg">
+                        chuyển khoản
+                      </span>
+                    </button>
+                  </div>
+                </div>
+                <div class="omni-layout-card--section-section">
+                  <div class="omni-layout-card--item-stack-cover">
+                    <div class="omni-layout-card--item-stack fill">
+
+                      <div class="row">
+                        <div class="col-lg-5" style="width: 150px;">
+                          <span class="header-title">Khách thanh toán</span>
+                        </div>
+                        <div class="col-lg-7">
+                          <!-- <button class="btn btn-outline-primary" ng-if="listCart.length !== 0" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal5" style="margin-left: 80px">
+                            <img src="/assets/images/debit-card.png" width="25px" alt="" srcset="" />
+                          </button> -->
+                          <!-- thanh toán -->
+                          <div class="modal fade" id="exampleModal5" tabindex="-1" aria-labelledby="exampleModalLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog modal-lg">
+                              <div class="modal-content custom-modal-content">
+                                <div class="modal-header">
+                                  <span style="font-size: 20px;">Thanh toán</span>
+                                </div>
+                                <div class="modal-body">
+                                  <div class="row">
+                                    <div class="col-lg-1">
+                                      <span style="padding-top: 10px">
+                                        Số tiền
+                                      </span>
+                                    </div>
+                                    <div class="col-lg-7">
+                                      <input min="0" oninput="this.value = Math.max(0, this.value)"
+                                        ng-model="newTransaction.soTien" class="form-control"
+                                        placeholder="Nhập số tiền khách trả" type="number" format-thousands />
+                                    </div>
+                                    <div class="col-lg-4">
+                                      <button class="btn btn-primary" style="margin-left: 0px"
+                                        ng-click="createTransaction()">
+                                        Tiền mặt
+                                      </button>
+                                      <!-- ng-click="Vnpay(tienCuoiCungCuaDon + (tienGiao ? + tienGiao:0))" -->
+                                      <button class="btn btn-primary" style="margin-left: 10px">
+                                        Chuyển khoản
+                                      </button>
+                                    </div>
+                                  </div>
+                                  <br />
+                                  <div class="box">
+                                    <span ng-if="listTransaction.length === 0" style="margin-left: 465px;">Không có
+                                      thanh toán nào</span>
+                                    <table class="table table-hover" ng-if="listTransaction.length !== 0">
+                                      <thead>
+                                        <tr
+                                          style="background: linear-gradient(96deg, #e6774e 32.96%, #fdb913 100.17%);">
+                                          <th scope="col">STT</th>
+                                          <th scope="col">Mã giao dịch</th>
+                                          <th scope="col">Số tiền</th>
+                                          <th scope="col">Phương thức</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody class="table table-borderless table-hover">
+                                        <tr ng-repeat="lt in listTransaction">
+                                          <th scope="row">{{$index + 1}}</th>
+                                          <td>{{lt.maGiaoDinh}}</td>
+                                          <td>{{lt.soTien.toLocaleString('vi-VN')}}đ</td>
+                                          <td>
+                                            {{lt.phuongThuc == 1 ? 'Tiền Mặt'
+                                            : 'Chuyển khoản'}}
+                                          </td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                  <br />
+                                  <div class="omni-layout-card--section-section">
+                                    <div class="omni-layout-card--item-stack-cover">
+                                      <div class="omni-layout-card--item-stack fill">
+                                        <div class="row">
+                                          <div class="col-lg-2" style="width: 150px;;">
+                                            <span class="header-title">Khách thanh toán</span>
+                                          </div>
+                                          <div class="col-lg-3">
+                                            <span class="header-title" style="color: #dd2222"
+                                              ng-model="newTransaction.tienKhachTra">{{totalAmountPaid.toLocaleString('vi-VN')}}đ</span>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="omni-layout-card--section-section">
+                                    <div class="omni-layout-card--item-stack-cover">
+                                      <div class="omni-layout-card--item-stack fill">
+                                        <div class="row" ng-show="tienCuoiCungCuaDon > 0">
+                                          <div class="col-lg-2" style="width: 150px;;">
+                                            <span class="header-title">Tiền thiếu</span>
+                                          </div>
+                                          <div class="col-lg-3">
+                                            <span class="header-title">
+                                              {{ (tienCuoiCungCuaDon + (tienGiao ? + tienGiao
+                                              :0)).toLocaleString('vi-VN')}}đ
+                                            </span>
+                                          </div>
+                                        </div>
+                                        <div class="row" ng-show="tienCuoiCungCuaDon <= 0">
+                                          <div class="col-lg-2" style="width: 150px;;">
+                                            <span class="header-title">Tiền thừa</span>
+                                          </div>
+                                          <div class="col-lg-3">
+                                            <span class="header-title">
+                                              {{ tienThuaTraKhach.toLocaleString('vi-VN')}}đ
+                                            </span>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                    Đóng
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <!-- thanh toán -->
+                        </div>
+                      </div>
+                    </div>
+                    <div class="omni-layout-card--item-stack fill text-right">
+                      <span class="header-title"
+                        style="color: #dd2222">{{totalAmountPaid.toLocaleString('vi-VN')}}đ</span>
+                      <input hidden ng-model="requestData.tongTien" type="text" ng-value="totalAmountPaid" />
+                    </div>
+                  </div>
+                </div>
+                <div class="omni-layout-card--section-section">
+                  <div class="omni-layout-card--item-stack-cover">
+                    <div class="omni-layout-card--item-stack fill"
+                      style="width: 100%;display: flex;justify-content: space-between;margin-top: 5px;">
+                      <div class="btn btn-outline-info"
+                        style="width: 100%; height: 40px; margin-top: 29px; display: flex; justify-content: space-between; font-size: 12px;"
+                        data-bs-toggle="modal" data-bs-target="#voucher">
+                        <div>
+                          <i class="ti ti-gift-card"
+                            style="font-size: 21px; transform: translateY(3px); display: inline-block;"></i>
+                          Phiếu giảm giá
+                        </div>
+                        <div style="display: flex; align-items: center;">
+                          <span>Chọn hoặc nhập mã</span>
+                          <i class="ti ti-chevron-right"
+                            style="font-size: 18px; transform: translateY(3px); display: inline-block; margin-left: 5px;"></i>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="omni-layout-card--item-stack fill text-right"></div>
+                  </div>
+                  <!-- modal voucher -->
+                  <div class="modal fade" id="voucher" tabindex="-1" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                      <div class="modal-content custom-modal-content" style="width: 145%; margin-left: -140px">
+                        <div class="modal-header">
+                          <span class="card-title fw-semibold">Phiếu giảm giá</span>
+                        </div>
+                        <div class="modal-header" style="height: 50px">
+                          <input class="form-control" style="margin-top: 20px" placeholder="Tìm kiếm voucher"
+                            ng-model="keyVoucher" ng-change="searchVoucher()" />
+                        </div>
+                        <hr />
+                        <div class="modal-body">
+                          <span ng-if="listVoucher.length === 0" style="margin-left: 465px;">Không có mã giảm giá</span>
+                          <table class="table table-borderless table-hover" style=" width: 1104px"
+                            ng-show="listVoucher.length !== 0">
+                            <thead>
+                              <tr style="background: linear-gradient(96deg, #e6774e 32.96%, #fdb913 100.17%);">
+                                <th scope="col">STT</th>
+                                <th scope="col">Mã voucher</th>
+                                <th scope="col">Tên voucher</th>
+                                <th scope="col">Giá trị giảm</th>
+                                <th scope="col">Đơn tối thiểu</th>
+                                <th scope="col">Số lượng</th>
+                                <th scope="col">Thời gian</th>
+                                <th scope="col">Thao tác</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr ng-repeat="v in listVoucher" ng-if="v.priceOrder <= tongTienHang">
+                                <td>{{$index + 1}}</td>
+                                <td>{{v.voucherCode}}</td>
+                                <td>{{v.nameVoucher}}</td>
+                                <td>
+                                  {{v.price.toLocaleString('vi-VN')}}{{v.style == 1 ? '%' :
+                                  'đ'}}
+                                </td>
+                                <td>{{v.priceOrder.toLocaleString('vi-VN')}}đ</td>
+                                <td>{{v.soLuongDung}}/{{v.soLuong}}</td>
+                                <td>
+                                  {{v.dateStart | date:'dd/MM/yyyy h:mm:ss
+                                  a'}} - {{v.dateEnd | date:'dd/MM/yyyy
+                                  h:mm:ss a'}}
+                                </td>
+                                <td>
+                                  <button ng-click="updateOrderCounter(v.id)" class="btn btn-primary">
+                                    Chọn
+                                  </button>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <nav aria-label="Page navigation example" style="margin-left: 520px"
+                          ng-if="listVoucher.length != 0">
+                          <ul class="pagination">
+                            <li class="page-item" ng-show="pageNumberVoucher > 0">
+                              <a class="page-link" href="" ng-click="previousPageVoucher()"><img
+                                  src="/assets/images/chevron-left.svg" height="15px" alt=""></a>
+                            </li>
+                            <li class="page-item">
+                              <a class="page-link">{{pageNumberVoucher + 1}}</a>
+                            </li>
+                            <li class="page-item" ng-show="showNextButtonVoucher">
+                              <a class="page-link" href="" ng-click="nextPageVoucher()"><img
+                                  src="/assets/images/chevron-right.svg" height="15px" alt=""></a>
+                            </li>
+                          </ul>
+                        </nav>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            Đóng
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- modal voucher -->
+                </div>
+                <!-- <div class="omni-layout-card--section-section">
+                  <div class="omni-layout-card--item-stack-cover">
+                    <div class="omni-layout-card--item-stack fill">
+                      <span class="header-title">Giao hàng</span>
+                    </div>
+
+                    <div class="omni-layout-card--item-stack fill text-right">
+
+                      <input ng-click="toggleInput()" type="checkbox" id="switch" />
+                      <label for="switch"></label>
+                    </div>
+                  </div>
+                </div> -->
+                <div class="omni-layout-card--section-section">
+                  <div class="omni-layout-card--item-stack-cover">
+                    <div class="omni-layout-card--item-stack fill">
+                      <span class="header-title">Tiền hàng</span>
+                    </div>
+                    <div class="omni-layout-card--item-stack fill text-right">
+                      <span class="header-title"
+                        ng-model="newTransaction.tongTien">{{tongTienHang.toLocaleString('vi-VN')}}đ</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="omni-layout-card--section-section" ng-show="!showInput">
+                  <div class="omni-layout-card--item-stack-cover">
+                    <div class="omni-layout-card--item-stack fill">
+                      <span class="header-title">Phí vận chuyển</span>
+                    </div>
+                    <div class="omni-layout-card--item-stack fill text-right" style="margin-top: 5px;">
+                      <input type="number" min="0" oninput="this.value = Math.max(0, this.value)" ng-model="tienGiao"
+                        class="form-control hidden-input" placeholder="Nhập tiền vận chuyển"
+                        ng-change="autoAddVoucher((tongTienHang - orderDetailCounter.tienGiamGia + (tienGiao ? + tienGiao :0)))" />
+                      <span style="color: red">{{errortienGiao}}</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="omni-layout-card--section-section">
+                  <div class="omni-layout-card--item-stack-cover">
+                    <div class="omni-layout-card--item-stack fill">
+                      <span class="header-title">Tiền áp mã giảm giá</span>
+                    </div>
+                    <div class="omni-layout-card--item-stack fill text-right">
+                      <span class="header-title">{{orderDetailCounter.tienGiamGia.toLocaleString('vi-VN') == null ?
+                        "0" :orderDetailCounter.tienGiamGia.toLocaleString('vi-VN')}}đ</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="omni-layout-card--section-section">
+                  <div class="omni-layout-card--item-stack-cover">
+                    <div class="omni-layout-card--item-stack fill">
+                      <span class="header-title">Tổng tiền hàng</span>
+                    </div>
+                    <div class="omni-layout-card--item-stack fill text-right">
+                      <span class="header-title">{{(tongTienHang - orderDetailCounter.tienGiamGia +
+                        (tienGiao ? + tienGiao :
+                        0)).toLocaleString('vi-VN')}}đ</span>
+                      <input hidden ng-model="requestData.tongTien" type="text" ng-value="tongTienHang" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <button class="btn btn-outline-warning" style="margin-left: 900px; margin-top: 25px; font-weight: bold"
+            ng-show="showInput && listCart.length != 0"
+            ng-click="createHoaDonChiTiet((tongTienHang - orderDetailCounter.tienGiamGia + (tienGiao ? +tienGiao : 0)), totalAmountPaid, tienThuaTraKhach, orderDetailCounter.tenKhach,orderDetailCounter.sodienthoai, orderDetailCounter.diaChi)">
+            Xác nhận hóa đơn
+          </button>
+
+          <button ng-show="!showInput && listCart.length != 0" class="btn btn-outline-warning"
+            style="margin-left: 900px; margin-top: 20px; font-weight: bold"
+            ng-click="createHoaDonChiTietGiao((tongTienHang - orderDetailCounter.tienGiamGia + (tienGiao ? +tienGiao : 0)), totalAmountPaid, tienThuaTraKhach)">
+            Xác nhận đặt hàng
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
