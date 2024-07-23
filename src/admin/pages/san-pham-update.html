@@ -1,0 +1,325 @@
+<style>
+  .star-image {
+    position: relative;
+  }
+
+  .star {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    color: red;
+    font-size: 24px;
+  }
+
+  .delete-button {
+    position: absolute;
+    top: 5px;
+    right: -5px;
+  }
+</style>
+<main role="main" class="main-content">
+  <div class="container-fluid">
+    <div class="row justify-content-center">
+      <div class="col-12">
+        <div class="card shadow">
+          <div class="card-body">
+            <div class="col text-center">
+              <span style="font-size: 20px;">Cập nhật sản phẩm</span>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="form-group col-md-6">
+                  <div class="form-outline">
+                    <span class="header-title"><span style="color: red">*</span>
+                      <span>Mã sản phẩm</span></span>
+                    <input type="text" id="form1" class="form-control" placeholder="Mã sản phẩm"
+                      ng-model="product.maSanPham" disabled />
+                    <span style="color: red">{{errorMaSanPham}}</span>
+                  </div>
+                </div>
+                <div class="form-group col-md-6">
+                  <div class="form-outline">
+                    <span class="header-title"><span style="color: red">*</span>
+                      <span>Tên sản phẩm</span></span>
+                    <input type="text" id="form1" class="form-control" placeholder="Tên sản phẩm"
+                      ng-model="product.productName" />
+                    <span style="color: red">{{errorProductName}}</span>
+                  </div>
+                </div>
+                <br>
+                <div class="form-group col-md-6" style="padding-top: 10px;">
+                  <div class="form-outline">
+                    <span class="header-title"><span style="color: red">*</span>
+                      <span>Giá bán</span></span>
+                    <input type="number" id="form1" class="form-control" min="0"
+                      oninput="this.value = Math.max(0, this.value)" placeholder="Giá sản phẩm"
+                      ng-model="product.price" />
+                    <span style="color: red">{{errorPrice}}</span>
+                  </div>
+                </div>
+                <div class="form-group col-md-6" style="padding-top: 10px;">
+                  <div class="form-outline">
+                    <span class="header-title"><span style="color: red">*</span>
+                      <span>Mô tả</span></span>
+                    <textarea id="form1" class="form-control" placeholder="Mô tả" ng-model="product.describe"
+                      style="height: 17px;"></textarea>
+                    <span style="color: red">{{errorDescribe}}</span>
+                  </div>
+                </div>
+                <div class="form-group col-md-6 mt-3">
+                  <span class="header-title"><span style="color: red">*</span>
+                    <span>Xuất xứ</span></span>
+                  <div class="input-group">
+                    <select class="form-control" ng-model="product.idXuatXu">
+                      <option ng-repeat="xx in listXuatXu" ng-selected="xx.tenXuatXu === product.tenXuatXu"
+                        ng-init="product.idXuatXu = (xx.tenXuatXu === product.tenXuatXu) ? xx.id : product.idXuatXu"
+                        value="{{xx.id}}">
+                        {{xx.tenXuatXu}}
+                      </option>
+                    </select>
+                  </div>
+                  <span style="color: red">{{errorXuatXu}}</span>
+                </div>
+                <div class="form-group col-md-6 mt-3">
+                  <span class="header-title">
+                    <span style="color: red">*</span>
+                    <span>Danh mục</span>
+                  </span>
+                  <div class="input-group">
+                    <select class="form-control" ng-model="product.idCategory">
+                      <option ng-repeat="dm in listDanhMuc" ng-selected="dm.tenDanhMuc === product.tenDanhMuc"
+                        ng-init="product.idCategory = (dm.tenDanhMuc === product.tenDanhMuc) ? dm.id : product.idCategory"
+                        value="{{dm.id}}">
+                        {{dm.tenDanhMuc}}
+                      </option>
+                    </select>
+                  </div>
+                  <span style="color: red">{{errorDanhMuc}}</span>
+                </div>
+                <div class="form-group col-md-6 mt-3">
+                  <span class="header-title"><span style="color: red">*</span>
+                    <span>Kiểu đế</span></span>
+                  <div class="input-group">
+                    <select class="form-control" ng-model="product.idKieuDe">
+                      <option ng-repeat="kd in listKieuDe"
+                        ng-init="product.idKieuDe = (kd.tenDe === product.tenKieuDe) ? kd.id : product.idKieuDe"
+                        ng-selected="kd.tenDe === product.tenDe" value="{{kd.id}}">
+                        {{kd.tenDe}}
+                      </option>
+                    </select>
+                  </div>
+                  <span style="color: red">{{errorKieuDe}}</span>
+                </div>
+                <div class="form-group col-md-6 mt-3">
+                  <span class="header-title"><span style="color: red">*</span>
+                    <span>Thương hiệu</span>
+                  </span>
+                  <div class="input-group">
+                    <select class="form-control" ng-model="product.idBrand">
+                      <option ng-repeat="th in listThuongHieu" ng-selected="th.tenThuongHieu === product.tenThuongHieu"
+                        ng-init="product.idBrand = (th.tenThuongHieu === product.tenThuongHieu) ? th.id : product.idBrand"
+                        value="{{th.id}}">
+                        {{th.tenThuongHieu}}
+                      </option>
+                    </select>
+                  </div>
+                  <span style="color: red">{{errorThuognHieu}}</span>
+                </div>
+              </div>
+              <br>
+              <button class="btn btn-primary" style="margin-left: 920px;" ng-click="updateProduct()">Cập nhập</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid mt-4">
+    <div class="row justify-content-center">
+      <div class="col-12">
+        <div class="card shadow">
+          <div class="card-body">
+            <div class="col text-center">
+              <span style="font-size: 20px;">Chi tiết sản phẩm</span>
+            </div>
+            <table class="table table-borderless table-hover">
+              <thead>
+                <tr class="text-center">
+                  <th>
+                    Màu sắc
+                  </th>
+                  <th>
+                    Chất liệu
+                  </th>
+                  <th>
+                    Kích cỡ
+                  </th>
+                  <th>
+                    Số lượng
+                  </th>
+                  <th>
+                    Qrcode
+                  </th>
+                  <th>
+                    Trạng thái
+                  </th>
+                  <th>
+                    Hành động
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="text-center" ng-repeat="pd in productDetail">
+                  <td>
+                    {{pd.color}}
+                  </td>
+
+                  <td>
+                    {{pd.chatLieu}}
+                  </td>
+                  <td>
+                    {{pd.size}}
+                  </td>
+                  <td class="col-1">
+                    <div class="input-group" style="width: 90px;">
+                      <input min="0" oninput="this.value = Math.max(0, this.value)" type="number" name="quant[1]"
+                        class="form-control text-center" value="{{pd.quantity}}" min="1" max="10000" ng-model="soLuong"
+                        ng-change="updateQuantity(pd.id,soLuong)" />
+                    </div>
+                  </td>
+                  <td>
+                    <img src="{{qrCodeImage }}" width="40px" alt="">
+                  </td>
+                  <td>
+                    <span style="
+                        background-color: #cceeff;
+                        color: #0077cc;
+                        padding: 4px 8px;
+                        border-radius: 4px;
+                        display: inline-block;
+                      ">{{pd.trangThai == 1 ? "Đã kích hoạt": "Chưa kích hoạt"}}
+                    </span>
+                  </td>
+                  <td>
+                    <button class="btn btn-warning" ng-show="pd.trangThai == 2" ng-click="updateStatusHuy(pd.id)">Kích
+                      hoạt</button>
+                    <button class="btn btn-secondary" ng-show="pd.trangThai == 1"
+                      ng-click="updateStatusKichHoat(pd.id)">Hủy kích hoạt</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="col-12 text-center">
+              <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#productDetailModal">
+                Thêm chi tiết sản phẩm
+              </button>
+            </div>
+            <div class="modal fade" id="productDetailModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+              aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                  <div class="modal-body">
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="form-group">
+                          <span class="header-title"><span style="color: red">*</span>
+                            <span>Màu sắc:</span></span>
+                          <select class="form-control" id="status" ng-model="newProductDetail.idMauSac">
+                            <option value="">Vui lòng chọn
+                            </option>
+                            <option ng-repeat="ms in listMauSac" value="{{ms.id}}">
+                              {{ms.tenMauSac}}
+                            </option>
+                          </select>
+                          <span style="color: red">{{errorMauSac}}</span>
+                        </div>
+                        <div class="col-12">
+                          <div class="form-group">
+                            <span class="header-title"><span style="color: red">*</span>
+                              <span>Chất liệu:</span></span>
+                            <select class="form-control" id="status" ng-model="newProductDetail.idChatLieu">
+                              <option value="">Vui lòng chọn
+                              </option>
+                              <option ng-repeat="cl in listChatLieu" value="{{cl.id}}">
+                                {{cl.tenChatLieu}}
+                              </option>
+                            </select>
+                            <span style="color: red">{{errorChatLieu}}</span>
+                          </div>
+                        </div>
+                        <div class="col-12">
+                          <div class="form-group">
+                            <span class="header-title"><span style="color: red">*</span>
+                              <span>Size:</span></span>
+                            <select class="form-control" id="status" ng-model="newProductDetail.idSize">
+                              <option value="">Vui lòng chọn
+                              </option>
+                              <option ng-repeat="s in listSize" value="{{s.id}}">
+                                {{s.size}}
+                              </option>
+                            </select>
+                            <span style="color: red">{{errorSize}}</span>
+                          </div>
+                        </div>
+                        <div class="col-12">
+                          <div class="form-group">
+                            <span class="header-title"><span style="color: red">*</span>
+                              <span>Số lượng:</span></span>
+                            <div class="row">
+                              <div class="input-group col-4">
+                                <div class="input-group">
+                                  <input min="0" oninput="this.value = Math.max(0, this.value)" type="number"
+                                    ng-model="newProductDetail.soLuong" class="form-control text-center" min="1"
+                                    ng-value="1" />
+                                </div>
+                              </div>
+                            </div>
+                            </small>
+                            <span style="color: red">{{errorSoLuong}}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="modal-footer text-center">
+                      <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+                        Hủy bỏ
+                      </button>
+                      <button type="button" class="btn btn-primary" ng-click="createProductDetail()">
+                        Xác nhận
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid">
+      <div class="row justify-content-center">
+        <div class="col-12 mt-4">
+          <div class="row mb-4">
+            <div class="col-md-12">
+              <div class="card shadow mb-4">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-lg-2" ng-repeat="i in image">
+                      <div class="star-image">
+                        <img width="160px" src="/assets/ảnh giày/{{i.tenImage}}" alt="" srcset=""
+                          ng-dblclick="deleteImage(i.id)">
+                      </div>
+                    </div>
+                  </div>
+                  <input style="margin-top: 15px;" class="form-control" type="file" id="formFile" ng-model="files"
+                    ng-show="image.length < 6" multiple>
+                  <button style="margin-top: 20px; margin-left: 510px;" class="btn btn-primary"
+                    ng-click="uploadImages()" ng-show="image.length < 6">Hoàn thành</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</main>

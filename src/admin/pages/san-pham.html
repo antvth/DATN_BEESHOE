@@ -1,0 +1,198 @@
+<div class="row justify-content-center">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="form-group col-md-6">
+            <div class="form-outline">
+              <input
+                type="search"
+                id="form1"
+                placeholder="Tìm kiếm"
+                class="form-control"
+                ng-model="value" />
+            </div>
+          </div>
+          <!-- form-group -->
+          <div class="form-group col-md-3">
+            <div class="form-outline">
+              <button class="btn btn-danger" ng-click="findByNameOrCode()" style="background: linear-gradient(96deg, #f15a22 32.96%, #fdb913 100.17%);">
+                Tìm kiếm
+              </button>
+              <button class="btn btn-warning" ng-click="lamMoiSanPham()">
+                <img src="/assets/images/reload.png" style="height: 20px;">
+              </button>
+            </div>
+          </div>
+          <!-- form-group -->
+          <div class="form-group col-md-3 text-right">
+            <div class="form-outline">
+              <a href="#/product/create">
+                <button class="btn btn-primary">Tạo sản phẩm</button>
+              </a>
+            </div>
+          </div>
+          <!-- form-group -->
+          <div class="form-group col-md-4 mt-3">
+            <span>Danh mục: </span>
+            <select
+              style="color: #f15a22"
+              class="custom-select"
+              ng-model="danhMuc"
+              ng-change="findByDanhMuc()">
+              <option value="">Tất cả</option>
+              <option ng-repeat="dm in listDanhMuc" value="{{dm.tenDanhMuc}}">
+                {{dm.tenDanhMuc}}
+              </option>
+            </select>
+          </div>
+          <!-- form-group -->
+          <div class="form-group col-md-4 mt-3">
+            <span>Thương hiệu: </span>
+            <select
+              style="color: #f15a22"
+              class="custom-select"
+              ng-model="thuongHieu"
+              ng-change="findByThuongHieu()">
+              <option value="">Tất cả</option>
+              <option
+                ng-repeat="th in listThuongHieu"
+                value="{{th.tenThuongHieu}}">
+                {{th.tenThuongHieu}}
+              </option>
+            </select>
+          </div>
+          <!-- form-group -->
+          <div class="form-group col-md-4 mt-3">
+            <span>Xuất xứ: </span>
+            <select
+              style="color: #f15a22"
+              class="custom-select"
+              ng-model="xuatXu"
+              ng-change="findByXuatXu()">
+              <option value="">Tất cả</option>
+              <option ng-repeat="xx in listXuatXu" value="{{xx.tenXuatXu}}">
+                {{xx.tenXuatXu}}
+              </option>
+            </select>
+          </div>
+          <!-- form-group -->
+          <div class="form-group col-md-4 mt-3">
+            <span>Kiểu đế: </span>
+            <select
+              style="color: #f15a22"
+              class="custom-select"
+              ng-model="kieuDe"
+              ng-change="findByKieuDe()">
+              <option value="">Tất cả</option>
+              <option ng-repeat="kd in listKieuDe" value="{{kd.tenDe}}">
+                {{kd.tenDe}}
+              </option>
+            </select>
+          </div>
+          <!-- form-group -->
+          <div class="form-group col-md-4 mt-3">
+            <span>Trạng thái: </span>
+            <select
+              style="color: #f15a22"
+              class="custom-select"
+              ng-model="status"
+              ng-change="findByStatus()">
+              <option value="">Tất cả</option>
+              <option value="1">Đang bán</option>
+              <option value="2">Ngừng bán</option>
+            </select>
+          </div>
+          <!-- form-group -->
+        </div>
+        <!-- form-group -->
+      </div>
+      <span ng-if="listSanPham.length === 0" style="margin-left: 500px"
+        >Không có sản phẩm nào</span
+      >
+      <div ng-if="listSanPham.length !== 0">
+        <table class="table table-borderless table-hover mt-3">
+          <thead>
+            <tr style="background: linear-gradient(96deg, #e6774e 32.96%, #fdb913 100.17%);">
+              <th>STT</th>
+              <th>Ảnh</th>
+              <th>Mã sản phẩm</th>
+              <th style="width: 325px">Tên sản phẩm</th>
+              <th>Giá</th>
+              <th>Ngày tạo</th>
+              <th>Trạng thái</th>
+              <th>Hành động</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="sp in listSanPham">
+              <td>{{$index + 1 + (pageNumber * pageSize)}}</td>
+              <td>
+                <img width="50px" src="/assets/ảnh giày/{{sp.image}}" alt="" />
+              </td>
+              <td>{{sp.maSanPham}}</td>
+              <td>{{sp.tenSanPham}}</td>
+              <td>
+                <span ng-show="sp.giaGiam != sp.giaBan"
+                  >{{sp.giaGiam < 0 ? 0 : sp.giaGiam.toLocaleString('vi-VN')}}đ
+                  <strike style="color: red"
+                    >{{sp.giaBan.toLocaleString('vi-VN')}}đ</strike
+                  >
+                </span>
+                <span ng-show="sp.giaGiam == sp.giaBan">
+                  {{sp.giaBan.toLocaleString('vi-VN')}}đ
+                </span>
+              </td>
+              <td>{{sp.ngayTao | date:'MM/dd/yyyy h:mm:ss a'}}</td>
+              <td>
+                <span
+                  style="
+                    background-color: #cceeff;
+                    color: #0077cc;
+                    padding: 4px 8px;
+                    border-radius: 4px;
+                    display: inline-block;
+                    text-align: center;
+                  ">
+                  {{sp.trangThai == 1 ? 'Đang bán' : 'Ngừng bán'}}
+                </span>
+              </td>
+              <td>
+                <a href="#/product-detail/{{sp.id}}" class="btn btn-primary"
+                  >Chi tiết</a
+                >
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <nav aria-span="Page navigation example" style="margin-left: 530px">
+          <ul class="pagination">
+            <li class="page-item" ng-show="pageNumber > 0">
+              <!-- Sử dụng ng-show để điều chỉnh hiển thị -->
+              <a class="page-link" href="" ng-click="previousPage()"
+                ><img
+                  src="/assets/images/chevron-left.svg"
+                  height="15px"
+                  alt=""
+              /></a>
+            </li>
+            <li class="page-item">
+              <a class="page-link">{{pageNumber + 1}}</a>
+            </li>
+            <li class="page-item" ng-show="showNextButton">
+              <!-- Sử dụng ng-show để điều chỉnh hiển thị -->
+              <a class="page-link" href="" ng-click="nextPage()"
+                ><img
+                  src="/assets/images/chevron-right.svg"
+                  height="15px"
+                  alt=""
+              /></a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <!-- / .card -->
+</div>
+<!-- .col-12 -->

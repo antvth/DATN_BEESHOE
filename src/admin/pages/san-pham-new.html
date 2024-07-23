@@ -1,0 +1,302 @@
+<div class="row justify-content-center">
+  <div class="col-12">
+    <div class="card shadow">
+      <div class="card-body">
+        <div class="col text-center">
+          <span style="font-size: 20px;">Thêm sản phẩm</span>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="form-group col-md-6">
+              <div class="form-outline">
+                <span class="header-title"><span style="color: red">*</span>
+                  <span>Mã sản phẩm</span></span>
+                <input type="text" id="form1" class="form-control" placeholder="Mã sản phẩm"
+                  ng-model="newProduct.maSanPham" disabled/>
+                <span style="color: red">{{errorMaSanPham}}</span>
+              </div>
+            </div>
+            <div class="form-group col-md-6">
+              <div class="form-outline">
+                <span class="header-title"><span style="color: red">*</span>
+                  <span>Tên sản phẩm</span></span>
+                <input type="text" id="form1" class="form-control" placeholder="Tên sản phẩm"
+                  ng-model="newProduct.productName" />
+                <span style="color: red">{{errorProductName}}</span>
+                <span ng-show="!isName" style="color: red">Tên sản phẩm đã tồn tại</span>
+              </div>
+            </div>
+            <br>
+            <div class="form-group col-md-6" style="padding-top: 10px;">  
+              <div class="form-outline">
+                <span class="header-title"><span style="color: red">*</span>
+                  <span>Giá bán</span></span>
+                <input type="number" id="form1" class="form-control" min="0"
+                oninput="this.value = Math.max(0, this.value)" placeholder="Giá sản phẩm"
+                  ng-model="newProduct.price" />
+                <span style="color: red">{{errorPrice}}</span>
+              </div>
+            </div>
+            <div class="form-group col-md-6" style="padding-top: 10px;">
+              <div class="form-outline">
+                <span class="header-title"><span style="color: red">*</span>
+                  <span>Mô tả</span></span>
+                <textarea id="form1" style="height: 17px;" class="form-control" placeholder="Mô tả"
+                  ng-model="newProduct.describe"></textarea>
+                <span style="color: red">{{errorDescribe}}</span>
+              </div>
+            </div>
+            <div class="form-group col-md-6 mt-3">
+              <div class="row">
+                <div class="col-lg-10">
+                  <span class="header-title"><span style="color: red">*</span>
+                    <span>Thương hiệu</span></span>
+                  <select class="form-control" style="width: 435px;" ng-model="newProduct.idBrand">
+                    <option value="">Vui lòng chọn
+                    </option>
+                    <option ng-repeat="th in listThuongHieu" value="{{th.id}}">{{th.tenThuongHieu}}
+                    </option>
+                  </select>
+                  <span style="color: red">{{errorThuognHieu}}</span>
+                </div>
+                <div class="col-lg-2" style="padding-left: 20px;padding-top: 20px;">
+                  <div class="input-group-append">
+                    <button class="btn btn-primary rounded" type="button" data-bs-toggle="modal"
+                      data-bs-target="#brandModal">
+                      <img width="25px" src="/assets/images/add.png" alt="">
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group col-md-6 mt-3">
+              <div class="row">
+                <div class="col-lg-10">
+                  <span class="header-title"><span style="color: red">*</span>
+                    <span>Danh mục</span></span>
+                  <select class="form-control" style="width: 435px;" ng-model="newProduct.idCategory">
+                    <option value="">Vui lòng chọn
+                    </option>
+                    <option ng-repeat="dm in listDanhMuc" value="{{dm.id}}">
+                      {{dm.tenDanhMuc}}
+                    </option>
+                  </select>
+                  <span style="color: red">{{errorDanhMuc}}</span>
+                </div>
+                <div class="col-lg-2" style="padding-left: 20px;padding-top: 20px;">
+                  <div class="input-group-append">
+                    <button class="btn btn-primary rounded" type="button" data-bs-toggle="modal"
+                      data-bs-target="#categoryModal">
+                      <img width="25px" src="/assets/images/add.png" alt="">
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group col-md-6 mt-3">
+              <div class="row">
+                <div class="col-lg-10">
+                  <span class="header-title"><span style="color: red">*</span>
+                    <span>Kiểu đế</span></span>
+                  <select class="form-control" style="width: 435px;" ng-model="newProduct.idKieuDe">
+                    <option value="">Vui lòng chọn
+                    </option>
+                    <option ng-repeat="kd in listKieuDe" value="{{kd.id}}">
+                      {{kd.tenDe}}
+                    </option>
+                  </select>
+                  <span style="color: red">{{errorKieuDe}}</span>
+                </div>
+                <div class="col-lg-2" style="padding-left: 20px;padding-top: 20px;">
+                  <div class="input-group-append">
+                    <button class="btn btn-primary rounded" type="button" data-bs-toggle="modal"
+                      data-bs-target="#soleModal">
+                      <img width="25px" src="/assets/images/add.png" alt="">
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group col-md-6 mt-3">
+              <div class="row">
+                <div class="col-lg-10">
+                  <span class="header-title"><span style="color: red">*</span>
+                    <span>Xuất xứ</span></span>
+                  <select class="form-control" style="width: 435px;" ng-model="newProduct.idXuatXu">
+                    <option value="">Vui lòng chọn
+                    </option>
+                    <option ng-repeat="xx in listXuatXu" value="{{xx.id}}">
+                      {{xx.tenXuatXu}}
+                    </option>
+                  </select>
+                  <span style="color: red">{{errorXuatXu}}</span>
+                </div>
+                <div class="col-lg-2" style="padding-left: 20px;padding-top: 20px;">
+                  <div class="input-group-append">
+                    <button class="btn btn-primary rounded" type="button" data-bs-toggle="modal"
+                      data-bs-target="#xuatXuMoi">
+                      <img width="25px" src="/assets/images/add.png" alt="">
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal fade" id="xuatXuMoi" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered size-modal" role="document">
+                <div class="modal-content">
+                  <div class="modal-body">
+                    <span style="text-align: center;">Thêm xuất xứ</span>
+                    <br>
+                    <div class="form-group">
+                      <span class="header-title"><span style="color: red">*</span><span>Tên xuất xứ:</span></span>
+                      <input type="text" class="form-control" id="brandName" placeholder="Nhập tên xuất xứ"
+                        ng-model="newXuatXu.tenXuatXu" />
+                      <span style="color: red">{{errortenXuatXu}}</span>
+                    </div>
+                    <div class="form-group">
+                      <span class="header-title"><span style="color: red">*</span><span>Trạng thái:</span></span>
+                      <select class="form-control" id="status" ng-model="newXuatXu.trangThai">
+                        <option value="">Vui lòng chọn
+                        </option>
+                        <option value="1">Hoạt động</option>
+                        <option value="2">
+                          Ngưng hoạt động
+                        </option>
+                      </select>
+                      <span style="color: red">{{errortrangThai}}</span>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                      Đóng
+                    </button>
+                    <button type="button" ng-click="createXuatXu()" class="btn btn-primary">
+                      Thêm
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Brand Modal -->
+            <div class="modal fade" id="brandModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+              aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered size-modal" role="document">
+                <div class="modal-content">
+                  <div class="modal-body">
+                    <span style="text-align: center;">Thêm thương hiệu</span>
+                    <br>
+                    <div class="form-group">
+                      <span class="header-title"><span style="color: red">*</span><span>Tên thương hiệu:</span></span>
+                      <input type="text" class="form-control" id="brandName" ng-model="newThuongHieu.tenThuongHieu"
+                        placeholder="Nhập tên thương hiệu" />
+                      <span style="color: red">{{errortenThuongHieu}}</span>
+                    </div>
+                    <div class="form-group">
+                      <span class="header-title"><span style="color: red">*</span><span>Trạng thái:</span></span>
+                      <select class="form-control" id="status" ng-model="newThuongHieu.trangThai">
+                        <option value="">Vui lòng chọn
+                        </option>
+                        <option value="1">Hoạt động</option>
+                        <option value="2">
+                          Ngưng hoạt động
+                        </option>
+                      </select>
+                      <span style="color: red">{{errortrangThai}}</span>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                      Đóng
+                    </button>
+                    <button type="button" class="btn btn-primary" ng-click="createThuongHieu()">
+                      Thêm
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal fade" id="categoryModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+              aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered size-modal" role="document">
+                <div class="modal-content">
+                  <div class="modal-body">
+                    <span style="text-align: center;">Thêm danh mục</span>
+                    <br>
+                    <div class="form-group">
+                      <span class="header-title"><span style="color: red">*</span><span>Tên danh mục:</span></span>
+                      <input type="text" class="form-control" id="brandName" placeholder="Nhập tên danh mục"
+                        ng-model="newDanhMuc.tenDanhMuc" />
+                      <span style="color: red">{{errortenDanhMuc}}</span>
+                    </div>
+                    <div class="form-group">
+                      <span class="header-title"><span style="color: red">*</span><span>Trạng thái:</span></span>
+                      <select class="form-control" id="status" ng-model="newDanhMuc.trangThai">
+                        <option value="">Vui lòng chọn
+                        </option>
+                        <option value="1">Hoạt động</option>
+                        <option value="2">
+                          Ngưng hoạt động
+                        </option>
+                      </select>
+                      <span style="color: red">{{errortrangThai}}</span>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                      Đóng
+                    </button>
+                    <button type="button" class="btn btn-primary" ng-click="createDanhMuc()">
+                      Thêm
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Sole Modal -->
+            <div class="modal fade" id="soleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered size-modal" role="document">
+                <div class="modal-content">
+                  <div class="modal-body">
+                    <span style="text-align: center;">Thêm kiểu đế</span>
+                    <br>
+                    <div class="form-group">
+                      <span class="header-title"><span style="color: red">*</span><span>Tên kiểu đế:</span></span>
+                      <input type="text" class="form-control" id="brandName" placeholder="Nhập tên kiểu đế"
+                        ng-model="newKieuDe.tenDe" />
+                      <span style="color: red">{{errortenDe}}</span>
+                    </div>
+                    <div class="form-group">
+                      <span class="header-title"><span style="color: red">*</span><span>Trạng thái:</span></span>
+                      <select class="form-control" id="status" ng-model="newKieuDe.trangThai">
+                        <option value="">Vui lòng chọn
+                        </option>
+                        <option value="1">Hoạt động</option>
+                        <option value="2">
+                          Ngưng hoạt động
+                        </option>
+                      </select>
+                      <span style="color: red">{{errortrangThai}}</span>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                      Đóng
+                    </button>
+                    <button type="button" class="btn btn-primary" ng-click="createKieuDe()">
+                      Thêm
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group col-md-12 text-right mt-3">
+              <a href="" type="button" class="btn btn-primary" ng-click="createProduct()">
+                Thêm
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

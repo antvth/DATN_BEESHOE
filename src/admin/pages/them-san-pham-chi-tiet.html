@@ -1,0 +1,305 @@
+<style>
+    .star-image {
+        position: relative;
+    }
+
+    .star {
+        position: absolute;
+        top: 5px;
+        left: 5px;
+        color: red;
+        font-size: 24px;
+    }
+
+    .delete-button {
+        position: absolute;
+        top: 5px;
+        right: -5px;
+    }
+</style>
+<main role="main" class="main-content">
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-12">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <h4 class="modal-title ard-title fw-semibold ml-5">Chi tiết sản phẩm</h4>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <div class="form-outline">
+                                        <span>Mã sản phẩm</span></span>
+                                        <input type="text" id="form1" class="form-control" placeholder="Mã sản phẩm"
+                                            ng-model="product.maSanPham" disabled />
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <div class="form-outline">
+                                        <span>Tên sản phẩm</span></span>
+                                        <input type="text" id="form1" class="form-control" placeholder="Tên sản phẩm"
+                                            ng-model="product.productName" disabled />
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="form-group col-md-6" style="padding-top: 10px;">
+                                    <div class="form-outline">
+                                        <span>Giá bán</span></span>
+                                        <input type="text" id="form1" class="form-control" placeholder="Giá sản phẩm"
+                                            ng-model="product.price" disabled />
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6" style="padding-top: 10px;">
+                                    <div class="form-outline">
+                                        <span>Mô tả</span></span>
+                                        <input id="form1" class="form-control" placeholder="Mô tả"
+                                            ng-model="product.describe" disabled></input>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6 mt-3">
+                                    <span>Xuất xứ</span></span>
+                                    <div class="input-group">
+                                        <input type="text" id="form1" class="form-control" placeholder="Bảo hành"
+                                            ng-model="product.tenXuatXu" disabled />
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6 mt-3">
+                                    <span class="header-title">
+                                        <span>Danh mục</span>
+                                    </span>
+                                    <div class="input-group">
+                                        <input type="text" id="form1" class="form-control" placeholder="Bảo hành"
+                                            ng-model="product.tenDanhMuc" disabled />
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6 mt-3">
+                                    <span>Kiểu đế</span></span>
+                                    <div class="input-group">
+                                        <input type="text" id="form1" class="form-control" placeholder="Bảo hành"
+                                            ng-model="product.tenKieuDe" disabled />
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6 mt-3">
+                                    <span>Thương hiệu</span>
+                                    </span>
+                                    <div class="input-group">
+                                        <input type="text" id="form1" class="form-control" placeholder="Bảo hành"
+                                            ng-model="product.tenThuongHieu" disabled />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid mt-4">
+        <div class="row justify-content-center">
+            <div class="col-12">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <div class="col text-center">
+                            <h4 class="modal-title ard-title fw-semibold">Chi tiết sản phẩm</h4>
+                        </div>
+                        <table class="table table-borderless table-hover">
+                            <thead>
+                                <tr class="text-center">
+                                    <th>
+                                        <p class="mb-0 text-muted"><strong>Màu sắc</strong></p>
+                                    </th>
+                                    <th>
+                                        <p class="mb-0 text-muted">
+                                            <strong>Chất liệu</strong>
+                                        </p>
+                                    </th>
+                                    <th>
+                                        <p class="mb-0 text-muted"><strong>Kích cỡ</strong></p>
+                                    </th>
+                                    <th>
+                                        <p class="mb-0 text-muted"><strong>Số lượng</strong></p>
+                                    </th>
+                                    <th>
+                                        <p class="mb-0 text-muted">
+                                            <strong>Qrcode</strong>
+                                        </p>
+                                    </th>
+                                    <th>
+                                        <p class="mb-0 text-muted">
+                                            <strong>Trạng thái</strong>
+                                        </p>
+                                    </th>
+                                    <th>
+                                        <p class="mb-0 text-muted">
+                                            <strong>Hành động</strong>
+                                        </p>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="text-center" ng-repeat="pd in productDetail">
+                                    <td>
+                                        <small class="mb-0 text-muted">{{pd.color}}</small>
+                                    </td>
+
+                                    <td>
+                                        <small class="mb-0 text-muted">{{pd.chatLieu}}</small>
+                                    </td>
+                                    <td>
+                                        <small class="mb-0 text-muted">{{pd.size}}</small>
+                                    </td>
+                                    <small class="mb-0 text-muted">
+                                        <td class="col-1">
+                                            <div class="input-group" style="width: 90px;">
+                                                <input min="0" oninput="this.value = Math.max(0, this.value)"
+                                                    type="number" name="quant[1]" class="form-control text-center"
+                                                    value="{{pd.quantity}}" min="1" max="10000" ng-model="soLuong"
+                                                    ng-change="updateQuantity(pd.id,soLuong)" />
+                                            </div>
+                                        </td>
+                                    </small>
+                                    <td>
+                                        <img src="{{qrCodeImage }}" width="40px" alt="">
+                                    </td>
+                                    <td>
+                                        <span style="
+                          background-color: #cceeff;
+                          color: #0077cc;
+                          padding: 4px 8px;
+                          border-radius: 4px;
+                          display: inline-block;
+                        ">{{pd.trangThai == 1 ? "Đã kích hoạt": "Chưa kích hoạt"}}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-warning" ng-show="pd.trangThai == 2"
+                                            ng-click="updateStatusHuy(pd.id)">Kích
+                                            hoạt</button>
+                                        <button class="btn btn-secondary" ng-show="pd.trangThai == 1"
+                                            ng-click="updateStatusKichHoat(pd.id)">Hủy kích hoạt</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="col-12 text-center">
+                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#productDetailModal">
+                                Thêm chi tiết sản phẩm
+                            </button>
+                        </div>
+                        <div class="modal fade" id="productDetailModal" tabindex="-1" role="dialog" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title ard-title fw-semibold">Thêm chi tiết sản phẩm</h5>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="form-group">
+                                                    <span class="text-danger">*</span>
+                                                    <label for="status">Màu sắc:</label>
+                                                    <select class="form-control" id="status"
+                                                        ng-model="newProductDetail.idMauSac">
+                                                        <option value="">Vui lòng chọn
+                                                        </option>
+                                                        <option ng-repeat="ms in listMauSac" value="{{ms.id}}">
+                                                            {{ms.tenMauSac}}
+                                                        </option>
+                                                    </select>
+                                                    <span style="color: red">{{errorMauSac}}</span>
+                                                </div>
+                                                <div class="col-12">
+                                                    <div class="form-group">
+                                                        <span class="text-danger">*</span>
+                                                        <label for="status">Chất liệu:</label>
+                                                        <select class="form-control" id="status"
+                                                            ng-model="newProductDetail.idChatLieu">
+                                                            <option value="">Vui lòng chọn
+                                                            </option>
+                                                            <option ng-repeat="cl in listChatLieu" value="{{cl.id}}">
+                                                                {{cl.tenChatLieu}}
+                                                            </option>
+                                                        </select>
+                                                        <span style="color: red">{{errorChatLieu}}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12">
+                                                    <div class="form-group">
+                                                        <span class="text-danger">*</span>
+                                                        <label for="status">Size:</label>
+                                                        <select class="form-control" id="status"
+                                                            ng-model="newProductDetail.idSize">
+                                                            <option value="">Vui lòng chọn
+                                                            </option>
+                                                            <option ng-repeat="s in listSize" value="{{s.id}}">
+                                                                {{s.size}}
+                                                            </option>
+                                                        </select>
+                                                        <span style="color: red">{{errorSize}}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12">
+                                                    <div class="form-group">
+                                                        <label for="status">Số lượng:</label>
+                                                        <small class="mb-0 text-muted">
+                                                            <div class="row">
+                                                                <div class="input-group col-4">
+                                                                    <div class="input-group">
+                                                                        <input min="0"
+                                                                            oninput="this.value = Math.max(0, this.value)"
+                                                                            type="number"
+                                                                            ng-model="newProductDetail.soLuong"
+                                                                            class="form-control text-center"
+                                                                            value="1" />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </small>
+                                                        <span style="color: red">{{errorSoLuong}}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer text-center">
+                                            <button type="button" class="btn btn-success" data-bs-dismiss="modal">
+                                                Đóng
+                                            </button>
+                                            <button type="button" class="btn btn-primary"
+                                                ng-click="createProductDetail()">
+                                                Xác nhận
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row justify-content-center">
+                <div class="col-12 mt-4">
+                    <div class="row mb-4">
+                        <div class="col-md-12">
+                            <div class="card shadow mb-4">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-lg-2" ng-repeat="i in image">
+                                            <div class="star-image">
+                                                <img width="160px" src="/assets/ảnh giày/{{i.tenImage}}" alt=""
+                                                    srcset="" ng-dblclick="deleteImage(i.id)">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <input style="margin-top: 15px;" class="form-control" type="file" id="formFile"
+                                        ng-model="files" ng-show="image.length < 6" multiple>
+                                    <button style="margin-top: 20px; margin-left: 510px;" class="btn btn-primary"
+                                        ng-click="uploadImages()" ng-show="image.length < 6">Xác nhận</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</main>

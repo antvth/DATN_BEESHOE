@@ -1,0 +1,186 @@
+<div class="row justify-content-center">
+    <div class="col-12">
+        <div class="card shadow mb-4">
+            <div class="card-body">
+                <div class="row">
+                    <h5 class="card-title mb-12 fw-semibold">
+                        <div class="col-lg-12">
+                          <span>Chi tiết sản phẩm</span>
+                        </div>
+                      </h5>
+                    <div class="form-group col-md-6 mt-3">
+                        <span>Trạng thái: </span>
+                        <select style="color: green" class="custom-select" id="trangThaiSelect" ng-model="trangThai"
+                            ng-change="filterStatus()">
+                            <option value="">Tất cả</option>
+                            <option value="1">Đang bán</option>
+                            <option value="2">Ngừng bán</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group col-md-6 mt-3">
+                        <span>Size: </span>
+                        <select style="color: green" class="custom-select" id="sizeSelect" ng-model="locSize"
+                            ng-change="filterSize()">
+                            <option value="">Tất cả</option>
+                            <option ng-repeat="s in listSize" value="{{s.size}}">
+                                {{s.size}}
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="form-group col-md-6 mt-3">
+                        <span>Chất liệu: </span>
+                        <select style="color: green" class="custom-select" id="chatLieuSelect" ng-model="locMaterial"
+                            ng-change="filterMaterial()">
+                            <option value="">Tất cả</option>
+                            <option ng-repeat="cl in listChatLieu" value="{{cl.tenChatLieu}}">
+                                {{cl.tenChatLieu}}
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="form-group col-md-6 mt-3">
+                        <span>Màu sắc: </span>
+                        <select style="color: green" class="custom-select" id="mauSacSelect" ng-model="locMauSac"
+                            ng-change="filterColor()">
+                            <option value="">Tất cả</option>
+                            <option ng-repeat="ms in listMauSac" value="{{ms.tenMauSac}}">
+                                {{ms.tenMauSac}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-3 mt-3"></div>
+                    <!-- form-group -->
+                    <div class="form-group col-md-3 mt-3"></div>
+                    <!-- form-group -->
+                    <div class="form-group col-md-3 mt-3"></div>
+                    <!-- form-group -->
+                    <div class="form-group col-md-3 mt-3" style="padding-left: 100px">
+                        <button class="btn btn-warning" ng-click="lamMoiChiTietSanPham()">Làm mới</button>
+                        <a href="#/product-update/{{idUpdate}}" class="btn btn-secondary">Sửa</a>
+                    </div>
+                    <!-- form-group -->
+                </div>
+            </div>
+        </div>
+        <!-- / .card -->
+    </div>
+    <!-- .col-12 -->
+</div>
+<!-- row justify-content-center -->
+
+<!-- table -->
+<span ng-if="listSanPhamChiTiet.length === 0" style="margin-left: 500px;">Không có dữ liệu</span>
+<div class="card shadow" ng-if="listSanPhamChiTiet.length !== 0">
+    <table class="table table-borderless table-hover">
+        <thead>
+            <tr style="background: linear-gradient(96deg, #e6774e 32.96%, #fdb913 100.17%);">
+                <th>
+                    <span>STT</span>
+                </th>
+                <th>
+                    <span>Tên sản phẩm</span>
+                </th>
+                <th>
+                    <span>Số lượng</span>
+                </th>
+                <th>
+                    <span>Kích thước</span>
+                </th>
+                <th>
+                    <span>Màu sắc</span>
+                </th>
+                <th>
+                    <span>Chất liệu</span>
+                </th>
+                <th>
+                    <span>Trạng thái</span>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="spct in listSanPhamChiTiet">
+                <td>
+                    {{$index +1}}
+                </td>
+                <td>
+                    {{spct.tenSanPham}}
+                </td>
+                <td>
+                    {{spct.soLuong}}
+                </td>
+                <td>
+                    {{spct.size}}
+                </td>
+                <td>
+                    {{spct.mauSac}}
+                </td>
+                <td>
+                    {{spct.chatLieu}}
+                </td>
+                <td>
+
+                    <span style="
+                      background-color: #cceeff;
+                      color: #0077cc;
+                      padding: 4px 8px;
+                      border-radius: 4px;
+                      display: inline-block;
+                    ">{{spct.trangThai == 1 ? "Đang bán": "Ngừng bán"}}
+                    </span>
+
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <nav aria-label="Page navigation example" style="margin-left: 490px" ng-if="listCart.length != 0">
+        <ul class="pagination">
+          <li class="page-item" ng-show="pageNumber > 0">
+            <a class="page-link" href="" ng-click="previousPage()">Previous</a>
+          </li>
+          <li class="page-item">
+            <a class="page-link">{{pageNumber + 1}}</a>
+          </li>
+          <li class="page-item" ng-show="showNextButton">
+            <a class="page-link" href="" ng-click="nextPage()">Next</a>
+          </li>
+        </ul>
+      </nav>
+</div>
+
+<div class="modal fade" id="sizeModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered size-modal" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Danh mục</h5>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <span class="text-danger">*</span>
+                    <label for="brandName">Tên danh mục:</label>
+                    <input type="text" class="form-control" id="brandName" placeholder="Nhập tên danh mục" />
+                </div>
+
+                <div class="form-group">
+                    <span class="text-danger">*</span>
+                    <label for="status">Trạng thái:</label>
+                    <select class="form-control" id="status">
+                        <option value="active">Hoạt động</option>
+                        <option value="inactive">Ngưng hoạt động</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                    Đóng
+                </button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">
+                    Thêm
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
