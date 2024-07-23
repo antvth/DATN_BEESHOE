@@ -62,8 +62,301 @@ myApp.controller(
 
     var id = $window.localStorage.getItem("idHoaDon");
     var idKhach = $window.localStorage.getItem("idKhach");
+    $scope.listHoaDonTaiQuay = []; // show list hóa đơn tại quầy
+    // tạo hóa đơn
+    setTimeout(() => {
+      $scope.createHoaDon = function () {
+        var token = $window.localStorage.getItem("token");
 
-    
+        var config = {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        };
+
+        var api = "http://localhost:8080/api/v1/don-hang/create";
+
+        if ($scope.listHoaDonTaiQuay.length >= 5) {
+          Swal.fire({
+            position: "top-end",
+            icon: "warning",
+            title: "Tối đa 5 hóa đơn",
+            showConfirmButton: false,
+            timer: 1500,
+            customClass: {
+              popup: "small-popup", // Add a class to the message
+            },
+          });
+          return;
+        }
+
+        Swal.fire({
+          title: "Bạn có muốn tạo hóa đơn?",
+          text: "",
+          icon: "question",
+          showCancelButton: true,
+          cancelButtonText: "Hủy bỏ", // Thay đổi từ "Cancel" thành "Hủy bỏ"
+          cancelButtonColor: "#d33",
+          confirmButtonColor: "#3085d6",
+          confirmButtonText: "Xác nhận", // Thay đổi từ "Yes" thành "Có"
+          reverseButtons: true,
+        }).then((result) => {
+          if (result.isConfirmed) {
+            $http.post(api, {}, config).then(function (response) {
+              $scope.listHoaDonTaiQuay.push(response.data);
+              $scope.getListHoaDonTaiQuay();
+              $scope.selectOrder(response.data.id, response.data.idKhach);
+              Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Tạo thành công",
+                showConfirmButton: false,
+                timer: 1500,
+                customClass: {
+                  popup: "small-popup",
+                },
+              }).then(() => {
+                // $window.location.reload();
+              });
+            });
+          }
+        });
+      };
+    }, 2000);
+
+    // delete hoadon
+    setTimeout(() => {
+      $scope.deleteOrder = function (id) {
+        var token = $window.localStorage.getItem("token");
+
+        var config = {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        };
+
+        Swal.fire({
+          title: "Xác nhận hủy !",
+          text: "Bạn có chắc chắn muốn hủy hóa đơn này ?",
+          icon: "warning",
+          showCancelButton: true,
+          cancelButtonText: "Hủy bỏ", // Thay đổi từ "Cancel" thành "Hủy bỏ"
+          cancelButtonColor: "#d33",
+          confirmButtonColor: "#3085d6",
+          confirmButtonText: "Xác nhận", // Thay đổi từ "Yes" thành "Có"
+          reverseButtons: true,
+        }).then((result) => {
+          if (result.isConfirmed) {
+            $http
+              .put(
+                "http://localhost:8080/api/v1/don-hang/remove?id=" + id,
+                null,
+                config
+              )
+              .then(function () {
+                $scope.removeItem();
+                Swal.fire({
+                  position: "top-end",
+                  icon: "success",
+                  title: "Hủy thành công",
+                  showConfirmButton: false,
+                  timer: 1500,
+                  customClass: {
+                    popup: "small-popup",
+                  },
+                }).then(() => {
+                  $window.location.reload();
+                });
+              });
+          }
+        });
+      };
+    }, 2000);
+
+    /**
+     * Get all hoa đơn tại quầy
+     */
+    $scope.pageNumber = 0;
+    $scope.pageSize = 5;
+    $scope.getListHoaDonTaiQuay = function () {
+      var token = $window.localStorage.getItem("token");
+
+      var config = {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      };
+      $http
+        .get(
+          "http://localhost:8080/api/v1/don-hang/show?pageNumber=" +
+          $scope.pageNumber +
+          "&pageSize=" +
+          $scope.pageSize,
+          config
+        )
+        .then(function (response) {
+          if ($scope.listHoaDonTaiQuay.length < 5) {
+            $scope.listHoaDonTaiQuay = response.data;
+          }
+        });
+    };
+    $scope.getListHoaDonTaiQuay();
+
+    // tìm kiếm hóa đơn
+    $scope.kyHoaDonTaiQuay = "";
+    $scope.searchOrder = function (ma) {
+      var token = $window.localStorage.getItem("token");
+
+      var config = {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      };
+      $http
+        .get("http://localhost:8080/api/v1/don-hang/search/" + ma, config)
+        .then(function (response) {
+          $scope.listHoaDonTaiQuay = response.data;
+        });
+      if (ma === null || ma === "") {
+        $scope.getListHoaDonTaiQuay();
+      }
+    };
+
+    $scope.lamMoiHoaDon = function () {
+      $scope.getListHoaDonTaiQuay();
+      $scope.kyHoaDonTaiQuay = "";
+    };
+
+    $scope.detailOrderCounterDetail = function () {
+      var token = $window.localStorage.getItem("token");
+      console.log(token);
+      var config = {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      };
+      $http
+        .get(
+          "http://localhost:8080/api/v1/don-hang/order-counter/" + id,
+          config
+        )
+        .then(function (response) {
+          $scope.orderDetailCounter = response.data;
+          $window.localStorage.setItem(
+            "tienGiamGiaTaiQuay",
+            $scope.orderDetailCounter.tienGiamGia
+          );
+        });
+    };
+
+    if (id != null) {
+      $scope.detailOrderCounterDetail();
+    }
+
+    $scope.showInput = true;
+
+    $scope.toggleInput = function () {
+      $scope.showInput = !$scope.showInput;
+      $scope.tenNguoiShip = "";
+      $scope.soDienThoaiNguoiShip = "";
+    };
+
+    $scope.selectedProductQuantity = function (quantity, id) {
+      $scope.luuSoLuong = quantity;
+      $scope.idSanPhamChiTiet = id;
+    };
+    // TODO: show sản phẩm trong giỏ hảng
+    $scope.pageNumberSpTrongGio = 0;
+    $scope.pageSizeSpTrongGio = 100;
+    $scope.listCart = [];
+
+    $scope.listSanPhamInCart = function () {
+      var token = $window.localStorage.getItem("token");
+
+      var config = {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      };
+
+      $http
+        .get(
+          "http://localhost:8080/api/gio-hang-chi-tiet/hien-thi?id=" +
+          idKhach +
+          "&pageNumber=" +
+          $scope.pageNumberSpTrongGio +
+          "&pageSize=" +
+          $scope.pageSizeSpTrongGio,
+          config
+        )
+        .then(function (response) {
+          $scope.listCart = response.data;
+          if ($scope.listCart.length < $scope.pageSizeSpTrongGio) {
+            $scope.showNextButtonSpInCart = false; // Ẩn nút "Next"
+          } else {
+            $scope.showNextButtonSpInCart = true; // Hiển thị nút "Next"
+          }
+        });
+    };
+
+    var tienMoi = 0;
+    $scope.listSanPhamTienInCart = function () {
+      var token = $window.localStorage.getItem("token");
+
+      var config = {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      };
+      $http
+        .get(
+          "http://localhost:8080/api/gio-hang-chi-tiet/hien-thi-tien?id=" +
+          idKhach,
+          config
+        )
+        .then(function (response) {
+          $scope.listCartTien = response.data;
+          for (var i = 0; i < $scope.listCartTien.length; i++) {
+            $scope.tongTienHang +=
+              $scope.listCartTien[i].giaGiam * $scope.listCartTien[i].soLuong;
+          }
+          tienMoi = $scope.tongTienHang;
+          console.log("Bên trong" + $scope.tongTienHang);
+          localStorage.setItem("tongTienHangTaiQuay", $scope.tongTienHang);
+        });
+    };
+
+    var tongTienTaiQuay = localStorage.getItem("tongTienHangTaiQuay");
+    console.log("Bên ngoài " + tongTienTaiQuay);
+    console.log("Tiền mới" + tienMoi);
+
+    if (id != null) {
+      $scope.listSanPhamInCart();
+      $scope.listSanPhamTienInCart();
+    }
+
+    // TODO: Quay lại trang
+    $scope.previousPageSpTrongGio = function () {
+      if ($scope.pageNumberSpTrongGio > 0) {
+        $scope.pageNumberSpTrongGio--;
+        $scope.listSanPhamInCart();
+      }
+    };
+
+    // TODO: tiến đến trang khác
+    $scope.nextPageSpTrongGio = function () {
+      $scope.pageNumberSpTrongGio++;
+      $scope.listSanPhamInCart();
+    };
+
+    if (id != null) {
+      CartService.setIdCart(id).then(function () { });
+      CartService.setIdCart(id).then(function () {
+        var idCart = CartService.getIdCart();
+        CartService.setIdCartDetail(idCart).then(function () { });
+      });
+    }
+
     $scope.themSanPhamCart = function (idCtSp, soLuongSanPham) {
       if (soLuongSanPham == undefined) {
         Swal.fire({
@@ -100,13 +393,13 @@ myApp.controller(
             $http
               .post(
                 "http://localhost:8080/api/gio-hang-chi-tiet/them-san-pham?idGioHang=" +
-                  idGioHang +
-                  "&idSanPhamChiTiet=" +
-                  idCtSp +
-                  "&soLuong=" +
-                  soLuongSanPham +
-                  "&id=" +
-                  id,
+                idGioHang +
+                "&idSanPhamChiTiet=" +
+                idCtSp +
+                "&soLuong=" +
+                soLuongSanPham +
+                "&id=" +
+                id,
                 {},
                 config // Truyền thông tin token qua config
               )
@@ -157,7 +450,7 @@ myApp.controller(
             $http
               .delete(
                 "http://localhost:8080/api/gio-hang-chi-tiet/delete_product?id=" +
-                  p.idGioHang,
+                p.idGioHang,
                 config // Chuyền token vào config
               )
               .then(function () {
@@ -201,7 +494,7 @@ myApp.controller(
         $http
           .get(
             "http://localhost:8080/api/gio-hang-chi-tiet/so-luong-san-pham?id=" +
-              idSanPhamChiTiet,
+            idSanPhamChiTiet,
             config
           )
           .then(function (response) {
@@ -245,6 +538,7 @@ myApp.controller(
       };
     }, 2000);
 
+<<<<<<< HEAD
       // TODO: Lấy ra tất cả bản ghi của chất liệu
       $scope.listChatLieu = [];
       $scope.getListChatLieu = function () {
@@ -706,5 +1000,8 @@ myApp.controller(
             });
         }
       };
+=======
+
+>>>>>>> 07cfa9609d3031dd8cb230d535b2ab886a2dd56d
   }
 );
