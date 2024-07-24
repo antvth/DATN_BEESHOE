@@ -1,0 +1,204 @@
+<div class="row justify-content-center">
+  <div class="col-12">
+    <div class="card shadow mb-4">
+      <div class="card-body">
+        <div class="row">
+          <div class="form-group col-md-6 mt-4">
+            <div class="form-outline">
+              <input type="search" id="form1" class="form-control" ng-model="searchQuery" placeholder="Tìm kiếm size" />
+            </div>
+          </div> <!-- form-group -->
+          <div class="form-group col-md-3 mt-4">
+            <span>Trạng thái: </span>
+            <select style="color: #f15a22" class="custom-select" ng-model="selectedTrangThai"
+              ng-change="onTrangThaiChange()" id="simple-select2">
+              <option value="">Tất cả</option>
+              <option value="1">Hoạt động</option>
+              <option value="2">Ngừng hoạt động</option>
+            </select>
+          </div> <!-- form-group -->
+          <div class="form-group col-md-3">
+            <label for="simple-select2">ㅤ</label>
+            <div class="form-outline">
+              <button class="btn btn-danger" style="background: linear-gradient(96deg, #f15a22 32.96%, #fdb913 100.17%);" ng-click="searchSize()">Tìm kiếm</button>
+              <button class="btn btn-warning" ng-click="clearSearch()">
+              <img src="/assets/images/reload.png" style="height: 20px;">
+              </button>
+            </div>
+          </div> <!-- form-group -->
+        </div>
+      </div>
+    </div> <!-- / .card -->
+  </div> <!-- .col-12 -->
+</div> <!-- row justify-content-center -->
+<div class="row justify-content-center">
+  <div class="col-12">
+    <div class="card shadow">
+      <div class="card-body">
+        <div class="row align-items-center my-4">
+          <div class="col">
+            <span style="font-size: 20px;">Danh sách size</span>
+          </div>
+          <div class="col-auto">
+            <div class="input-group-append ml-3">
+              <button class="btn btn-primary rounded" data-bs-toggle="modal" data-bs-target="#sizeModal">
+                Tạo size
+              </button>
+            </div>
+          </div>
+        </div>
+        <table class="table table-borderless table-hover">
+          <thead>
+            <tr style="background: linear-gradient(96deg, #e6774e 32.96%, #fdb913 100.17%);">
+              <th>
+                STT
+              </th>
+              <th>
+                Size
+              </th>
+              <th>
+                Trạng thái
+              </th>
+              <th>
+                Ngày tạo
+              </th>
+              <th>
+                Ngày cập nhật
+              </th>
+              <th>
+                Hành động
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-if="!listSize.length">
+              <td colspan="10" style="font-size: larger;text-align: center;">Không có dữ liệu</td>
+            </tr>
+            <tr ng-repeat="th in listSize">
+              <td>
+                {{$index + 1}}
+              </td>
+              <td>
+                {{th.size}}
+              </td>
+              <td>
+                <span style="
+                background-color: #cceeff;
+                color: #0077cc;
+                padding: 4px 8px;
+                border-radius: 4px;
+                display: inline-block;
+                text-align: center;
+              "> {{th.trangThai == 1 ? "Hoạt động" : "Ngừng hoạt động"}}
+                </span>
+
+              </td>
+              <td>
+                {{th.ngayTao | date:'MM/dd/yyyy'}}
+              </td>
+              <td>
+                {{th.ngayCapNhat | date:'MM/dd/yyyy'}}
+              </td>
+              <td>
+                <button class="btn btn-warning" ng-click="deleteSize(th.id)">Xóa</button>
+                <button class="btn btn-success" data-bs-toggle="modal" ng-click="fetchSizedetail(th.id)"
+                  data-bs-target="#sua">Sửa</button>
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <nav aria-label="Table Paging" class="my-3 d-flex justify-content-center">
+      <ul class="pagination">
+        <li class="page-item" ng-show="pageNumber > 0">
+          <a class="page-link" ng-href="" ng-click="previousPage()"><img src="/assets/images/chevron-left.svg"
+              height="15px" alt=""></a>
+        </li>
+        <li class="page-item">
+          <a class="page-link">{{ pageNumber + 1 }}</a>
+        </li>
+        <li class="page-item" ng-show="showNextButtonSpInCart">
+          <a class="page-link" ng-href="" ng-click="nextPage()" ng-disabled="pageNumber === totalNumberOfPages - 1"><img
+              src="/assets/images/chevron-right.svg" height="15px" alt=""></a>
+        </li>
+      </ul>
+    </nav>
+
+  </div> <!-- .col-12 -->
+</div> <!-- .row -->
+<!-- thêm -->
+<div class="modal fade" id="sizeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered size-modal" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title ard-title fw-semibold">Thêm mới size</h5>
+      </div>
+      <div class="modal-body row">
+        <div class="form-group col-6">
+          <span class="header-title"><span style="color: red">*</span>
+          <span>Size:</span></span>
+          <span ng-show="!isthuoctinh" style="color: red;">Vui lòng nhập size</span>
+          <span ng-show="!isthuoctinhIsPresent" style="color: red;">Size đã tồn tại</span>
+          <input type="text" class="form-control" id="brandName" ng-model="newSize.size" placeholder="Nhập size" />
+        </div>
+
+        <div class="form-group col-6">
+          <span class="header-title"><span style="color: red">*</span>
+          <span>Trạng thái:</span></span>
+          <span ng-show="!istrangthai" style="color: red;">Vui lòng chọn trạng thái</span>
+          <select style="color: #f15a22" class="custom-select" id="status" ng-model="newSize.trangThai">
+            <option value="">Vui lòng chọn</option>
+            <option value="1">Hoạt động</option>
+            <option value="2">Ngừng hoạt động</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Đóng
+        </button>
+        <button type="button" class="btn btn-primary" ng-click="createSize()">
+          Thêm
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- sửa -->
+<div class="modal fade" id="sua" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered size-modal" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title ard-title fw-semibold">Chỉnh sửa size</h5>
+      </div>
+      <div class="modal-body row">
+        <div class="form-group col-6">
+          <span class="header-title"><span style="color: red">*</span>
+          <span>Size:</span></span>
+          <span ng-show="!isthuoctinh_update" style="color: red;">Vui lòng nhập size</span>
+          <input type="text" class="form-control" id="brandName" placeholder="Nhập size" ng-model="selectedSize.size" />
+        </div>
+
+        <div class="form-group col-6">
+          <span class="header-title"><span style="color: red">*</span>
+          <span>Trạng thái:</span></span>
+          <span ng-show="!istrangthai_update" style="color: red;">Vui lòng chọn trạng thái</span>
+          <select style="color: #f15a22" class="custom-select" ng-model="selectedSize.trangThai">
+            <option value="1">Hoạt động</option>
+            <option value="2">Ngừng hoạt động</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Đóng
+        </button>
+        <button type="button" class="btn btn-primary" ng-click="updateSize(selectedSize)">
+          Sửa
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
