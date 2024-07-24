@@ -15,6 +15,26 @@ myApp.config(function ($routeProvider, $locationProvider) {
       templateUrl: "./pages/login-admin.html",
       controller: "loginController",
     })
+    .when("/product/create", {
+      templateUrl: "./pages/san-pham-new.html",
+      controller: "sanPhamController",
+    })
+    .when("/product-detail/:id", {
+      templateUrl: "./pages/sanphamchitiet.html",
+      controller: "sanPhamChiTietController",
+    })
+    .when("/product-detail/create/:id", {
+      templateUrl: "./pages/them-san-pham-chi-tiet.html",
+      controller: "sanPhamChiTietCreateController",
+    })
+    .when("/product", {
+      templateUrl: "./pages/san-pham.html",
+      controller: "sanPhamController",
+    })
+    .when("/product-update/:id", {
+      templateUrl: "./pages/san-pham-update.html",
+      controller: "sanPhamUpdateController",
+    })
     .otherwise({
       redirectTo: "/dashboard",
     });
