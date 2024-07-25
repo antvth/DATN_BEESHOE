@@ -1,0 +1,172 @@
+<style>
+  h6 {
+    text-align: center;
+    color: black;
+    font-size: 22px;
+    font-weight: 600;
+  }
+
+  .txt-text {
+    color: black;
+    font-size: 16px;
+    font-weight: 600;
+  }
+</style>
+<main role="main" class="main-content">
+  <div class="container-fluid">
+    <div class="row justify-content-center">
+      <div class="col-12">
+        <div class="row">
+          <div class="col-md-6 col-xl-3 mb-4">
+            <div class="card shadow border-0">
+              <div class="card-body">
+                <div class="row align-items-center">
+                  <div class="col pr-0">
+                    <h6>Hôm nay</h6>
+                    <span class="txt-text">Tổng tiền hàng: {{tongtienhomnay.toLocaleString('vi-VN')}}đ</span>
+                    <br>
+                    <span class="txt-text">Tổng số đơn: {{tongSoDonHnay}}</span>
+                    <br>
+                    <span class="txt-text">Tổng số đơn hủy: {{soDonHuyHnay}}</span>
+                    <br>
+                    <span class="txt-text">Số sản phẩm bán ra: {{soSanPhamBanRaHomNay}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-xl-3 mb-4">
+            <div class="card shadow border-0">
+              <div class="card-body">
+                <div class="row align-items-center">
+                  <div class="col pr-0">
+                    <h6 style="text-align: center;">Tuần này</h6>
+                    <span class="txt-text">Tổng tiền hàng: {{tongtientuannay.toLocaleString('vi-VN')}}đ</span>
+                    <br>
+                    <span class="txt-text">Tổng số đơn: {{tongSoDonTuanNay}}</span>
+                    <br>
+                    <span class="txt-text">Tổng số đơn hủy: {{soDonHuyTuanNay}}</span>
+                    <br>
+                    <span class="txt-text">Số sản phẩm bán ra: {{soSanPhamBanRaTuanNay}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-xl-3 mb-4">
+            <div class="card shadow border-0">
+              <div class="card-body">
+                <div class="row align-items-center">
+                  <div class="col pr-0">
+                    <h6>Tháng này</h6>
+                    <span class="txt-text">Tổng tiền hàng: {{tongtiendonthangnay.toLocaleString('vi-VN')}}đ</span>
+                    <br>
+                    <span class="txt-text">Tổng số đơn: {{tongSoDonThangNay}}</span>
+                    <br>
+                    <span class="txt-text">Tổng số đơn hủy: {{soDonHuyThangNay}}</span>
+                    <br>
+                    <span class="txt-text">Số sản phẩm bán ra: {{soSanPhamBanRaThangNay}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-xl-3 mb-4">
+            <div class="card shadow border-0">
+              <div class="card-body">
+                <div class="row align-items-center">
+                  <div class="col pr-0">
+                    <h6>Năm nay</h6>
+                    <span class="txt-text">Tổng tiền hàng: {{tongtiennamnay.toLocaleString('vi-VN')}}đ</span>
+                    <br>
+                    <span class="txt-text">Tổng số đơn: {{tongSoDonNamNay}}</span>
+                    <br>
+                    <span class="txt-text">Tổng số đơn hủy: {{soDonHuyNamNay}}</span>
+                    <br>
+                    <span class="txt-text">Số sản phẩm bán ra: {{soSanPhamBanRaNamNay}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> <!-- end section -->
+        <div class="row my-4">
+          <div class="card shadow border-0" style="margin-left: 10px; width: 1130px;">
+            <div class="card-body">
+              <div class="col">
+                <h6>Biểu đồ thống kê</h6>
+              </div>
+              <br>
+              <div class="row">
+                <!-- Input cho ngày bắt đầu và ngày kết thúc -->
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label for="start-date" class="txt-text">Ngày bắt đầu</label>
+                    <input type="date" class="form-control" id="start-date" ng-model="startDate" ng-change="updateChart()">
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label for="end-date" class="txt-text">Ngày kết thúc</label>
+                    <input type="date" class="form-control" id="end-date" ng-model="endDate" ng-change="updateChart()">
+                  </div>
+                </div>
+              </div>
+              <br>
+              <canvas id="myBarChart"></canvas>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="chart-box">
+              <div id="columnChart"></div>
+            </div>
+          </div> <!-- .col -->
+        </div> <!-- end section -->
+        <div class="row">
+          <div class="col-md-8">
+            <div class="card shadow border-0">
+              <div class="card-body">
+                <h6>Top 10 sản phẩm bán chạy nhất</h6>
+                <table class="table table-borderless table-hover">
+                  <thead>
+                    <tr role="row" style="background: linear-gradient(96deg, #e6774e 32.96%, #fdb913 100.17%);">
+                      <th>STT</th>
+                      <th>Ảnh</th>
+                      <th>Tên sản phẩm</th>
+                      <th>Giá bán</th>
+                      <th>Số lượng đã bán</th>
+                      <th>Doanh số</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-repeat="sp in listSanPhamBanChay">
+                      <th scope="col">{{$index + 1}}</th>
+                      <td><img src="/assets/ảnh giày/{{sp.image}}" width="80px" alt=""></td>
+                      <td>{{sp.productName}}</td>
+                      <td ng-show="sp.price === sp.giaGiam">{{sp.giaGiam.toLocaleString('vi-VN')}}đ</strike></td>
+                      <td ng-show="sp.price != sp.giaGiam">{{sp.price.toLocaleString('vi-VN')}}đ<strike
+                          style="color: red;">{{sp.giaGiam.toLocaleString('vi-VN')}}đ</strike></td>
+                      <td>{{sp.soLuongDaBan}}</td>
+                      <td>{{sp.doanhSo.toLocaleString('vi-VN')}}đ</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card shadow mb-4">
+              <div class="card-body">
+                <div class="col">
+                  <h6>Trạng thái hóa đơn</h6>
+                </div>
+                <div>
+                  <canvas id="myChart"></canvas>
+                </div>
+              </div> <!-- .card-body -->
+            </div> <!-- .card -->
+          </div> <!-- .col-md -->
+        </div>
+      </div> <!-- .row -->
+    </div> <!-- .container-fluid -->
+</main> <!-- main -->

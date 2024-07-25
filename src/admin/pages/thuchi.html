@@ -1,0 +1,252 @@
+<div class="card p-3 shadow">
+  <!-- bread crumbs -->
+  <div class="d-sm-flex d-block align-items-center justify-content-between mb-9">
+    <div class="mb-3 mb-sm-0">
+      <i class="ti ti-home-2"></i> / <span style="color: black;display: inline-block;">Quản lí đơn hàng</span>
+    </div>
+  </div>
+
+  <div class=" overflow-hidden" >
+    <div class="row" style="padding-top: 30px; padding-left: 80px">
+      <div class="col-md-9">
+        <input class="form-control"  placeholder="Tìm kiếm hóa đơn" style="width: 100%" ng-model="searchQuery" />
+      </div>
+      <div class="col-md-3">
+        <button type="button" style="background: linear-gradient(96deg, #f15a22 32.96%, #fdb913 100.17%);" class="btn btn-danger" ng-click="searchHoaDon()">
+          Tìm kiếm
+        </button>
+        <button type="button" class="btn btn-warning" ng-click="clearSearch()">
+          <img src="/assets/images/reload.png" style="height: 20px;">
+        </button>
+      </div>
+    </div>
+    <div class="row" style="padding: 20px">
+      <div class="col-md-3">
+        <span>Loại đơn:</span>
+        <select style="color: #e6774e" class="custom-select" ng-model="selectedLoaiDon" ng-change="filterHoaDon()">
+          <option value="">Tất cả</option>
+          <option value="2">Tại quầy</option>
+          <option value="1">Online</option>
+        </select>
+      </div>
+      <!-- <div ng-show="isAdmin || role === 'ADMIN'" class="col-md-4" style="margin-left: -85px;">
+        <span> Nhân viên:</span>
+        <select style="color: #e6774e" class="custom-select" ng-model="selectedTenNhanVien"
+          ng-change="filterHoaDonByNguoiXacNhan()">
+          <option value="">Tất cả</option>
+          <option ng-repeat="nhanVien in allTenNhanVienOptions track by nhanVien.idNhanVien"
+            value="{{nhanVien.tenNhanVien}}">
+            {{nhanVien.tenNhanVien}}
+          </option>
+        </select>
+      </div> -->
+    </div>
+  </div>
+
+  <nav>
+    <div class="nav nav-tabs mb-3" id="nav-tab" role="tablist" ng-init="setDefaultTrangThai()">
+      <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button"
+        role="tab" aria-controls="nav-home" aria-selected="true" ng-click="openCity(1, 1)" style="position: relative;">
+        <div style="
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        top: -7px;
+        right: -5px;
+        font-size: 11px;
+        color: white;
+        font-weight: 600;
+        z-index: 5;
+        line-height: 20px;" ng-class="{ 'active': selectedTrangThai === 1 }"></div>
+        Chờ xác nhận
+      </button>
+      <button class="nav-link" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button"
+        role="tab" aria-controls="nav-home" aria-selected="true" ng-click="openCity(2)" style="position: relative;">
+        Xác nhận
+        <div style="
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        top: -7px;
+        right: -5px;
+        font-size: 11px;
+        color: white;
+        font-weight: 600;
+        z-index: 5;
+        line-height: 20px;" ng-class="{ 'active': selectedTrangThai === 2 }"></div>
+      </button>
+      <button class="nav-link" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button"
+        role="tab" aria-controls="nav-home" aria-selected="true" ng-click="openCity(3)" style="position: relative;">
+        Chờ giao
+        <div style="
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        top: -7px;
+        right: -5px;
+        font-size: 11px;
+        color: white;
+        font-weight: 600;
+        z-index: 5;
+        line-height: 20px;" ng-class="{ 'active': selectedTrangThai === 3 }"></div>
+      </button>
+      <button class="nav-link" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button"
+        role="tab" aria-controls="nav-home" aria-selected="true" ng-click="openCity(4)" style="position: relative;">
+        Đang giao
+        <div style="
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        top: -7px;
+        right: -5px;
+        font-size: 11px;
+        color: white;
+        font-weight: 600;
+        z-index: 5;
+        line-height: 20px;" ng-class="{ 'active': selectedTrangThai === 4 }"></div>
+      </button>
+      <button class="nav-link" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button"
+        role="tab" aria-controls="nav-home" aria-selected="true" ng-click="openCity(5)" style="position: relative;">
+        Hoàn thành
+        <div style="
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        top: -7px;
+        right: -5px;
+        font-size: 11px;
+        color: white;
+        font-weight: 600;
+        z-index: 5;
+        line-height: 20px;" ng-class="{ 'active': selectedTrangThai === 5 }"></div>
+      </button>
+      <button class="nav-link" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button"
+        role="tab" aria-controls="nav-home" aria-selected="true" ng-click="openCity(6)" style="position: relative;">
+        Hủy
+        <div style="
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        top: -7px;
+        right: -5px;
+        font-size: 11px;
+        color: white;
+        font-weight: 600;
+        z-index: 5;
+        line-height: 20px;" ng-class="{ 'active': selectedTrangThai === 6 }"></div>
+      </button>
+    </div>
+  </nav>
+  
+  
+  <div class="tab-content p-3 border" id="nav-tabContent">
+    <div class="tab-pane fade active show" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+      <table class="table">
+        <thead class="text-dark fs-4" style="background-color: rgb(218 212 212 / 24%);text-align: center;">
+          <tr>
+            <th style="width: 7%;">
+              <h6 class="fw-semibold mb-0" style="border-right: 1px solid #b1acac;">#</h6>
+            </th>
+            <th class="border-bottom-0">
+              <h6 class="fw-semibold mb-0" style="border-right: 1px solid #b1acac;">Mã hóa đơn</h6>
+            </th>
+            <th class="border-bottom-0">
+              <h6 class="fw-semibold mb-0" style="border-right: 1px solid #b1acac;">Tên khách hàng</h6>
+            </th>
+            <th class="border-bottom-0">
+              <h6 class="fw-semibold mb-0" style="border-right: 1px solid #b1acac;">Ngày tạo</h6>
+            </th>
+            <th class="border-bottom-0">
+              <h6 class="fw-semibold mb-0" style="border-right: 1px solid #b1acac;">Số SĐT khách</h6>
+            </th>
+            <th class="border-bottom-0">
+              <h6 class="fw-semibold mb-0" style="border-right: 1px solid #b1acac;">Tổng tiền</h6>
+            </th>
+            <th class="border-bottom-0">
+              <h6 class="fw-semibold mb-0" style="border-right: 1px solid #b1acac;">Người xác nhận</h6>
+            </th>
+            <th class="border-bottom-0">
+              <h6 class="fw-semibold mb-0" style="border-right: 1px solid #b1acac;">Loại đơn</h6>
+            </th>
+            <th class="border-bottom-0">
+              <h6 class="fw-semibold mb-0">Thao tác</h6>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="hd in listHoaDon">
+            <td class="border-bottom-0">
+              <h6 class="fw-semibold mb-0"> {{$index + 1 + (pageNumber * 20)}}</h6>
+            </td>
+            <td class="border-bottom-0">
+              <span class="fw-normal">{{hd.ma}}</span>
+            </td>
+            <td class="border-bottom-0">
+              <span class="fw-normal">{{hd.tenKhachHang}}</span>
+            </td>
+            <td class="border-bottom-0">
+              <span class="fw-normal">{{hd.ngayTao | date:'MM/dd/yyyy h:mm:ss a'}}</span>
+            </td>
+            <td class="border-bottom-0">
+              <span class="fw-normal">{{hd.soDienThoai}}</span>
+            </td>
+            <td class="border-bottom-0">
+              <span class="fw-normal">{{hd.thanhTien.toLocaleString('vi-VN')}}đ</span>
+            </td>
+            <td class="border-bottom-0">
+              <span class="fw-normal">{{hd.tenNhanVien}}</span>
+            </td>
+            <td class="border-bottom-0">
+              <span class="fw-normal">{{hd.loaiDon}}</span>
+            </td>
+            <td class="border-bottom-0">
+               <a href="#/order-detail/{{hd.id}}" type="button" class="btn btn-warning m-1">
+              Chi tiết
+            </a>
+           
+            <!-- <a ng-show="isAdmin" data-bs-toggle="modal" data-bs-target="#thayDoiNhanVien"
+              ng-click="getEmployeeAndInvoiceInfo(hd.id)" type="button" class="btn btn-primary m-1">
+              Thay đổi
+            </a> -->
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+      <div class="col-lg-12">
+        <nav aria-label="Page navigation example" style="margin-left: 480px">
+          <ul class="pagination">
+            <li class="page-item" ng-show="pageNumber > 0">
+              <a class="page-link" ng-href="" ng-click="previousPage()">
+                <img src="/assets/images/chevron-left.svg" height="15px" alt="">
+              </a>
+            </li>
+            <li class="page-item">
+              <a class="page-link">{{ pageNumber + 1 }}</a>
+            </li>
+            <li class="page-item" ng-show="showNextButtonSpInCart">
+              <a class="page-link" ng-href="" ng-click="nextPage()" ng-disabled="pageNumber === totalNumberOfPages - 1">
+                <img src="/assets/images/chevron-right.svg" height="15px" alt="">
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+      <!-- Pagination -->
+      <span ng-show="numPages!=0">
+        <uib-pagination items-per-page="itemsPerPage" total-items="totalItems" ng-model="currentPage"
+          class="pagination-sm" previous-text="‹" next-text="›" first-text="«" last-text="»" style="
+                width: 16%;
+                margin-left: auto;
+                margin-right: auto;
+                " max-size="3" ng-change="pageChanged()"></uib-pagination>
+      </span>
+    </div>
+  </div>
+</div>

@@ -35,6 +35,10 @@ myApp.config(function ($routeProvider, $locationProvider) {
       templateUrl: "./pages/san-pham-update.html",
       controller: "sanPhamUpdateController",
     })
+    .when("/order", {
+      templateUrl: "./pages/thuchi.html",
+      controller: "hoaDonController",
+    })
     .otherwise({
       redirectTo: "/dashboard",
     });
