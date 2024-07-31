@@ -1,0 +1,223 @@
+<div class="card overflow-hidden" style="min-height: 120px">
+  <div class="box">
+    <div class="row" style="padding-top: 25px; padding-left: 60px">
+      <div class="col-md-2">
+        <input class="form-control" placeholder="Tìm theo mã, SĐT" ng-model="searchQuery" style="margin-top: 4px" />
+      </div>
+      <div class="col-md-4 mt-1">
+        <button class="btn btn-primary" ng-click="searchNhanVien()">
+          Tìm kiếm
+        </button>
+        <button class="btn btn-warning" ng-click="clearSearch()">
+          Làm mới
+        </button>
+      </div>
+      <div class="col-md-3 d-flex justify-content-start" style="text-align: end">
+        <label class="form-label" style="margin-top: 11px">Trạng thái :</label>
+        <select style="color: #e6774e" class="custom-select" ng-model="selectedTrangThai" ng-change="onTrangThaiChange()">
+          <option value="">Tất cả</option>
+          <option value="1">Hoạt động</option>
+          <option value="2">Nghỉ làm</option>
+        </select>
+      </div>
+      <div class="col-md-3 mt-1">
+        <button type="submit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+          Tạo nhân viên
+        </button>
+      </div>
+      <div class="modal-dialog modal-lg">
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-lg" style="max-width: 80%">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title ard-title fw-semibold">Tạo nhân viên</h5>
+              </div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-4 text-center">
+                    <label>
+                      <div class="image-container">
+                        <img id="selectedImage" src="#" alt="Selected Image" style="display: none;">
+                      </div>
+                    </label>
+                  </div>
+                  <div class="col-md-8">
+                    <form name="frmNhanVien">
+                      <div class="form-group">
+                        <span class="header-title"><span style="color: red">*</span> <span>Họ và tên</span></span>
+                        <span ng-show="!isHoTenValid" style="color: red;">Vui lòng nhập vào họ tên</span>
+                        <input type="text" class="form-control" ng-model="ten" />
+                      </div>
+                      <br />
+                      <div class="form-group">
+                        <span class="header-title"><span style="color: red">*</span> <span>Ngày sinh</span></span>
+                        <span ng-show="!isNgaySinhValid" style="color: red;">Vui lòng chọn ngày sinh</span>
+                        <input required type="date" class="form-control" ng-model="ngaySinh" />
+                      </div>
+                      <br />
+                      <div class="form-group">
+                        <span class="header-title">
+                          <span style="color: red">*</span>
+                          <span>Số điện thoại</span>
+                        </span>
+                        <span ng-show="!isSoDienThoaiValid" style="color: red;">Vui lòng nhập vào số điện thoại</span>
+                        <span ng-show="!isSoDienThoaiFormat" style="color: red;">Số điện thoại sai định dạng, vui lòng xem lại</span>
+                        <span ng-show="!isSoDienThoaiIsPresent" style="color: red;">Số điện thoại đã tồn tại</span>
+                        <input 
+                          type="text" 
+                          pattern="^0[0-9]{9,10}$" 
+                          class="form-control" 
+                          ng-model="soDienThoai" 
+                          ng-pattern="/^0[0-9]{9,10}$/" 
+                        />
+                      </div>
+                      <br />
+                      <div class="form-group">
+                        <span class="header-title"><span style="color: red">*</span> <span>Giới tính</span></span>
+                        <span ng-show="!isGioiTinhValid" style="color: red;">Vui lòng chọn giới tính</span>
+                        <div class="form-check-inline">
+                          <input class="form-check-input" type="radio" name="gender" ng-model="gioiTinh" value="true"
+                            checked />
+                          <label class="form-check-label"> Nam </label>
+                        </div>
+                        <div class="form-check-inline">
+                          <input class="form-check-input" type="radio" name="gender" ng-model="gioiTinh"
+                            value="false" />
+                          <label class="form-check-label"> Nữ </label>
+                        </div>
+                      </div>
+                      <br />
+                      <div class="form-group">
+                        <span class="header-title"><span style="color: red">*</span> <span>Email</span></span>
+                        <span ng-show="!isEmailValid" style="color: red;">Vui lòng nhập vào email</span>
+                        <span ng-show="!isEmailFormat" style="color: red;">Email định dạng, vui lòng xem lại</span>
+                        <span ng-show="!isEmailIsPresent" style="color: red;">Email đã tồn tại</span>
+                        <input type="text" class="form-control" ng-model="email" />
+                      </div>
+                      <br>
+                      <div class="form-group">
+                        <span class="header-title"><span style="color: red">*</span> <span>Địa chỉ</span></span>
+                        <span ng-show="!isDiaChiValid" style="color: red;">Vui lòng nhập vào địa chỉ</span>
+                        <input required type="text" class="form-control" ng-model="diaChi" />
+                      </div>
+                      <br>
+                      <div class="form-group">
+                        <span class="header-title"><span style="color: red">*</span> <span>Trạng thái</span></span>
+                        <span ng-show="!isTrangThaiValid" style="color: red;">Vui lòng chọn trạng thái</span>
+                        <div class="form-check-inline">
+                          <input class="form-check-input" type="radio" name="status" ng-model="trangThai" value="1"
+                            checked />
+                          <label class="form-check-label">
+                            Hoạt động
+                          </label>
+                        </div>
+                        <div class="form-check-inline">
+                          <input class="form-check-input" type="radio" name="status" ng-model="trangThai" value="2" />
+                          <label class="form-check-label">
+                            Nghỉ làm
+                          </label>
+                        </div>
+                      </div>
+                      <br />
+                      <div class="form-group">
+                        <span class="header-title"><span style="color: red">*</span> <span>Photo</span></span>
+                        <span ng-show="!isFileValid" style="color: red;">Vui lòng chọn file</span>
+                        <input type="file" name="file" id="fileInput" onchange="displayImage(event)" />
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-danger" ng-click="createNhanVien()">Thêm</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="card overflow-hidden" style="margin-top: 25px">
+  <div class="box">
+    <style>
+      .table {
+        table-layout: fixed;
+        /* Đảm bảo các cột có chiều rộng đều */
+        width: 100%;
+        /* Chiều rộng của bảng là 100% */
+      }
+
+      .table th,
+      .table td {
+        overflow: hidden;
+        /* Tránh che lấn giá trị bên trong */
+        text-overflow: ellipsis;
+        /* Hiển thị dấu ba chấm (...) khi giá trị quá dài */
+      }
+    </style>
+    <table class="table">
+      <thead>
+        <tr style="background: linear-gradient(96deg, #e6774e 32.96%, #fdb913 100.17%);">
+          <th scope="col">STT</th>
+          <th scope="col">Ảnh</th>
+          <th scope="col">Mã nhân viên</th>
+          <th scope="col">Họ và tên</th>
+          <th scope="col">Email</th>
+          <th scope="col">Giới tính</th>
+          <th scope="col">Số điện thoại</th>
+          <th scope="col">Địa chỉ</th>
+          <th scope="col">Trạng thái</th>
+          <th scope="col">Thao tác</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-if="!listNhanVien.length">
+          <td colspan="10" style="font-size: larger;text-align: center;">Không có dữ liệu</td>
+        </tr>
+        <tr ng-repeat="nv in listNhanVien">
+          <th>{{$index + 1}}</th>
+          <td style="width: 10%;"><img src="/assets/ảnh giày/{{nv.image}}" width="70px" alt=""></td>
+          <td>{{nv.maNhanVien}}</td>
+          <td>{{nv.fullName}}</td>
+          <td>{{nv.email}}</td>
+          <td>{{nv.gioiTinh == false ? "Nữ" : "Nam"}}</td>
+          <td>{{nv.soDienThoai}}</td>
+          <td>{{nv.diaChi}}</td>
+          <td style="width: 10%;">
+            <span style="
+                      background-color: #cceeff;
+                      color: #0077cc;
+                      padding: 4px 8px;
+                      border-radius: 4px;
+                      display: inline-block;
+                    ">{{nv.trangThai == 1 ? "Hoạt động": "Nghỉ làm"}}
+            </span>
+          </td>
+          <td>
+            <a type="button" href="#/staff/update/{{nv.id}}" class="btn btn-success">
+              Sửa
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="row">
+    <nav aria-label="Page navigation example" style="margin-left: 480px;" ng-show="listNhanVien.length != 0">
+      <ul class="pagination">
+        <li class="page-item" ng-show="pageNumber > 0">
+          <a class="page-link" ng-href="" ng-click="previousPage()">Previous</a>
+        </li>
+        <li class="page-item">
+          <a class="page-link">{{ pageNumber + 1 }}</a>
+        </li>
+        <li class="page-item" ng-show="showNextButton">
+          <a class="page-link" ng-href="" ng-click="nextPage()"
+            ng-disabled="pageNumber === totalNumberOfPages - 1">Next</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</div>

@@ -1,0 +1,72 @@
+<div class="container-fluid">
+    <div class="card overflow-hidden" style="min-height: 120px">
+        <div class="row" style="padding: 30px;">
+            <div class="col-md-4 text-center">
+                <label>
+                    <div class="image-container">
+                        <img id="selectedImage" src="/assets/ảnh giày/{{selectedNhanVien.image}}" class="logo" alt="" />
+                    </div>
+                </label>
+            </div>
+            <div class="col-md-8">
+                <form name="frmAccount">
+                    <div class="form-group">
+                        <span class="header-title"><span style="color: red">*</span> <span>Họ và
+                                tên</span></span>
+                        <span ng-show="!isHoTenValid" style="color: red;">Vui lòng nhập vào họ tên</span>
+                        <input required type="text" class="form-control" ng-model="selectedNhanVien.fullName" />
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <span class="header-title"><span style="color: red">*</span> <span>Ngày
+                                sinh</span></span>
+                        <span ng-show="!isNgaySinhValid" style="color: red;">Vui lòng chọn ngày sinh</span>
+                        <input required type="date" class="form-control" ng-model="selectedNhanVien.ngaySinh" />
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <span class="header-title"><span style="color: red">*</span> <span>Số điện
+                                thoại</span></span>
+                        <span ng-show="!isSoDienThoaiValid" style="color: red;">Vui lòng nhập vào số điện thoại</span>
+                        <span ng-show="!isSoDienThoaiFormat" style="color: red;">Số điện thoại sai định dạng, vui lòng
+                            xem
+                            lại</span>
+                        <span ng-show="!isSoDienThoaiIsPresent" style="color: red;">Số điện thoại đã tồn tại</span>
+                        <input required type="text" class="form-control" ng-model="selectedNhanVien.soDienThoai" />
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <span class="header-title"><span style="color: red">*</span> <span>Địa
+                                chỉ</span></span>
+                        <span ng-show="!isDiaChiValid" style="color: red;">Vui lòng nhập vào địa chỉ</span>
+                        <input required type="text" class="form-control" ng-model="selectedNhanVien.diaChi" />
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <span class="header-title"><span style="color: red">*</span> <span>Trạng
+                                thái</span></span>
+                        <span ng-show="!isTrangThaiValid" style="color: red;">Vui lòng chọn trạng thái</span>
+                        <div class="form-check-inline">
+                            <input class="form-check-input" type="radio" name="status"
+                                ng-model="selectedNhanVien.trangThai" value="2" />
+                            <label class="form-check-label"> Chưa kích hoạt </label>
+                        </div>
+                        <div class="form-check-inline">
+                            <input class="form-check-input" type="radio" name="status"
+                                ng-model="selectedNhanVien.trangThai" value="1" />
+                            <label class="form-check-label"> Đã kích hoạt </label>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <span class="header-title"><span style="color: red">*</span> <span>Photo</span></span>                    
+                        <input type="file" name="file" id="fileInput" onchange="displayImage(event)"/>
+                    </div>
+                </form>
+            </div>
+            <a href="/src/admin/index-admin.html#/staff" style="width: 100px;margin-left: 990px;" type="button" class="mb-2 btn btn-primary">Quay về</a>
+            <button style="width: 100px;margin-left: 990px;" type="button" class="btn btn-danger"
+                ng-click="updateNhanVien()">Chỉnh sửa</button>
+        </div>
+    </div>
+</div>
