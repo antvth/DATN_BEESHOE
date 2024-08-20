@@ -1,0 +1,1 @@
+var myAppCustom = angular.module("myModuleCustom", ["ngRoute"] );
