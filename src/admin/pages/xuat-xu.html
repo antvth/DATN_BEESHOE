@@ -1,0 +1,190 @@
+<div class="row justify-content-center">
+  <div class="col-12">
+    <div class="card shadow mb-4">
+      <div class="card-body">
+        <div class="row">
+          <div class="form-group col-md-6 mt-4">
+            <div class="form-outline">
+              <input type="search" id="form1" class="form-control" ng-model="searchQuery" placeholder="Tìm kiếm xuất xứ" />
+            </div>
+          </div>
+          <!-- form-group -->
+
+          <div class="form-group col-md-3 mt-4">
+            <span>Trạng thái: </span>
+            <select style="color: #f15a22" class="custom-select" ng-model="selectedTrangThai" ng-change="onTrangThaiChange()"
+              id="simple-select2">
+              <option value="">Tất cả</option>
+              <option value="1">Hoạt động</option>
+              <option value="2">Ngừng hoạt động</option>
+            </select>
+          </div>
+          <!-- form-group -->
+
+          <div class="form-group col-md-3">
+            <label for="simple-select2">ㅤ</label>
+            <div class="form-outline">
+              <button class="btn btn-danger" style="background: linear-gradient(96deg, #f15a22 32.96%, #fdb913 100.17%);" ng-click="searchXuatXu()">
+                Tìm kiếm
+              </button>
+              <button class="btn btn-warning" ng-click="clearSearch()">
+                <img src="/assets/images/reload.png" style="height: 20px;">
+              </button>
+            </div>
+          </div>
+          <!-- form-group -->
+        </div>
+      </div>
+    </div>
+    <!-- / .card -->
+  </div>
+  <!-- .col-12 -->
+</div>
+<!-- row justify-content-center -->
+<div class="row justify-content-center">
+  <div class="col-12">
+    <div class="card shadow">
+      <div class="card-body">
+        <div class="row align-items-center my-4">
+          <div class="col">
+            <span style="font-size: 20px">Danh sách xuất xứ</span>
+          </div>
+          <div class="col-auto">
+            <div class="input-group-append ml-3">
+              <button class="btn btn-primary rounded" data-bs-toggle="modal" data-bs-target="#xxmodel">
+                Tạo xuất xứ
+              </button>
+            </div>
+          </div>
+        </div>
+        <table class="table table-borderless table-hover">
+          <thead>
+            <tr style="background: linear-gradient(96deg, #f15a22 32.96%, #fdb913 100.17%);">
+              <th>STT</th>
+              <th>Tên xuất xứ</th>
+              <th>Trạng thái</th>
+              <th>Ngày tạo</th>
+              <th>Ngày cập nhật</th>
+              <th>Hành động</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="th in listXuatXu">
+              <td>{{$index + 1}}</td>
+              <td>{{th.tenXuatXu}}</td>
+              <td>                <span style="
+                background-color: #cceeff;
+                color: #0077cc;
+                padding: 4px 8px;
+                border-radius: 4px;
+                display: inline-block;
+                text-align: center;
+              ">                {{th.trangThai == 1 ? "Hoạt động" : "Ngừng hoạt động"}}
+        </span></td>
+              <td>{{th.ngayTao | date:'MM/dd/yyyy'}}</td>
+              <td>{{th.ngayCapNhat | date:'MM/dd/yyyy'}}</td>
+              <td>
+                <button class="btn btn-warning" ng-click="deleteXuatXu(th.id)">
+                  Xóa
+                </button>
+                <button class="btn btn-success" data-bs-toggle="modal" ng-click="fetchXuatXuDetail(th.id)"
+                  data-bs-target="#suaxx">Sửa
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <nav aria-label="Table Paging" class="my-3 d-flex justify-content-center">
+      <ul class="pagination">
+        <li class="page-item">
+          <a class="page-link" ng-href="" ng-click="previousPage()"><img src="/assets/images/chevron-left.svg" height="15px"
+            alt=""></a>
+        </li>
+        <li class="page-item">
+          <a class="page-link">{{ pageNumber + 1 }}</a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" ng-href="" ng-click="nextPage()"
+            ng-disabled="pageNumber === totalNumberOfPages - 1"><img src="/assets/images/chevron-right.svg" height="15px"
+            alt=""></a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</div>
+<div class="modal fade" id="xxmodel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered size-modal" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title ard-title fw-semibold">Thêm xuất xứ</h5>
+      </div>
+      <div class="modal-body row">
+
+        <div class="form-group col-6">
+          <span class="header-title"><span style="color: red">*</span><span>Tên xuất xứ:</span></span>
+          <input type="text" class="form-control" id="brandName" ng-model="newXuatXu.tenXuatXu"
+            placeholder="Nhập tên xuất xứ" />
+          <span style="color: red">{{errorTenXuatXu}}</span>
+          <span style="color: red">{{errorMessage}}</span>
+        </div>
+        <div class="form-group col-6">
+          <span class="header-title"><span style="color: red">*</span><span>Trạng thái: </span></span>
+          <select style="color: #f15a22" class="custom-select" id="status" ng-model="newXuatXu.trangThai">
+            <option value="">Vui lòng chọn</option>
+            <option value="1">Hoạt động</option>
+            <option value="2">Ngừng hoạt động</option>
+          </select>
+          <span style="color: red">{{errortrangThai}}</span>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Đóng
+        </button>
+        <button type="button" class="btn btn-primary" ng-click="createXuatXu()">
+          Thêm
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Sửa -->
+<div class="modal fade" id="suaxx" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered size-modal" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title ard-title fw-semibold">Chỉnh sửa xuất xứ</h5>
+      </div>
+      <div class="modal-body row">
+        <div class="form-group col-6">
+          <span class="header-title"><span style="color: red">*</span><span>Tên xuất xứ:</span></span>
+          <input type="text" class="form-control" id="brandName" placeholder="Nhập tên xuất xứ"
+            ng-model="newXuatXu.tenXuatXu" />
+          <span style="color: red">{{errortenXuatXu}}</span>
+        </div>
+        <div class="form-group col-6">
+          <span class="header-title"><span style="color: red">*</span><span>Trạng thái: </span></span>
+          <select style="color: #f15a22" class="custom-select" id="status" ng-model="newXuatXu.trangThai">
+            <option value="">Vui lòng chọn
+            </option>
+            <option value="1">Hoạt động</option>
+            <option value="2">
+              Ngưng hoạt động
+            </option>
+          </select>
+          <span style="color: red">{{errortrangThai}}</span>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Đóng
+        </button>
+        <button type="button" ng-click="updateXuatXu(newXuatXu)" class="btn btn-primary">
+          Thêm
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
