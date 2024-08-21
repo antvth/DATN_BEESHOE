@@ -1,0 +1,65 @@
+<div class="row">
+    <div class="col-lg-8" style="padding-bottom: 10px;">
+        <a href="#/promotion" class="btn btn-danger">
+            Quay lại
+        </a>
+    </div>
+    <div class="col-lg-8">
+        <input type="text" class="next-input" ng-model="searchQuery" ng-change="searchKhach()"
+            placeholder="Tìm kiếm sản phẩm" />
+    </div>
+    <div class="col-lg-4">
+        <button class="btn btn-warning" style="margin-left: 10px" ng-click="refresh()">
+            Làm mới
+        </button>
+    </div>
+</div>
+<br>
+<table class="table table-borderless table-hover">
+    <thead>
+        <tr style="background: linear-gradient(96deg, #e6774e 32.96%, #fdb913 100.17%);">
+            <th scope="col">STT</th>
+            <th scope="col">Ảnh sản phẩm</th>
+            <th scope="col">Tên sản phẩm</th>
+            <th scope="col">Đơn giá</th>
+            <th scope="col">Số lượng giảm giá</th>
+            <th scope="col">Giá sau giảm</th>
+        </tr>
+    </thead>
+    <tbody class="table table-borderless table-hover">
+        <tr ng-if="listProduct.length === 0">
+            <td colspan="9" style="text-align: center;">Không tìm thấy dữ liệu</td>
+        </tr>
+        <tr ng-repeat="gg in listProduct">
+            <td style="padding-top: 75px">
+                {{$index + 1 + (pageNumber * 20)}}
+            </td>
+            <td>
+                <img src="/assets/ảnh giày/{{gg.image}}" alt="" width="150px" />
+            </td>
+            <td>{{gg.productName}}</td>
+            <td>
+                {{gg.giaBan.toLocaleString('vi-VN')}}đ
+            <td>
+                {{gg.soLanGiam}}
+            </td>
+            <td>
+                {{(gg.giaBan - gg.giaGiam) < 0 ? 0 : (gg.giaBan - gg.giaGiam).toLocaleString('vi-VN') }}đ
+            </td>
+        </tr>
+    </tbody>
+</table>
+<nav aria-label="Table Paging" class="my-3 d-flex justify-content-center">
+    <ul class="pagination">
+        <li class="page-item">
+            <a class="page-link" ng-href="" ng-click="previousPage()"><img src="/assets/images/chevron-left.svg" height="15px" alt=""></a>
+        </li>
+        <li class="page-item">
+            <a class="page-link">{{ pageNumber + 1 }}</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" ng-href="" ng-click="nextPage()"
+                ng-disabled="pageNumber === totalNumberOfPages - 1"><img src="/assets/images/chevron-right.svg" height="15px" alt=""></a>
+        </li>
+    </ul>
+</nav>

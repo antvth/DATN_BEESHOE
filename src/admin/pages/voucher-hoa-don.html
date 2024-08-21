@@ -1,0 +1,151 @@
+<style>
+  .wide-column {
+    width: 250px;
+
+    /* Điều chỉnh độ rộng tùy ý */
+  }
+
+  .disabled-btn {
+    opacity: 0.6;
+    /* Mờ đi khi bị disable */
+    cursor: not-allowed;
+    /* Không hiển thị con trỏ khi hover */
+  }
+
+  .loading-spinner {
+    border: 6px solid #f3f3f3;
+    border-top: 6px solid #3498db;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto;
+  }
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+</style>
+<div class="card overflow-hidden" style="min-height: 120px">
+  <div class="box row" style="display: flex; flex-direction: row; flex-wrap: wrap;">
+    <div class="col-3 mt-3">
+      <input class="form-control" ng-model="searchQuery" ng-change="searchKhach()" placeholder="Tìm kiếm mã"
+        style="margin-top: 4px;" />
+    </div>
+    <div class="col-3 mt-3">
+      <input class="form-control" ng-model="searchQuery2" ng-change="searchTenKhach()"
+        placeholder="Tìm kiếm tên" style="margin-top: 4px;" />
+    </div>
+
+    <div class="col-3 mt-3">
+      <label class="form-label">Trạng thái :</label>
+      <select style="color: #e6774e" class="custom-select" ng-model="searchQuery3" ng-change="onTrangThaiChange()">
+        <option value="">Tất cả</option>
+        <option value="1">Hoạt động</option>
+        <option value="2">Kết thúc</option>
+        <option value="3">Sắp diễn ra</option>
+        <option value="4">Hết lượt sử dụng</option>
+      </select>
+    </div>
+    <div class="col-md-3" style="margin-top: 20px;">
+      <button class="btn btn-warning" ng-click="refresh()">
+        Làm mới
+      </button>
+      <a href="#/voucher/create" class="btn btn-primary">
+        Thêm mới
+      </a>
+    </div>
+  </div>
+</div>
+<div class="card overflow-hidden">
+  <div class="box">
+    <table class="table table-borderless table-hover">
+      <thead>
+        <tr style="background: linear-gradient(96deg, #e6774e 32.96%, #fdb913 100.17%);">
+          <th scope="col">STT</th>
+          <th scope="col">Mã voucher</th>
+          <th scope="col">Tên voucher</th>
+          <th scope="col">Đơn tối thiểu</th>
+          <th scope="col">Giá giảm</th>
+          <th scope="col">Số lượng</th>
+          <th scope="col" style="width: 200px; padding-left: 60px">
+            Thời gian
+          </th>
+          <th scope="col">Trạng thái</th>
+          <th scope="col" class="wide-column">Thao tác</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-if="loadingData">
+          <td colspan="9" style="text-align: center;">
+            <div class="loading-spinner"></div>
+            Dữ liệu đang được tải, vui lòng đợi...
+          </td>
+        </tr>
+
+        <tr ng-repeat="gg in listVoucher">
+          <td>{{$index + 1}}</td>
+          <td>{{gg.maVoucher}}</td>
+          <td>{{gg.tenVoucher}}</td>
+          <td>{{gg.giaTriToiThieuDonhang.toLocaleString('vi-VN')}}đ</td>
+          <td>
+            {{gg.giaTriGiam.toLocaleString('vi-VN')}}{{gg.hinhThucGiam == 1 ? '%' : 'đ'}}
+          </td>
+          <td>
+            {{gg.soLuongDung == null ? 0 : gg.soLuongDung }} / {{gg.soLuongMa}}
+          </td>
+          <td style="padding-left: 25px;">
+            {{gg.ngayBatDau | date:'dd/MM/yyyy HH:mm:ss a'}} - {{gg.ngayKetThuc
+            | date:'dd/MM/yyyy HH:mm:ss a'}}
+          </td>
+          <td>
+            <span style="
+            background-color: #cceeff;
+            color: #0077cc;
+            padding: 4px 8px;
+            border-radius: 4px;
+            display: inline-block;
+            text-align: center;">
+              {{gg.trangThai == 1 ? 'Hoạt động':gg.trangThai == 2 ? 'Kết thúc':gg.trangThai == 4 ? 'Hết lượt
+              sử dụng':'Sắp diễn ra'}}
+            </span>
+          </td>
+          <td class="action-column">
+            <a class="btn btn-warning" ng-click="gg.trangThai !== 4 && updateVoucherStatus(gg.id, $event)"
+              ng-style="{'opacity': gg.trangThai == 4 ? 0.6 : 1}" ng-disabled="gg.trangThai == 4">
+              {{ gg.trangThai == 2 ? 'Kích hoạt' : 'Hủy kích hoạt' }}
+            </a>
+
+
+            <a ng-href="{{gg.trangThai != 2 ? '#/voucher/update/' + gg.id : ''}}" class="btn btn-success"
+              ng-style="{'opacity': gg.trangThai == 2 ? 0.6 : 1}" ng-disabled="gg.trangThai == 2">
+              Sửa
+            </a>
+
+
+          </td>
+
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <nav aria-label="Table Paging" class="my-3 d-flex justify-content-center">
+    <ul class="pagination">
+      <li class="page-item" ng-show="pageNumber > 0">
+        <a class="page-link" ng-href="" ng-click="previousPage()">Previous</a>
+      </li>
+      <li class="page-item">
+        <a class="page-link">{{ pageNumber + 1 }}</a>
+      </li>
+      <li class="page-item" ng-show="showNextButton">
+        <a class="page-link" ng-href="" ng-click="nextPage()">Next</a>
+      </li>
+    </ul>
+  </nav>
+</div>

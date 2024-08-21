@@ -1,0 +1,134 @@
+<div class="card overflow-hidden" style="min-height: 120px">
+  <h5 style="padding-left: 20px; padding-top: 16px; margin-bottom: 0">
+    <img src="/assets/images/filter-filled-tool-symbol.png" width="20px" style="padding-right: 3px" />Bộ lọc
+  </h5>
+  <hr />
+  <div class="box row" style="display: flex; flex-direction: row; flex-wrap: wrap;padding-left: 10px; height: 250px;">
+    <div class="col-3" >
+      <label></label>
+      <input class="form-control" ng-model="searchQuery" ng-change="searchKhach()" placeholder="Tìm kiếm mã "
+        style="margin-top: 4px;" />
+    </div>
+    <div class="col-3" >
+      <label></label>
+      <input class="form-control" ng-model="searchQuery2" ng-change="searchTenKhach()"
+        placeholder="Tìm kiếm tên " style="margin-top: 4px;" />
+    </div>
+    <div class="col-3 mt-3">
+      <label class="form-label" >Trạng thái :</label>
+      <select style="color: #e6774e" class="custom-select" ng-model="selectedTrangThai" ng-change="onTrangThaiChange()">
+        <option value="">Tất cả</option>
+        <option value="1">Hoạt động</option>
+        <option value="2">Kết thúc</option>
+      </select>
+    </div>
+    
+    <div class="col-3 mt-4">
+      
+      <a href="#/promotion/product" class="btn btn-success">
+        Chi tiết áp dụng
+      </a>
+      <a href="#/promotion/create" class="btn btn-primary">
+        Thêm mới
+      </a>
+    </div>
+    <div class="col-3" >
+      <label>Tìm theo ngày bắt đầu</label>
+      <input type="date" class="form-control" ng-model="searchQuery3" ng-change="searchNgay()"
+        style="margin-top: 4px;" />
+    </div>
+    <div class="col-3" >
+      <label></label>
+      <input class="form-control" ng-model="searchQuery7" ng-change="searchSanPham()"
+        placeholder="Tìm kiếm tên sản phẩm" style="margin-top: 4px;" />
+    </div>
+    
+    <div class="col-lg-3 mt-4">
+      <button class="btn btn-warning " ng-click="refresh()">
+        Làm mới
+      </button>
+    </div>
+    
+  </div>
+
+</div>
+</div>
+<div class="row">
+ 
+  <div class="col-lg-6"></div>
+</div>
+<div class="card overflow-hidden">
+  <div class="box">
+    <table class="table table-borderless table-hover">
+      <thead>
+        <tr style="background: linear-gradient(96deg, #e6774e 32.96%, #fdb913 100.17%);">
+          <th scope="col">STT</th>
+          <th scope="col">Mã </th>
+          <th scope="col">Tên </th>
+          <th scope="col">Giảm giá</th>
+          <th scope="col" style="width: 200px;">Thời gian</th>
+          <th scope="col" style="width: 160px;">Trạng thái</th>
+          <th scope="col" style="width: 300px;">Thao tác</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-if="listGiamGia.length === 0">
+          <td colspan="9" style="text-align: center;">Không tìm thấy dữ liệu</td>
+        </tr>
+        <tr ng-repeat="gg in listGiamGia">
+          <td>{{$index + 1}}</td>
+          <td>{{gg.maGiamGia}}</td>
+          <td>{{gg.tenGiamGia}}</td>
+          <td>{{gg.mucGiam.toLocaleString('vi-VN')}}{{gg.hinhThucGiam == 1 ? 'đ' : '%'}}</td>
+          <td>
+            {{gg.ngayBatDau | date:'dd/MM/yyyy HH:mm:ss a'}} - {{gg.ngayKetThuc | date:'dd/MM/yyyy HH:mm:ss a'}}
+          </td>
+          <td>
+            <span style="
+            background-color: #cceeff;
+            color: #0077cc;
+            padding: 4px 8px;
+            border-radius: 4px;
+            display: inline-block;
+            text-align: center;"> {{gg.trangThai == 1 ? 'Hoạt động':'Kết thúc'}}
+            </span>
+          </td>
+          <td>
+            <a ng-href="{{gg.trangThai != 2 ? '#/promotion/detail/' + gg.id : ''}}" class="btn btn-danger"
+              ng-style="{'opacity': gg.trangThai == 2 ? 0.6 : 1}" ng-disabled="gg.trangThai == 2">
+              Chi tiết
+            </a>
+            <a ng-href="{{gg.trangThai != 2 ? '#/promotion/update/' + gg.id : ''}}" class="btn btn-danger"
+              ng-style="{'opacity': gg.trangThai == 2 ? 0.6 : 1}" ng-disabled="gg.trangThai == 2">
+              Sửa
+            </a>
+            <!-- <a ng-href="{{gg.trangThai != 2 ? '#/promotion/update/' + gg.id : ''}}" class="btn btn-success"
+              ng-click="gg.trangThai != 2 ? updateGiamGiaStatus(gg.id, $event) : null"
+              ng-style="{'opacity': gg.trangThai == 2 ? 0.6 : 1}" ng-disabled="gg.trangThai == 2">
+              Sửa
+            </a> -->
+            <a class="btn btn-secondary" ng-click="updateGiamGiaStatus(gg.id, $event)">
+              {{ gg.trangThai == 2 ? 'Kích hoạt' : 'Hủy kích hoạt' }}
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="col-lg-12">
+      <nav aria-label="Table Paging" class="my-3 d-flex justify-content-center">
+        <ul class="pagination">
+          <li class="page-item" ng-show="pageNumber > 0">
+            <a class="page-link" ng-href="" ng-click="previousPage()"><img src="/assets/images/chevron-left.svg"
+                height="15px"></a>
+          </li>
+          <li class="page-item">
+            <a class="page-link">{{ pageNumber + 1 }}</a>
+          </li>
+          <li class="page-item" ng-show="showNextButton">
+            <a class="page-link" ng-href="" ng-click="nextPage()"><img src="/assets/images/chevron-right.svg"
+                height="15px"></a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>

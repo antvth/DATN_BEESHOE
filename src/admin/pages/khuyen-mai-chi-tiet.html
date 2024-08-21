@@ -1,0 +1,77 @@
+<h2>Thông tin chi tiết sản phẩm khuyến mãi</h2>
+<div class="col-lg-8" style="padding-bottom: 10px;">
+    <a href="#/promotion" class="btn btn-danger">
+        Quay lại
+    </a>
+</div>
+
+
+<!-- table -->
+<span ng-if="listSanPhamChiTiet.length === 0" style="margin-left: 500px;">Không có dữ liệu</span>
+<div class="card shadow" ng-if="listSanPhamChiTiet.length !== 0">
+    <table class="table table-borderless table-hover">
+        <thead>
+            <tr style="background: linear-gradient(96deg, #e6774e 32.96%, #fdb913 100.17%);">
+                <th scope="col">STT</th>
+                <th scope="col">Tên sản phẩm</th>
+                <th scope="col">Giá bán</th>
+                <th scope="col">Giá giảm</th>
+            </tr>
+        </thead>
+        <tbody class="table table-borderless table-hover">
+            <tr ng-repeat="detail in detailList">
+                <td>{{$index + 1}}</td>
+                <td>{{detail.productName}}</td>
+                <td>{{detail.giaBan.toLocaleString('vi-VN')}}đ</td>
+                <td>{{detail.donGiaKhiGiam.toLocaleString('vi-VN')}}đ</td>
+            </tr>
+        </tbody>
+    </table>
+    <nav aria-label="Page navigation example" style="margin-left: 490px" ng-if="listCart.length != 0">
+        <ul class="pagination">
+            <li class="page-item" ng-show="pageNumber > 0">
+                <a class="page-link" href="" ng-click="previousPage()">Previous</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link">{{pageNumber + 1}}</a>
+            </li>
+            <li class="page-item" ng-show="showNextButton">
+                <a class="page-link" href="" ng-click="nextPage()">Next</a>
+            </li>
+        </ul>
+    </nav>
+</div>
+
+<div class="modal fade" id="sizeModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered size-modal" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Danh mục</h5>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <span class="text-danger">*</span>
+                    <label for="brandName">Tên danh mục:</label>
+                    <input type="text" class="form-control" id="brandName" placeholder="Nhập tên danh mục" />
+                </div>
+
+                <div class="form-group">
+                    <span class="text-danger">*</span>
+                    <label for="status">Trạng thái:</label>
+                    <select class="form-control" id="status">
+                        <option value="active">Hoạt động</option>
+                        <option value="inactive">Ngưng hoạt động</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                    Đóng
+                </button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">
+                    Thêm
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
