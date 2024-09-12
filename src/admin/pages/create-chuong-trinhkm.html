@@ -1,0 +1,285 @@
+<style>
+  @import url("https://fonts.googleapis.com/css?family=Oswald");
+
+  * {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    box-sizing: border-box;
+  }
+
+
+
+  .fl-left {
+    float: left;
+  }
+
+  .fl-right {
+    float: right;
+  }
+
+  .row {
+    overflow: hidden;
+  }
+
+  .vc_CornerBadge_valid {
+    background-color: var(--vc-corner-badge-bg-color, #eda500);
+  }
+
+  .card-voucher {
+    margin-left: 10px;
+    display: table-row;
+    width: 350px;
+    height: 105px;
+    background-color: #fff;
+    color: #989898;
+    margin-bottom: 10px;
+    font-family: "Oswald", sans-serif;
+    text-transform: uppercase;
+    border-radius: 4px;
+    position: relative;
+  }
+
+  .date-voucher {
+    display: table-cell;
+    width: 35%;
+    position: relative;
+    text-align: center;
+    border-right: 2px dashed #dadde6;
+  }
+
+  .date-voucher:before,
+  .date-voucher:after {
+    content: "";
+    display: block;
+    width: 30px;
+    height: 30px;
+    background-color: #dadde6;
+    position: absolute;
+    top: -15px;
+    right: -15px;
+    z-index: 1;
+    border-radius: 50%;
+  }
+
+  .date-voucher:after {
+    top: auto;
+    bottom: -15px;
+  }
+
+  .date-voucher time {
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+  }
+
+  .date-voucher time span {
+    display: block;
+  }
+
+  .date-voucher time span:first-child {
+    color: #2b2b2b;
+    font-weight: 600;
+    font-size: 250%;
+  }
+
+  .date-voucher time span:last-child {
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-top: -10px;
+  }
+
+  .card-cont-voucher {
+    display: table-cell;
+    width: 75%;
+    font-size: 85%;
+    padding: 10px 10px 30px 50px;
+    padding-top: 15px;
+  }
+
+  .card-cont-voucher h3 {
+    color: #3c3c3c;
+    font-size: 130%;
+  }
+
+  .row:last-child .card:last-of-type .card-cont-voucher h3 {
+    text-decoration: line-through;
+  }
+
+  .card-cont-voucher>div {
+    display: table-row;
+  }
+
+  .card-cont-voucher .even-date i,
+  .card-cont-voucher .even-info i,
+  .card-cont-voucher .even-date time,
+  .card-cont-voucher .even-info p {
+    display: table-cell;
+  }
+
+  .card-cont-voucher .even-date i,
+  .card-cont-voucher .even-info i {
+    padding: 5% 5% 0 0;
+  }
+
+  .card-cont-voucher .even-info p {
+    padding: 30px 50px 0 0;
+  }
+
+  .card-cont-voucher .even-date time span {
+    display: block;
+  }
+
+  .card-cont-voucher a {
+    display: block;
+    text-decoration: none;
+    width: 80px;
+    height: 30px;
+    background-color: #d8dde0;
+    color: #fff;
+    text-align: center;
+    line-height: 30px;
+    border-radius: 2px;
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+  }
+
+  .row:last-child .card:first-child .card-cont-voucher a {
+    background-color: #037fdd;
+  }
+
+  .row:last-child .card:last-child .card-cont-voucher a {
+    background-color: #f8504c;
+  }
+
+  @media screen and (max-width: 860px) {
+    .card {
+      display: block;
+      float: none;
+      width: 100%;
+      margin-bottom: 10px;
+    }
+
+    .card+.card {
+      margin-left: 0;
+    }
+
+    .card-cont-voucher .even-date,
+    .card-cont-voucher .even-info {
+      font-size: 75%;
+    }
+  }
+</style>
+<div class="row">
+  <div class="col-lg-8">
+    <br />
+    <div class="card overflow-hidden" style="
+              padding-left: 20px;
+              padding-top: 20px;
+              padding-bottom: 20px;
+              padding-right: 20px;
+            ">
+      <div class="row">
+
+        <div class="col-lg-6">
+          <span class="header-title">
+            <span style="color: red">*</span>
+            <span>Mã giảm giá</span>
+          </span>
+          <input type="text" class="next-input" ng-model="maVoucher" disabled placeholder="Nhập mã voucher" />
+        </div>
+        <div class="col-lg-6">
+          <span class="header-title">
+            <span style="color: red">*</span>
+            <span>Tên giảm giá</span>
+          </span>
+          <input type="text" class="next-input" ng-model="tenVoucher" placeholder="Nhập tên voucher" />
+        </div>
+      </div>
+      <br />
+      <div class="row">
+        <div class="col-lg-6">
+          <span class="header-title">
+            <span style="color: red">*</span> <span>Số lượng</span>
+          </span>
+          <input type="number" class="next-input" ng-model="soLuongMa" placeholder="Nhập số lượng"
+            ng-disabled="!isQuantityEnabled" min="0" oninput="this.value = Math.max(0, this.value)" />
+        </div>
+        <div class="col-lg-6">
+          <span class="header-title"><span style="color: red">*</span><span>Giá trị tối thiểu đơn hàng</span></span>
+          <input type="number" class="next-input" ng-model="giaTriToiThieuDonhang"
+            placeholder="Nhập giá trị tối thiểu đơn hàng" min="0" oninput="this.value = Math.max(0, this.value)" />
+        </div>
+      </div>
+
+      <br />
+      <div class="row">
+        <div class="col-lg-6">
+          <span class="header-title"><span style="color: red">*</span><span>Giá giảm</span></span>
+          <input type="number" class="next-input" ng-model="giaTriGiam" placeholder="Nhập giá trị giảm" min="0"
+            oninput="this.value = Math.max(0, this.value)" />
+        </div>
+        <div class="col-lg-6">
+          <select class="form-select" id="selectOption" ng-model="hinhThucGiam" aria-label="Default select example"
+            style="margin-top: 20px;">
+            <option value="1" selected>%</option>
+            <option value="2" selected>đ</option>
+          </select>
+        </div>
+      </div>
+      <br />
+      <div class="row">
+        <div class="col-lg-6">
+          <span class="header-title"><span style="color: red">*</span><span>Ngày bắt đầu</span></span>
+          <input type="date" class="next-input" ng-model="ngayBatDau" placeholder="Nhập ngày bắt đầu" />
+        </div>
+        <div class="col-lg-6">
+          <span class="header-title"><span style="color: red">*</span><span>Ngày kết thúc</span></span>
+          <input type="date" class="next-input" ng-model="ngayKetThuc" placeholder="Nhập ngày kết thúc" />
+        </div>
+      </div>
+    </div>
+    <button class="btn btn-primary" ng-click="themVoucher()" style="width: 125px;">Thêm giảm giá</button>
+  </div>
+
+  <div class="col-lg-4" style="padding-top: 20px">
+    <div class="card overflow-hidden" style="padding-top: 20px; height: 350px; background-color: #dadde6">
+      <article class="card-voucher fl-left">
+        <section class="date-voucher">
+          <time datetime="23th feb">
+            <div data-testid="vcCornerBadge"
+              class="vc_CornerBadge_cornerBadge vc_CornerBadge_levelCorner vc_CornerBadge_valid" style="width: 100px">
+              <div class="" style="font-size: 10px; color: #2b2b2b">
+                Số lượng có hạn : {{soLuongMa}}
+              </div>
+            </div>
+            <img width="90px" style="padding-bottom: 0px"
+              src="/assets/images/z4754468708043_e3218b27549165452a995a7d4cbe6705_preview_rev_1.png" alt="" srcset="" />
+          </time>
+        </section>
+        <section class="card-cont-voucher">
+          <h6>Giá trị giảm : {{giaTriGiam.toLocaleString('vi-VN')}} {{ hinhThucGiam == 1 ? "%": "VND" }} </h6>
+          <span>Đơn tối thiểu : {{giaTriToiThieuDonhang.toLocaleString('vi-VN')}} VNĐ</span>
+          <div class="even-date">
+            <i class="fa fa-calendar"></i>
+            HSD: {{ ngayKetThuc == null ? "..." : ngayKetThuc | date:'MM/dd/yyyy h:mm:ss a'}}
+          </div>
+        </section>
+      </article>
+      <article class="card-voucher fl-left" style="height: 300px">
+        <h6 style="padding-left: 10px; padding-top: 10px;">Hạn sử dụng mã</h6>
+        <span style="padding-left: 10px;">{{ ngayBatDau == null ? "..." : ngayBatDau | date:'MM/dd/yyyy h:mm:ss a'}} -
+          {{ ngayKetThuc == null ?
+          "..." : ngayKetThuc | date:'MM/dd/yyyy h:mm:ss a'}}</span>
+        <h6 style="padding-left: 10px; padding-top: 10px;">Áp dụng cho đơn hàng</h6>
+        <span style="padding-left: 10px;">Chỉ áp dụng trên web cho một số hóa đơn nhất định.</span>
+      </article>
+    </div>
+  </div>
+
+</div>

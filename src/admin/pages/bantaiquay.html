@@ -51,7 +51,7 @@
     background-color: #bada55;
   }
 
-  .omni-layout-card--item-stack-cover {
+  .omni-layout-card--item-stack-cover{
     margin-top: unset !important;
   }
 </style>
@@ -115,7 +115,6 @@
       </div>
     </div>
   </div>
-
 
   <!-- Thông tin sản phẩm -->
   <div class="col-6">
@@ -219,7 +218,7 @@
         </table>
       </div>
     </div>
-
+    
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-lg">
         <div class="modal-content custom-modal-content">
@@ -418,6 +417,7 @@
     </div>
   </div>
 </div>
+
 
 <br>
 <hr>
@@ -654,7 +654,7 @@
                   <span style="color: red;margin-left: -25px;">{{errordiaChi}}</span>
                 </div>
               </div>
-
+              
               <div class="col-sm-6 col-12">
                 <div class="row">
                   <div class="col-lg-5" style="width: 350px;">
@@ -664,13 +664,13 @@
                     <button style="width: 49%;font-size: 14px;" class="btn btn-outline-warning"
                       ng-click="createTransaction2()">
                       <span style="display: inline-block;transform: translateY(-4px);">
-                        <i class="ti ti-cash"
-                          style="font-size: 30px;display: inline-block; transform: translateY(4px)"></i>
+                        <i class="ti ti-cash" style="font-size: 30px;display: inline-block; transform: translateY(4px)"></i>
                         Tiền mặt
                       </span>
                     </button>
-                    <!-- ng-click="Vnpay(tienCuoiCungCuaDon + (tienGiao ? + tienGiao : 0))" -->
-                    <button style="width: 49%;font-size: 14px;" class="btn btn-outline-warning">
+                    <button style="width: 49%;font-size: 14px;" class="btn btn-outline-warning"
+                    ng-click="Vnpay(tienCuoiCungCuaDon + (tienGiao ? + tienGiao : 0))"
+                    >
                       <img style="   
                      width: 50%;
                     transform: translateY(-2px);" src="https://sandbox.vnpayment.vn/paymentv2/Images/brands/logo.svg">
@@ -678,9 +678,10 @@
                     </button>
                   </div>
                   <div style="width: 100%;display: flex;justify-content: space-between;margin-top: 5px;">
-                    <button style="width: 100%;font-size: 14px;padding: 15px;" class="btn btn-outline-warning"
-                      ng-click="choosePaymentMethod(2)" ng-if="listCart.length !== 0" data-bs-toggle="modal"
-                      data-bs-target="#exampleModal5">
+                    <button style="width: 100%;font-size: 14px;padding: 15px;"
+                      class="btn btn-outline-warning" 
+                      ng-click="choosePaymentMethod(2)" 
+                      ng-if="listCart.length !== 0" data-bs-toggle="modal" data-bs-target="#exampleModal5">
                       <span style="display: inline-block;transform: translateY(-5px);">
                         <i class="ti ti-cash"
                           style="font-size: 30px; transform: translateY(4px);display: inline-block;"></i>
@@ -696,16 +697,12 @@
                 <div class="omni-layout-card--section-section">
                   <div class="omni-layout-card--item-stack-cover">
                     <div class="omni-layout-card--item-stack fill">
-
+                      
                       <div class="row">
                         <div class="col-lg-5" style="width: 150px;">
                           <span class="header-title">Khách thanh toán</span>
                         </div>
                         <div class="col-lg-7">
-                          <!-- <button class="btn btn-outline-primary" ng-if="listCart.length !== 0" data-bs-toggle="modal"
-                            data-bs-target="#exampleModal5" style="margin-left: 80px">
-                            <img src="/assets/images/debit-card.png" width="25px" alt="" srcset="" />
-                          </button> -->
                           <!-- thanh toán -->
                           <div class="modal fade" id="exampleModal5" tabindex="-1" aria-labelledby="exampleModalLabel"
                             aria-hidden="true">
@@ -731,8 +728,10 @@
                                         ng-click="createTransaction()">
                                         Tiền mặt
                                       </button>
-                                      <!-- ng-click="Vnpay(tienCuoiCungCuaDon + (tienGiao ? + tienGiao:0))" -->
-                                      <button class="btn btn-primary" style="margin-left: 10px">
+                                      <button class="btn btn-primary" style="margin-left: 10px"
+                                      ng-click="Vnpay(tienCuoiCungCuaDon + (tienGiao ? + tienGiao:0))"
+                                        
+                                        >
                                         Chuyển khoản
                                       </button>
                                     </div>
@@ -829,20 +828,17 @@
                 </div>
                 <div class="omni-layout-card--section-section">
                   <div class="omni-layout-card--item-stack-cover">
-                    <div class="omni-layout-card--item-stack fill"
-                      style="width: 100%;display: flex;justify-content: space-between;margin-top: 5px;">
-                      <div class="btn btn-outline-info"
-                        style="width: 100%; height: 40px; margin-top: 29px; display: flex; justify-content: space-between; font-size: 12px;"
-                        data-bs-toggle="modal" data-bs-target="#voucher">
+                    <div class="omni-layout-card--item-stack fill" style="width: 100%;display: flex;justify-content: space-between;margin-top: 5px;">
+                      <div class="btn btn-outline-info" 
+                           style="width: 100%; height: 40px; margin-top: 29px; display: flex; justify-content: space-between; font-size: 12px;"
+                           data-bs-toggle="modal" data-bs-target="#voucher">
                         <div>
-                          <i class="ti ti-gift-card"
-                            style="font-size: 21px; transform: translateY(3px); display: inline-block;"></i>
+                          <i class="ti ti-gift-card" style="font-size: 21px; transform: translateY(3px); display: inline-block;"></i>
                           Phiếu giảm giá
                         </div>
                         <div style="display: flex; align-items: center;">
                           <span>Chọn hoặc nhập mã</span>
-                          <i class="ti ti-chevron-right"
-                            style="font-size: 18px; transform: translateY(3px); display: inline-block; margin-left: 5px;"></i>
+                          <i class="ti ti-chevron-right" style="font-size: 18px; transform: translateY(3px); display: inline-block; margin-left: 5px;"></i>
                         </div>
                       </div>
                     </div>
@@ -928,7 +924,7 @@
                   </div>
                   <!-- modal voucher -->
                 </div>
-                <!-- <div class="omni-layout-card--section-section">
+                <div class="omni-layout-card--section-section">
                   <div class="omni-layout-card--item-stack-cover">
                     <div class="omni-layout-card--item-stack fill">
                       <span class="header-title">Giao hàng</span>
@@ -940,7 +936,7 @@
                       <label for="switch"></label>
                     </div>
                   </div>
-                </div> -->
+                </div>
                 <div class="omni-layout-card--section-section">
                   <div class="omni-layout-card--item-stack-cover">
                     <div class="omni-layout-card--item-stack fill">
@@ -989,17 +985,29 @@
                     </div>
                   </div>
                 </div>
+
+                <div class="omni-layout-card--section-section">
+                  <div class="omni-layout-card--item-stack-cover">
+                    <div class="omni-layout-card--item-stack fill">
+                      <span class="header-title">Tiền thừa</span>
+                    </div>
+                    <div class="omni-layout-card--item-stack fill text-right">
+                      <span class="header-title">{{ tienThuaTraKhach.toLocaleString('vi-VN')}}đ</span>
+                      <input hidden ng-model="requestData.tongTien" type="text" ng-value="tongTienHang" />
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-
+            
           </div>
-
+          
           <button class="btn btn-outline-warning" style="margin-left: 900px; margin-top: 25px; font-weight: bold"
             ng-show="showInput && listCart.length != 0"
             ng-click="createHoaDonChiTiet((tongTienHang - orderDetailCounter.tienGiamGia + (tienGiao ? +tienGiao : 0)), totalAmountPaid, tienThuaTraKhach, orderDetailCounter.tenKhach,orderDetailCounter.sodienthoai, orderDetailCounter.diaChi)">
             Xác nhận hóa đơn
           </button>
-
+          
           <button ng-show="!showInput && listCart.length != 0" class="btn btn-outline-warning"
             style="margin-left: 900px; margin-top: 20px; font-weight: bold"
             ng-click="createHoaDonChiTietGiao((tongTienHang - orderDetailCounter.tienGiamGia + (tienGiao ? +tienGiao : 0)), totalAmountPaid, tienThuaTraKhach)">

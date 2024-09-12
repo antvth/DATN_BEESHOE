@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+<style>
+  .view-account {
+    width: 108%;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .profile {
+    width: 100%;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Style for the circular image */
+  .profile-image {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+    /* Đảm bảo ảnh không bị cắt */
+    margin: 0 auto;
+    /* Canh giữa ảnh */
+  }
+
+  .profile-image img {
+    width: 100%;
+    /* Tự động thích ứng với kích thước của hình tròn */
+    height: 100%;
+    /* Tự động thích ứng với kích thước của hình tròn */
+  }
+
+  /* Style for the list */
+  .profile ul {
+    list-style: none;
+    padding: 0;
+    text-align: center;
+  }
+
+  .profile li {
+    margin: 10px 0;
+    list-style: none;
+  }
+
+  /* Style for the links */
+  .profile a {
+    font-size: 18px;
+    color: #333;
+    font-size: 400;
+    text-decoration: none;
+  }
+
+  .profile a:hover {
+    font-weight: 600;
+  }
+</style>
+<link rel="shortcut icon" type="image/png"
+  href="/assets/images/z4754478488073_3d987c07976994288f3feae0cc9f3835_preview_rev_1.png" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css" />
+<link rel="stylesheet" href="/assets/css/styles.min.css" />
+<link rel="stylesheet" href="/css/custom/hinh-thuc-thah-toan.css" />
+<link rel="stylesheet" href="/css/custom/create-ctkm.css" />
+<link rel="stylesheet" href="/css/custom/combobox.css" />
+<link rel="stylesheet" href="/css/custom/trang-thai-hdct.css" />
+
+<body>
+  <div class="row">
+    <div class="page-wrapper col-md-2" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6"
+      data-sidebartype="full" data-sidebar-position="fixed" data-header-position="fixed">
+      <div>
+        <div class="brand-logo d-flex align-items-center justify-content-between">
+          <a href="./index.html" class="text-nowrap logo-img">
+            <img src="/assets/images/z4754468708043_e3218b27549165452a995a7d4cbe6705_preview_rev_1.png" width="130"
+              alt="" />
+          </a>
+          <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
+            <i class="ti ti-x fs-8"></i>
+          </div>
+        </div>
+        <br>
+        <nav class="sidebar-nav scroll-sidebar" data-simplebar="">
+          <ul id="sidebarnav">
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="#/dia-chi" aria-expanded="false">
+                <span>
+                  <img src="/assets/images/Medical-Profile-Patiant-3--Streamline-Ultimate.png" width="180" alt=""
+                    style="width: 21px; height: 21px" />
+                </span>
+                <span class="hide-menu">Thông tin cá nhân</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="#/don-hang" aria-expanded="false">
+                <span>
+                  <img src="/assets/images/donhang.png" width="180" alt=""
+                    style="width: 21px; height: 21px" />
+                </span>
+                <span class="hide-menu">Đơn hàng</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="#/home" aria-expanded="false">
+                <span>
+                  <img src="/assets/images/Move-Back--Streamline-Ultimate.png" width="180" alt=""
+                    style="width: 21px; height: 21px" />
+                </span>
+                <span class="hide-menu">Về trang chủ</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+    <div class="col-md-10">
+      <div class="card overflow-hidden" style=" width: 1200px">
+        <div class="card-body p-4">
+          <div>
+            <h6 style="
+                font-weight: bold;
+                height: 10px;
+                font-size: 15px;
+                padding-left: 709px;
+                padding-bottom: 10px;
+              ">
+              MÃ ĐƠN HÀNG : {{listThongTin.ma}}
+            </h6>
+          </div>
+          <hr />
+          <div class="row mb-2">
+            <div class="col-lg-4">
+              <h6 style="font-weight: bold; font-size: 15px">
+                Thông tin nhận hàng
+              </h6>
+              <span>{{listThongTin.tenNguoiNhan}}</span>
+              <br />
+              <span>{{listThongTin.sdtNguoiNhan}}</span>
+              <br />
+              <span>{{listThongTin.diaChi}}</span>
+            </div>
+            <div class="col-lg-4">
+              <h6 style="font-weight: bold; font-size: 15px">
+                Thông tin người giao
+              </h6>
+              <span>{{listThongTin.tenNguoiShip}}</span>
+              <br />
+              <span>{{listThongTin.sdtNguoiShip}}</span>
+            </div>
+            <div class="col-lg-4">
+              <h6 style="font-weight: bold; font-size: 15px">Lịch sử đơn hàng</h6>
+              <div ng-repeat="item in listTrangThai">
+                <span>
+                  {{
+                  item.trangThai == 1 ? "Chờ xác nhận" :
+                  item.trangThai == 2 ? "Đã xác nhận" :
+                  item.trangThai == 3 ? "Chờ giao hàng" :
+                  item.trangThai == 4 ? "Giao hàng" :
+                  item.trangThai == 5 ? "Hoàn thành" :
+                  item.trangThai == 6 ? "Đã hủy" :
+                  item.trangThai == 7 ? 'Trả hàng' : 'Chỉnh sửa đơn'
+                  }}: {{ item.thoiGian | date:'HH:mm dd-MM-yyyy' }}
+                </span>
+                <br />
+              </div>
+            </div>
+          </div>
+          <!-- modal thông báo trạng thái HD -->
+          <span style="font-size: 20px;">Lịch sử thanh toán</span>
+          <div class="d-flex align-items-center">
+            <!-- modal hoàn trả  -->
+            <table class="table" style="width: 1085px;">
+              <thead>
+                <tr style="border: 1px solid #ccc; background: linear-gradient(96deg, #e6774e 32.96%, #fdb913 100.17%);">
+                  <th scope="col">STT</th>
+                  <th scope="col">Mã giao dịnh</th>
+                  <th scope="col">Thanh toán</th>
+                  <th scope="col">Số tiền khách trả</th>
+                  <th scope="col">Thời gian</th>
+                  <th scope="col">Hình thức thanh toán</th>
+                  <th scope="col">Ghi chú</th>
+                  <th scope="col">Người xác nhận</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="item in lichSu">
+                  <td>{{$index + 1}}</td>
+                  <td>{{item.ma}}</td>
+                  <td>{{item.tenLoai}}</td>
+                  <td>{{item.soTienTra | number}}đ</td>
+                  <td>{{item.ngayTao| date:'MM/dd/yyyy h:mm:ss a'}}</td>
+                  <td>{{item.phuongThucThanhToan == 1 ? 'Tiền mặt' : 'Chuyển khoản'}}</td>
+                  <td>{{item.ghiChu}}</td>
+                  <td>{{item.name}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <br />
+        <table class="table">
+          <tbody>
+            <tr ng-repeat="item in listSanPham">
+              <td style="width: 150px">
+                <img src="/assets/ảnh giày/{{item.tenImage}}" alt="" width="200px" />
+              </td>
+              <td >
+                <h6 style="font-size: 15px; font-weight: bold; height: 10px">
+                  {{item.tenSanPham}}
+                  <br />
+                  <br />
+                  Size: {{item.size}}
+                  <br />
+                  Chất Liệu: {{item.tenChatLieu}}
+                  <br />
+                  Màu Sắc: {{item.tenMauSac}}
+                  <br>
+                  Số lượng: {{item.soLuong}}
+                </h6>
+              </td>
+              <td style="padding-top: 80px">
+                <div ng-show="item.donGiaSauGiam != null">
+                  {{item.donGiaSauGiam | number}}đ
+                  <span
+                    style="text-decoration: line-through;color: crimson">{{item.donGia | number}}đ</span>
+                </div>
+                <div ng-show="item.donGiaSauGiam == null">
+                  {{item.donGia | number}}đ
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="omni-layout-card--section-section">
+          <div style="margin-left: 15px;">
+            <button ng-show="hoaDonChiTiet.trangThai == 1 || hoaDonChiTiet.trangThai == 2" type="button"
+              class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#huydonkhach">Hủy đơn</button>
+            <a type="button" href="/src/customer/index-customer.html?#/shop" class="btn btn-primary">Trang
+              chủ</a>
+          </div>
+          <!-- modal hủy hóa đơn khách -->
+          <div class="modal fade" id="huydonkhach" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header"></div>
+                <div class="modal-body">
+                  <div class="modal-body-item">
+                    <span class="header-title"><span style="color: red">*</span>
+                      <span>Nhập lý do hủy đơn</span></span>
+                    <input type="text" class="form-control" placeholder="Lý do hủy" ng-model="huyHoaDon.ghiChu" />
+                    <br />
+                  </div>
+                  <br />
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Hủy
+                  </button>
+                  <button type="button" data-bs-dismiss="modal" class="btn btn-outline-danger m-1"
+                    ng-click="comfirmStatusHuyDon()">
+                    Xác nhận
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- modal hủy hóa đơn -->
+        </div>
+        <div class="omni-layout-card--item-stack-cover" style="margin-right: 10px;">
+          <div class="omni-layout-card--item-stack fill">
+            <span class="header-title" style="padding-left: 1000px">Tổng tiền hàng</span>
+          </div>
+          <div class="omni-layout-card--item-stack fill text-right">
+            <span class="header-title">{{tongTienHang.toLocaleString('vi-VN')}}đ</span>
+          </div>
+        </div>
+        <div class="omni-layout-card--section-section mt-3" style="margin-right: 10px;">
+          <div class="omni-layout-card--item-stack-cover">
+            <div class="omni-layout-card--item-stack fill">
+              <span class="header-title" style="padding-left: 1000px">Tiền ship</span>
+            </div>
+            <div class="omni-layout-card--item-stack fill text-right">
+              <span class="header-title">{{ thanhTien.tienShip != null ? thanhTien.tienShip.toLocaleString('vi-VN')
+                +
+                'đ' : '0' }}₫</span>
+            </div>
+          </div>
+        </div>
+        <div class="omni-layout-card--section-section" style="margin-right: 10px;">
+          <div class="omni-layout-card--item-stack-cover">
+            <div class="omni-layout-card--item-stack fill">
+              <span class="header-title" style="padding-left: 1000px">Tiền giảm giá</span>
+            </div>
+            <div class="omni-layout-card--item-stack fill text-right">
+              <span class="header-title">{{thanhTien.tienGiamGia.toLocaleString('vi-VN')}}₫</span>
+            </div>
+          </div>
+        </div>
+        <div class="omni-layout-card--section-section" style="margin-right: 10px;">
+          <div class="omni-layout-card--item-stack-cover">
+            <div class="omni-layout-card--item-stack fill">
+              <span class="header-title" style="padding-left: 1000px">Thành tiền</span>
+            </div>
+            <div class="omni-layout-card--item-stack fill text-right">
+              <span class="header-title">{{thanhTien.tongTien.toLocaleString('vi-VN')}}₫</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+</html>

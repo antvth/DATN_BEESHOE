@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myModule">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>BEE SHOE</title>
+    <link rel="shortcut icon" type="image/png"
+        href="/assets/images/z4754478488073_3d987c07976994288f3feae0cc9f3835_preview_rev_1.png" />
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="/css/font-awesome.min.css" type="text/css" />
+    <link rel="stylesheet" href="/css/elegant-icons.css" type="text/css" />
+    <link rel="stylesheet" href="/css/nice-select.css" type="text/css" />
+    <link rel="stylesheet" href="/css/jquery-ui.min.css" type="text/css" />
+    <link rel="stylesheet" href="/css/owl.carousel.min.css" type="text/css" />
+    <link rel="stylesheet" href="/css/slicknav.min.css" type="text/css" />
+    <link rel="stylesheet" href="/css/style.css" type="text/css" />
+    <link rel="stylesheet" href="/css/cart-hover.css" />
+
+</head>
+<style>
+    .icon_close:hover {
+        margin: 0px 5px;
+    }
+
+    @import "https://fonts.googleapis.com/css?family=Lato:300,400,700";
+    @import "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css";
+
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
+    }
+
+    .container-cart {
+        background: rgb(255, 255, 255) none repeat scroll 0 0;
+        /* border-radius: 3px;
+    float: right;
+    margin: 20px 0;
+    padding: 20px;
+    position: relative; */
+        width: 320px;
+        border: 0.5px solid rgb(245, 241, 241);
+    }
+
+    .shopping-cart {
+        background: rgb(255, 255, 255) none repeat scroll 0 0;
+        border-radius: 3px;
+        float: right;
+        margin: 20px 0;
+        padding: 20px;
+        position: relative;
+        width: 320px;
+    }
+
+    .shopping-cart .shopping-cart-header {
+        border-bottom: 1px solid rgb(232, 232, 232);
+        padding-bottom: 15px;
+    }
+
+    .shopping-cart .shopping-cart-header .shopping-cart-total {
+        float: right;
+    }
+
+    .shopping-cart .shopping-cart-items {
+        padding-top: 20px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .shopping-cart .shopping-cart-items li {
+        margin-bottom: 18px;
+        display: flex;
+        align-items: center;
+    }
+
+    .shopping-cart .shopping-cart-items img {
+        margin-right: 10px;
+    }
+
+    .shopping-cart .shopping-cart-items .item-name {
+        display: block;
+        font-size: 13px;
+        padding-top: 10px;
+    }
+
+    .shopping-cart .shopping-cart-items .item-price {
+        color: rgb(99, 148, 248);
+        font-size: 15px;
+        padding-top: 5px;
+        display: block;
+    }
+
+    .shopping-cart .shopping-cart-items .item-quantity {
+        color: rgb(171, 176, 190);
+        font-size: 13px;
+        display: block;
+        padding-top: 5px;
+    }
+
+    .shopping-cart::after {
+        -moz-border-bottom-colors: none;
+        -moz-border-left-colors: none;
+        -moz-border-right-colors: none;
+        -moz-border-top-colors: none;
+        border-color: rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) rgb(255, 255, 255);
+        border-image: none;
+        border-style: solid;
+        border-width: 8px;
+        bottom: 100%;
+        content: " ";
+        height: 0;
+        left: 89%;
+        margin-left: -8px;
+        pointer-events: none;
+        position: absolute;
+        width: 0;
+    }
+
+    .cart-icon {
+        color: rgb(81, 87, 131);
+        float: left;
+        font-size: 24px;
+        margin-right: 7px;
+    }
+
+    .button {
+        background: #7fad39 none repeat scroll 0 0;
+        border-radius: 30px;
+        box-shadow: 7px 7px 10px rgba(0, 0, 0, 0.15);
+        color: rgb(255, 255, 255);
+        display: block;
+        font-size: 16px;
+        margin: 25px 0 15px;
+        padding: 12px;
+        text-align: center;
+        text-decoration: none;
+    }
+
+    .button_viewcart {
+        background: rgb(255, 93, 93) none repeat scroll 0 0;
+        border-radius: 30px;
+        box-shadow: 7px 7px 10px rgba(0, 0, 0, 0.15);
+        color: rgb(255, 255, 255);
+        display: block;
+        font-size: 16px;
+        margin: 25px 0 15px;
+        padding: 12px;
+        text-align: center;
+        text-decoration: none;
+    }
+
+    .button:hover {
+        background: #90d626 none repeat scroll 0 0;
+    }
+
+    .button_viewcart:hover {
+        background: rgb(255, 80, 70) none repeat scroll 0 0;
+    }
+
+    .clearfix::after {
+        clear: both;
+        content: "";
+        display: table;
+    }
+
+    .container-cart {
+        display: none;
+    }
+
+    .open-cart:hover .container-cart {
+        display: block;
+    }
+
+    .custom-radio {
+        display: flex;
+        align-items: center;
+        margin-right: 20px;
+        /* Khoảng cách giữa radio button và label */
+    }
+
+    .custom-radio input[type="radio"] {
+        margin-right: 5px;
+        /* Khoảng cách giữa radio button và label */
+    }
+
+    .custom-radio label {
+        font-weight: normal;
+        /* Loại bỏ đậm */
+        font-size: 16px;
+        /* Điều chỉnh kích thước văn bản */
+    }
+
+    /* Thiết lập kiểu thanh cuộn */
+    ::-webkit-scrollbar {
+        width: 3px;
+        /* Chiều rộng của thanh cuộn */
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background-color: #7fad39;
+        /* Màu nền của thanh cuộn */
+        border-radius: 20px;
+        /* Bo tròn cạnh của thanh cuộn */
+    }
+
+    ::-webkit-scrollbar-track {
+        background-color: #e2e9d7;
+        /* Màu nền của phần track thanh cuộn */
+    }
+
+    .account-form {
+        display: none;
+        position: absolute;
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        padding: 10px;
+        top: 45px;
+        right: 0;
+        z-index: 999;
+    }
+
+    .account-hover:hover .account-form {
+        display: block;
+    }
+
+    /* CSS để thay đổi màu nền khi click */
+    li.account-hover a:active {
+        background-color: #dcdcdc;
+        /* Màu xám nhạt */
+    }
+
+    /* CSS để xóa chọn văn bản khi click (nếu có) */
+    li.account-hover a:active,
+    li.account-hover a:focus {
+        outline: none;
+    }
+</style>
+
+<body>
+    <header class="header-area">
+        <!-- main header start -->
+        <div class="main-header d-none d-lg-block">
+  
+          <!-- header middle area start -->
+          <div class="header-main-area sticky">
+            <div class="container">
+              <div class="row align-items-center position-relative">
+                <!-- start logo area -->
+                <div class="col-lg-2">
+                  <div class="logo">
+                    <a href="#!trang-chu" style="   
+                                 font-size: 19px;
+                                font-weight: 200;">
+                      <img style="width: 50%;"
+                        src="/assets/images/z4754468708043_e3218b27549165452a995a7d4cbe6705_preview_rev_1.png" alt="">
+                    </a>
+                  </div>
+                </div>
+                <!-- start logo area -->
+  
+                <!-- main menu area start -->
+                <div class="col-lg-8 position-static">
+                  <div class="main-menu-area">
+                    <div class="main-menu">
+                      <!-- main menu navbar start -->
+                      <nav class="desktop-menu">
+                        <ul>
+                          <li class="active btn-nav" id="home" ng-click="changeActive(0)"><a href="#home"
+                              style="font-weight: 600;">Trang
+                              chủ</a>
+                          </li>
+  
+                          <li class="static btn-nav" id="men_shoes" ng-click="changeActive(1)" style="font-weight: 600;">
+                            <a href="#shop" style="font-weight: 600;">Sản phẩm
+                            </a>
+  
+                          </li>
+                        </ul>
+                      </nav>
+                      <!-- main menu navbar end -->
+                    </div>
+                  </div>
+                </div>
+                <!-- main menu area end -->
+  
+                <!-- mini cart area start -->
+                <div class="col-lg-2">
+                  <div class="header-configure-wrapper">
+                    <div class="header-configure-area">
+                      <ul class="nav justify-content-end">
+                        <li>
+                          <a href="#" class="offcanvas-btn">
+                            <i class="ion-ios-search-strong"></i>
+                          </a>
+                        </li>
+                        <li class="user-hover" ng-controller="loginCutomController">
+                          <a>
+                            <i class="ti ti-user"></i>
+                          </a>
+                          <ul style="padding: 10px!important;padding-left: 16px!important;" class="dropdown-list" ng-if="!isLoggedIn">
+                            <li><a href="#/login">Đăng nhập</a></li>
+                            <li><a href="#/register">Đăng ký</a></li>
+                          </ul>
+                        
+                          <!-- Menu cho người đã đăng nhập -->
+                          <ul style="padding: 10px!important;padding-left: 16px!important;" class="dropdown-list" ng-if="isLoggedIn">
+                            <li><a href="#/dia-chi">Thông tin</a></li>
+                            <li><a href="#/don-hang">Danh sách hóa đơn</a></li>
+                            <li style="cursor: pointer;"><a ng-click="logout()" ng-if="isLoggedIn">Đăng xuất</a></li>
+                          </ul>
+                        </li>
+                        <li>
+                          <a class="minicart-btn" href="#/check-out" ng-click="openMiniCart()">
+                            <i class="ion-bag"></i>
+                            <div class="notification" id="quantity_of_cart_mobile">{{quantity_all.tongSoLuong}}</div>
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <!-- mini cart area end -->
+              </div>
+            </div>
+          </div>
+          <!-- header middle area end -->
+        </div>
+  
+        <!-- <div class="offcanvas-minicart-wrapper" ng-show="showMiniCart">
+          <div class="minicart-inner">
+            <div class="offcanvas-overlay"></div>
+            <div class="minicart-inner-content">
+              <div class="minicart-close">
+                <i class="ion-android-close"></i>
+              </div>
+              <div class="minicart-content-box">
+                <div class="minicart-item-wrapper">
+                  <ul>
+                    <li class="minicart-item" ng-repeat="product in products">
+                      <div class="minicart-thumb">
+                        <a href="product-details.html">
+                          <img src="/assets/ảnh giày/{{product.tenimage}}" alt="{{product.tensanpham}}">
+                        </a>
+                      </div>
+                      <div class="minicart-content">
+                        <h3 class="product-name">
+                          <a href="product-details.html">{{product.tensanpham}}</a>
+                        </h3>
+                        <p>
+                          <span class="cart-quantity">{{product.soluong}} <strong>&times;</strong></span>
+                          <span class="cart-price">{{product.dongiakhigiam || product.giaban | number}}đ</span>
+                        </p>
+                      </div>
+                      <button class="minicart-remove" ng-click="deleteProduct(product.id)"><i class="ion-android-close"></i></button>
+                    </li>
+                  </ul>
+                </div>
+                <div class="minicart-pricing-box">
+                  <ul>
+                    <li class="total">
+                      <span>Tổng tiền</span>
+                      <span><strong>{{totalAmount | number}}đ</strong></span>
+                    </li>
+                  </ul>
+                </div>
+                <div class="minicart-button">
+                  <a href="#/check-out" style="background-color: #3a4863;"><i class="fa fa-shopping-cart"></i>Đi đến giỏ hàng</a>
+                  <a href="#/check-out" style="background-color: #3a4863;"><i class="fa fa-share"></i> Thanh toán</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> -->
+  
+      </header>
+
+    <section class="featured spad">
+        <div class="container">
+            <h1 class="section-header" style="text-align: center;">Liên hệ với chúng tôi</h1>
+
+            <div class="col-md-12">
+                <div class="wrapper">
+                    <div class="row no-gutters mb-5">
+                        <div class="col-md-">
+                            <div class="contact-wrap w-100 p-md-5 p-4">
+                                
+                                <form method="POST" id="contactForm" name="contactForm" class="contactForm">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="label" for="name"></label>
+                                                <input type="text" class="form-control" name="name" id="name"
+                                                    placeholder="Nhập tên của bạn">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="label" for="email"></label>
+                                                <input type="email" class="form-control" name="email" id="email"
+                                                    placeholder="Nhập email của bạn">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="label" for="subject"></label>
+                                                <input type="text" class="form-control" name="subject" id="subject"
+                                                    placeholder="Nhập số điện thoại của bạn">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="label" for="#"></label>
+                                                <textarea name="message" class="form-control" id="message" cols="30"
+                                                    rows="4" placeholder="Nội dung của bạn"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <input type="submit" value="Gửi phản hồi" class="btn btn-primary">
+                                                <div class="submitting"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="dbox w-100 text-center">
+                                <div class="icon d-flex align-items-center justify-content-center">
+                                    <span class="fa fa-map-marker"></span>
+                                </div>
+                                <div class="text">
+                                    <p><span>Địa chỉ:</span> 07 - Trịnh Văn Bô - Bắc Từ Liêm - Hà Nội</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="dbox w-100 text-center">
+                                <div class="icon d-flex align-items-center justify-content-center">
+                                    <span class="fa fa-phone"></span>
+                                </div>
+                                <div class="text">
+                                    <p><span>Phone:</span> <a href="tel://1234567920">+ 1235 2355 98</a></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="dbox w-100 text-center">
+                                <div class="icon d-flex align-items-center justify-content-center">
+                                    <span class="fa fa-paper-plane"></span>
+                                </div>
+                                <div class="text">
+                                    <p><span>Email:</span> <a href="mailto:info@yoursite.com">beeshoepoly@gmail.com</a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="dbox w-100 text-center">
+                                <div class="icon d-flex align-items-center justify-content-center">
+                                    <span class="fa fa-globe"></span>
+                                </div>
+                                <div class="text">
+                                    <p><span>Website</span> <a href="#">BEESHOE.com</a></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        </div>
+    </section>
+
+      <!-- Footer Section Begin -->
+      <footer>
+        <div class="footer-bottom">
+          <div class="form-site">
+            <div class="footer-content row">
+              <div class="col-12 col-sm-12 col-md-6">
+                <div class="information">
+                  <a href=""><img src="/assets/images/z4754468708043_e3218b27549165452a995a7d4cbe6705_preview_rev_1.png" style="height: 150px;" alt="">
+                  </a>
+                  <div class="contact1">
+                    <div class="contac-lh">
+                      <div class="icon-contac"><img src="/assets/image/phone.png" alt=""></div>
+                      <div class="content-lh">098.328.0968</div>
+                    </div>
+                    <div class="contac-lh">
+                      <div class="icon-contac">
+                        <img src="/assets/image/mail.png" alt="">
+                      </div>
+                      <div class="content-lh">beeshoepoly@gmail.com</div>
+                    </div>
+                    <div class="contac-lh">
+                      <div class="icon-contac">
+                        <img src="/assets/image/map.png" alt="">
+                      </div>
+                      <div class="content-lh">
+                        07 - Trịnh Văn Bô - Bắc Từ Liêm - Hà Nội
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-6 col-sm-6 col-sd-3 col-xl-2">
+                <div class="nationnal">
+                  <h5 class="title-national">Cửa hàng</h5>
+                  <a href="" class="conten-nationnal">Trang chủ</a>
+                  <a href="" class="conten-nationnal">Về chúng tôi</a>
+                  <a href="" class="conten-nationnal">Tin tức</a>
+                  <a href="" class="conten-nationnal">Tuyển dụng</a>
+                  <a href="" class="conten-nationnal">Chính sách</a>
+                </div>
+              </div>
+              <div class="col-6 col-sm-6 col-sd-3 col-xl-2">
+                <div class="nationnal">
+                  <h5 class="title-national">Dịch vụ</h5>
+                  <a href="/src/customer/index-customer.html#/chinh-sach-van-chuyen" class="conten-nationnal">Chính sách vận chuyển
+                    và giao nhận</a>
+                  <a href="/src/customer/index-customer.html#/chinh-sach-doi-tra" class="conten-nationnal">Chính sách đổi, trả và
+                    bảo hành</a>
+                  <a href="/src/customer/index-customer.html#/chinh-sach-bao-mat" class="conten-nationnal">Chính sách bảo mật</a>
+                  <a href="/src/customer/index-customer.html#/chinh-sach-xu-ly-khieu-nai" class="conten-nationnal">Chính sách xử lý
+                    khiếu nại</a>
+                  <a href="/src/customer/index-customer.html#/huong-dan" class="conten-nationnal">Hướng dẫn đặt hàng</a>
+                  <a href="/src/customer/index-customer.html#/hinh-thuc-thanh-toan" class="conten-nationnal">Hình thức thanh toán</a>
+  
+                </div>
+              </div>
+              <div class="col-6 col-sm-6 col-sd-3 col-xl-2">
+                <div class="folow">
+                  <h5 class="title-forlow ">Theo dõi chúng tôi</h5>
+                  <a href="" class="img-folow"><img src="/assets/image/Vector.png" alt=""></a>
+                  <a href="" class="img-folow"><img src="/assets/image/X.png" alt=""></a>
+                  <a href="" class="img-folow"><img src="/assets/image/LinkedIn.png" alt=""></a>
+                  <a href="" class="img-folow"><img src="/assets/image/Youtube.png" alt=""></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </footer>
+    <script src="/js/jquery-3.3.1.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/jquery.nice-select.min.js"></script>
+    <script src="/js/jquery-ui.min.js"></script>
+    <script src="/js/jquery.slicknav.js"></script>
+    <script src="/js/mixitup.min.js"></script>
+    <script src="/js/owl.carousel.min.js"></script>
+    <script src="/js/main.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,144 @@
+<div class="card overflow-hidden" style="min-height: 120px">
+  <div class="box">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card overflow-hidden" style="
+                  margin-top: 20px;
+                  margin-left: 20px;
+                  padding-left: 20px;
+                  padding-right: 20px;
+                  padding-top: 20px;
+                  padding-bottom: 20px;
+                  width: 1110px;
+                ">
+          <div class="row">
+            <div class="col-lg-6" style="padding-top: 15px">
+              <span class="header-title">Mã khuyến mại</span>
+              <span class="header-title" style="padding-left: 320px">
+                <input type="text" disabled class="next-input" placeholder="nhập mã khuyến mãi"
+                  ng-value="giamgiachitiet.maGiamGia" />
+              </span>
+            </div>
+            <div class="col-lg-6" style="padding-top: 15px">
+              <span class="header-title">Tên khuyến mại </span>
+              <input type="text" class="next-input" placeholder="Nhập tên khuyến mại"
+                ng-model="giamgiachitiet.tenGiamGia" />
+            </div>
+            <div class="col-lg-5" style="padding-top: 15px">
+              <span class="header-title">Mức giảm</span>
+              <input type="number" class="next-input" placeholder="0" ng-model="giamgiachitiet.mucGiam" min="0"
+                oninput="this.value = Math.max(0, this.value)" />
+            </div>
+            <div class="col-lg-2" style="padding-top: 10px">
+              <select class="form-select" id="selectOption" ng-value="giamgiachitiet.hinhThucGiam"
+                ng-model="giamgiachitiet.hinhThucGiam" aria-label="Default select example">
+                <option value="1" selected>đ</option>
+                <option value="2" selected>%</option>
+              </select>
+            </div>
+            <!-- Ngày Bắt Đầu -->
+            <div class="col-lg-6" style="padding-top: 15px">
+              <span class="header-title">Ngày bắt đầu</span>
+              <input type="date" class="next-input" placeholder="Nhập ngày bắt đầu"
+                ng-value="giamgiachitiet.ngayBatDau | date:'yyyy-MM-dd'" ng-model="giamgiachitiet.ngayBatDau" />
+            </div>
+            <div class="col-lg-6" style="padding-top: 15px">
+              <span class="header-title">Ngày kết thúc</span>
+              <input type="date" class="next-input" placeholder="Nhập ngày kết thúc"
+                ng-value="giamgiachitiet.ngayKetThuc | date:'yyyy-MM-dd'" ng-model="giamgiachitiet.ngayKetThuc" />
+            </div>
+            <br />
+            <div class="col-lg-12">
+              <button type="button" class="btn btn-success m-1" ng-click="updateGiamGia(giamgiachitiet.id)">
+                Sửa
+              </button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="card overflow-hidden" style="
+                margin-top: 20px;
+                margin-left: 20px;
+                margin-right: 20px;
+                width: 1135px;
+              ">
+        <br />
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-8">
+              <input type="text" class="next-input" ng-model="searchQuery" ng-change="searchKhach()"
+                placeholder="Tìm kiếm tên sản phẩm" />
+            </div>
+            <div class="col-lg-4">
+              <button class="btn btn-warning" ng-click="refresh()">
+                Làm mới
+              </button>
+            </div>
+          </div>
+        </div>
+        <br />
+        <table class="table table-borderless table-hover">
+          <thead>
+            <tr style="background: linear-gradient(96deg, #e6774e 32.96%, #fdb913 100.17%);">
+              <th scope="col">
+                <input type="checkbox" style="margin-right: 15px" ng-model="selectAllProducts"
+                  ng-change="toggleAllProducts()" />
+                {{$index + 1}}
+              </th>
+              <th scope="col">Ảnh sản phẩm</th>
+              <th scope="col">Tên sản phẩm</th>
+              <th scope="col">Giá sản phẩm</th>
+              <th scope="col">Số lượng giảm giá</th>
+              <th scope="col">Giá bán sau khi giảm</th>
+            </tr>
+          </thead>
+          <tbody class="table table-borderless table-hover">
+            <tr ng-if="listProduct.length === 0">
+              <td colspan="9" style="text-align: center;">Không tìm thấy dữ liệu</td>
+            </tr>
+
+            <tr ng-repeat="gg in listProduct" ng-class="{ 'row-red': (gg.giaBan - gg.giaGiam) <= 0 }">
+              <td style="padding-top: 75px">
+                <input type="checkbox" style="margin-right: 15px" ng-model="selectedProductIds[gg.id]"
+                  ng-change="chonSanPham(gg.id)"
+                  ng-checked="selectAllProducts ||gg.id === giamgiachitiet.idSanPham || isIdEqual(giamgiachitiet.idSanPham, gg.id)" />
+
+                {{$index + 1 + (pageNumber * 20)}}
+              </td>
+              <td>
+                <img src="/assets/ảnh giày/{{gg.image}}" alt="" width="150px" />
+              </td>
+              <td>{{gg.productName}}</td>
+              <td>
+                {{gg.giaBan.toLocaleString('vi-VN')}}đ
+              </td>
+              <td>
+                {{gg.soLanGiam}}
+              </td>
+              <td>
+                {{(gg.giaBan - gg.giaGiam) < 0 ? 0 : (gg.giaBan - gg.giaGiam).toLocaleString('vi-VN')}}đ </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <nav aria-label="Table Paging" class="my-3 d-flex justify-content-center">
+        <ul class="pagination">
+          <li class="page-item">
+            <a class="page-link" ng-href="" ng-click="previousPage()"><img src="/assets/images/chevron-left.svg"
+                height="15px" alt=""></a>
+          </li>
+          <li class="page-item">
+            <a class="page-link">{{ pageNumber + 1 }}</a>
+          </li>
+          <li class="page-item">
+            <a class="page-link" ng-href="" ng-click="nextPage()"
+              ng-disabled="pageNumber === totalNumberOfPages - 1"><img src="/assets/images/chevron-right.svg"
+                height="15px" alt=""></a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>

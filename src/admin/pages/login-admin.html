@@ -1,0 +1,35 @@
+<div class="row justify-content-center">
+    <div class="form-box">
+        <div class="form-tab">
+            <div class="tab-content" id="tab-content-5">
+                <div class="tab-pane fade active show" id="signin" role="tabpanel" aria-labelledby="signin-tab"
+                    style="margin-left: 170px;margin-top: 100px;">
+                    <div class="form-outline mb-4" style="margin-left: 225px;">
+                        <label for="email" class="form-label">Tài khoản</label>
+                        <input ng-model="username" type="text" id="email" style="width: 350px;"
+                            class="form-control form-control-lg ng-pristine ng-empty ng-invalid ng-invalid-required ng-touched"
+                            placeholder="Nhập tài khoản" required="" />
+                        <span style="color: red">{{errorUsername}}</span>
+                    </div>
+                    <div class="form-outline mb-4" style="margin-left: 225px;">
+                        <label class="form-label" for="password">Mật khẩu</label>
+                        <input ng-model="password" type="password" id="password" style="width: 350px;"
+                            class="form-control form-control-lg ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required"
+                            placeholder="Nhập mật khẩu" required="" />
+                        <span style="color: red">{{errorPassword}}</span>
+                    </div>
+                    <div class="pt-1 mb-2">
+                        <button
+                            style="width: 350px; margin-left: 225px; background: linear-gradient(96deg, #f15a22 32.96%, #fdb913 100.17%);"
+                            class="btn btn-danger" type="button" ng-click="login()">
+                            Đăng nhập
+                        </button>
+                    </div>
+                    <a href="" style="margin-left: 365px; color: black;">Quên mật khẩu</a>
+                </div>
+            </div>
+            <!-- End .form-footer -->
+        </div>
+        <!-- .End .tab-pane -->
+    </div>
+</div>

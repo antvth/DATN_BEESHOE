@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+</head>
+<style>
+  /* Left box */
+  .view-account {
+    width: 108%;
+    background: #fff;
+    padding: 20px 30px;
+    margin: 0 20px;
+    border-radius: 12px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .profile {
+    width: 100%;
+    background: #fff;
+    padding: 20px 30px;
+    margin: 0 20px;
+    border-radius: 12px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Style for the circular image */
+  .profile-image {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+    /* Đảm bảo ảnh không bị cắt */
+    margin: 0 auto;
+    /* Canh giữa ảnh */
+  }
+
+  .profile-image img {
+    width: 100%;
+    /* Tự động thích ứng với kích thước của hình tròn */
+    height: 100%;
+    /* Tự động thích ứng với kích thước của hình tròn */
+  }
+
+  /* Style for the list */
+  .profile ul {
+    list-style: none;
+    padding: 0;
+    text-align: center;
+  }
+
+  .profile li {
+    margin: 10px 0;
+    list-style: none;
+  }
+
+  /* Style for the links */
+  .profile a {
+    font-size: 18px;
+    color: #333;
+    font-size: 400;
+    text-decoration: none;
+  }
+
+  .profile a:hover {
+    font-weight: 600;
+  }
+
+  /* Thiết lập kiểu thanh cuộn */
+  ::-webkit-scrollbar {
+    width: 3px;
+    height: 3px;
+    /* Chiều rộng của thanh cuộn */
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: #7fad39;
+    /* Màu nền của thanh cuộn */
+    border-radius: 20px;
+    /* Bo tròn cạnh của thanh cuộn */
+  }
+
+  ::-webkit-scrollbar-track {
+    background-color: #e2e9d7;
+    /* Màu nền của phần track thanh cuộn */
+  }
+</style>
+<link rel="shortcut icon" type="image/png"
+  href="/assets/images/z4754478488073_3d987c07976994288f3feae0cc9f3835_preview_rev_1.png" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css" />
+<link rel="stylesheet" href="/assets/css/styles.min.css" />
+<link rel="stylesheet" href="/css/custom/hinh-thuc-thah-toan.css" />
+<link rel="stylesheet" href="/css/custom/create-ctkm.css" />
+<link rel="stylesheet" href="/css/custom/combobox.css" />
+<link rel="stylesheet" href="/css/custom/trang-thai-hdct.css" />
+<link rel="stylesheet" href="/css/ok.css" />
+
+<body>
+  <div class="row">
+    <div class="col-md-2" style="background-color: #fff;">
+      <div class="page-wrapper" style="background-color: #fff" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6"
+        data-sidebartype="full" data-sidebar-position="fixed" data-header-position="fixed">
+        <div>
+          <div class="brand-logo d-flex align-items-center justify-content-between">
+            <a href="" class="text-nowrap logo-img">
+              <img src="/assets/images/z4754468708043_e3218b27549165452a995a7d4cbe6705_preview_rev_1.png" width="130"
+                alt="" />
+            </a>
+            <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
+              <i class="ti ti-x fs-8"></i>
+            </div>
+          </div>
+          <br>
+          <nav class="sidebar-nav scroll-sidebar" data-simplebar="">
+            <ul id="sidebarnav">
+              <li class="sidebar-item">
+                <a class="sidebar-link" href="#/dia-chi" aria-expanded="false">
+                  <span>
+                    <img src="/assets/images/Medical-Profile-Patiant-3--Streamline-Ultimate.png" width="180" alt=""
+                      style="width: 21px; height: 21px" />
+                  </span>
+                  <span class="hide-menu">Thông tin cá nhân</span>
+                </a>
+              </li>
+              <li class="sidebar-item">
+                <a class="sidebar-link" href="#/don-hang" aria-expanded="false">
+                  <span>
+                    <img src="/assets/images/donhang.png" width="180" alt="" style="width: 21px; height: 21px" />
+                  </span>
+                  <span class="hide-menu">Đơn hàng</span>
+                </a>
+              </li>
+              <li class="sidebar-item">
+                <a class="sidebar-link" href="#/home" aria-expanded="false">
+                  <span>
+                    <img src="/assets/images/Move-Back--Streamline-Ultimate.png" width="180" alt=""
+                      style="width: 21px; height: 21px" />
+                  </span>
+                  <span class="hide-menu">Về trang chủ</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-10" style="background-color: #fff;">
+      <div class="view-account" style="height: 2745px">
+        <div class="page" style="max-width: 1120px">
+          <div class="pcss3t pcss3t-effect-scale pcss3t-theme-1" style="width: 1130px; margin-left: -20px">
+            <!-- Bổ sung attribute (ng-click) để gọi hàm khi chuyển tab -->
+            <input type="radio" ng-click="loadDonHang(1)" name="pcss3t" id="tab2" class="tab-content-2" />
+            <label for="tab2"><img src="/assets/images/choices.png" width="35px" alt="" />Chờ
+              xác nhận
+            </label>
+            <input type="radio" ng-click="loadDonHang(2)" name="pcss3t" id="tab3" class="tab-content-3" />
+            <label for="tab3"><img src="/assets/images/approved.png" width="35px" alt="" />Xác nhận</label>
+            <input type="radio" ng-click="loadDonHang(3)" name="pcss3t" id="tab4" class="tab-content-4" />
+            <label for="tab4"><img src="/assets/images/exchange.png" width="35px" alt="" />Chờ giao hàng</label>
+            <input type="radio" ng-click="loadDonHang(4)" name="pcss3t" id="tab5" class="tab-content-5" />
+            <label for="tab5"><img src="/assets/images/fast-delivery.png" width="35px" alt="" />Giao hàng</label>
+            <input type="radio" ng-click="loadDonHang(5)" name="pcss3t" id="tab6" class="tab-content-6" />
+            <label for="tab6"><img src="/assets/images/shipped.png" width="35px" alt="" />Thành công</label>
+            <input type="radio" ng-click="loadDonHuy()" name="pcss3t" id="tab7" class="tab-content-7" />
+            <label for="tab7"><img src="/assets/images/failed.png" width="35px" alt="" />Đã hủy</label>
+            <input type="radio" ng-click="loadTraHang()" name="pcss3t" id="tab8" class="tab-content-8" />
+            <label for="tab8"><img src="/assets/images/exchange.png" width="35px" alt="" />Trả hàng</label>
+            <hr />
+            <ul style="height: 2630px ;max-height: 2630px;overflow-y: auto; ">
+              <!-- donhangxacnhan -->
+              <div ng-show="!hasOrders">
+                <p>Không có đơn hàng nào.</p>
+              </div>
+              <li ng-show="hasOrders">
+
+
+              <li class="tab-content tab-content-2 typography">
+                <!-- search  -->
+                <div class="row">
+                  <div class="col-lg-7">
+                    <input ng-model="searchQuery" ng-change="searchOrders()" class="form-control"
+                      placeholder="Tìm đơn hàng" style="
+                                  width: 950px;
+                                  margin-left: -30px;
+                                  font-weight: bold;
+                                  height: 40px;
+                                " />
+                  </div>
+                  <div class="col-lg-5">
+                    <button class="btn btn-primary" style="margin-left: 315px" ng-click="searchOrders()">
+                      Tìm kiếm
+                    </button>
+                  </div>
+                </div>
+                <br>
+                <div class="card overflow-hidden" style="left: -30px; width: 1100px " ng-repeat="item in listDonHang2">
+                  <div class="card-body p-4">
+                    <h6 style="font-weight: bold;height: 10px;padding-left: 705px;padding-bottom: 10px;">
+                      <span ng-if="item.trangThaiHoaDon === '1'">Đơn hàng đang chờ xác nhận | CHỜ XÁC NHẬN</span>
+                      <span ng-if="item.trangThaiHoaDon === '2'">Đơn hàng đã được xác nhận | XÁC NHẬN</span>
+                      <span ng-if="item.trangThaiHoaDon === '3'">Đơn hàng đã giao cho đơn vị vận chuyển | CHỜ GIAO
+                        HÀNG</span>
+                      <span ng-if="item.trangThaiHoaDon === '4'">Đơn hàng đang trên đường giao cho bạn | ĐANG GIAO
+                        HÀNG</span>
+                      <span ng-if="item.trangThaiHoaDon === '5'">Đơn hàng đã được giao thành công | THÀNH CÔNG</span>
+                      <span ng-if="item.trangThaiHoaDon === '6'">Đơn hàng đã hủy | ĐÃ HỦY</span>
+                      <span ng-if="item.trangThaiHoaDon === '7'">Đơn hàng hoàn trả | TRẢ HÀNG</span>
+                    </h6>
+                    {{item.tongSoLuong}} sản phẩm <br>
+                    <table class="table">
+                      <tbody class="table">
+                        <tr>
+                          <td style="width: 150px">
+                            <img src="/assets/ảnh giày/{{item.tenImage}}" alt="" width="200px" />
+                          </td>
+                          <td style="padding-top: 50px">
+                            <h6 style="
+                                font-size: 15px;
+                                font-weight: bold;
+                                height: 10px;
+                              ">
+                              {{item.tenSanPham}}
+                              <br />
+                              Size: {{item.size}}
+                              <br />
+                              Chất liệu: {{item.tenChatLieu}}
+                              <br />
+                              Màu sắc: {{item.tenMauSac}}
+                              <br>
+                              x{{item.soLuong}}
+                            </h6>
+                          </td>
+                          <td>
+                            <h6 style="color: crimson; padding-top: 90px">
+                          <td style="padding-top: 80px">
+                            <div ng-show="item.donGiaSauGiam != null">
+                              {{item.donGiaSauGiam| number}}đ
+                              <span style="text-decoration: line-through;color: crimson">{{item.donGia| number}}đ</span>
+                            </div>
+                            <div ng-show="item.donGiaSauGiam == null">
+                              {{item.donGia| number}}đ
+                            </div>
+                          </td>
+                          </h6>
+                          </td>
+                        </tr>
+                      </tbody>
+                      <hr />
+                    </table>
+                    <div class="row">
+                      <a href="#/don-hang-chi-tiet/{{item.idHoaDon}}"
+                        style="text-align: center;text-decoration: none; color: rgb(125, 143, 143);"> Xem thêm
+                        sản phẩm </a>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-3">
+                        <!-- Nhét id vào đây nhé @Hiếu // item.idHoaDon -->
+                        <a href="#/don-hang-chi-tiet/{{item.idHoaDon}}"
+                          style="color: rgb(121, 112, 112);text-decoration: none;"
+                          class="btn btn-outline-danger m-1">Chi tiết</a>
+                        <!-- close -->
+                      </div>
+                      <div class="col-lg-4"></div>
+                      <div class="col-lg-5">
+                        <h6 style="
+                            padding-top: 27px;
+                            margin-left: 275px;
+                          ">
+                          Tổng tiền: {{item.thanhTien}}đ
+                        </h6>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li class="tab-content tab-content-3 typography">
+                <!-- search  -->
+                <div class="row">
+                  <div class="col-lg-7">
+                    <input ng-model="searchQuery2" ng-change="searchOrders2()" class="form-control"
+                      placeholder="Tìm đơn hàng" style="
+                                    width: 950px;
+                                    margin-left: -30px;
+                                    font-weight: bold;
+                                    height: 40px;
+                                  " />
+                  </div>
+                  <div class="col-lg-5">
+                    <button class="btn btn-primary" style="margin-left: 315px" ng-click="searchOrders2()">
+                      Tìm kiếm
+                    </button>
+                  </div>
+                </div>
+                <br>
+                <div class="card overflow-hidden" style="left: -30px; width: 1100px " ng-repeat="item in listDonHang2">
+                  <div class="card-body p-4">
+                    <h6 style="
+            font-weight: bold;
+            height: 10px;
+            padding-left: 705px;
+            padding-bottom: 10px;
+        ">
+                      <span ng-if="item.trangThaiHoaDon === '1'">Đơn hàng đang chờ xác nhận | CHỜ XÁC NHẬN</span>
+                      <span ng-if="item.trangThaiHoaDon === '2'">Đơn hàng đã được xác nhận | XÁC NHẬN</span>
+                      <span ng-if="item.trangThaiHoaDon === '3'">Đơn hàng đã giao cho đơn vị vận chuyển | CHỜ GIAO
+                        HÀNG</span>
+                      <span ng-if="item.trangThaiHoaDon === '4'">Đơn hàng đang trên đường giao cho bạn | ĐANG GIAO
+                        HÀNG</span>
+                      <span ng-if="item.trangThaiHoaDon === '5'">Đơn hàng đã được giao thành công | THÀNH CÔNG</span>
+                      <span ng-if="item.trangThaiHoaDon === '6'">Đơn hàng đã hủy | ĐÃ HỦY</span>
+                      <span ng-if="item.trangThaiHoaDon === '7'">Đơn hàng hoàn trả | TRẢ HÀNG</span>
+                    </h6>
+                    {{item.tongSoLuong}} sản phẩm <br>
+                    <table class="table">
+                      <tbody class="table">
+                        <tr>
+                          <td style="width: 150px">
+                            <img src="/assets/ảnh giày/{{item.tenImage}}" alt="" width="200px" />
+                          </td>
+                          <td style="padding-top: 50px">
+                            <h6 style="
+                                  font-size: 15px;
+                                  font-weight: bold;
+                                  height: 10px;
+                                ">
+                              {{item.tenSanPham}}
+                              <br />
+                              Size: {{item.size}}
+                              <br />
+                              Chất liệu: {{item.tenChatLieu}}
+                              <br />
+                              Màu sắc: {{item.tenMauSac}}
+                              <br>
+                              x{{item.soLuong}}
+                            </h6>
+                          </td>
+                          <td>
+                            <h6 style="color: crimson; padding-top: 90px">
+                          <td style="padding-top: 80px">
+                            <div ng-show="item.donGiaSauGiam != null">
+                              {{item.donGiaSauGiam| number}}đ
+                              <span style="text-decoration: line-through;color: crimson">{{item.donGia| number}}đ</span>
+                            </div>
+                            <div ng-show="item.donGiaSauGiam == null">
+                              {{item.donGia| number}}đ
+                            </div>
+                          </td>
+                          </h6>
+                          </td>
+                        </tr>
+                      </tbody>
+                      <hr />
+                    </table>
+                    <div class="row">
+                      <a href="#/don-hang-chi-tiet/{{item.idHoaDon}}"
+                        style="text-align: center;text-decoration: none; color: rgb(125, 143, 143);"> Xem thêm
+                        sản phẩm </a>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-3">
+                        <!-- Nhét id vào đây nhé @Hiếu // item.idHoaDon -->
+                        <a href="#/don-hang-chi-tiet/{{item.idHoaDon}}"
+                          style="color: rgb(121, 112, 112);text-decoration: none;"
+                          class="btn btn-outline-danger m-1">Chi tiết</a>
+                        <!-- close -->
+                      </div>
+                      <div class="col-lg-4"></div>
+                      <div class="col-lg-5">
+                        <h6 style="
+                              padding-top: 27px;
+                              margin-left: 275px;
+                            ">
+                          Tổng tiền: {{item.thanhTien}}đ
+                        </h6>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+
+              <li class="tab-content tab-content-4 typography">
+                <!-- search  -->
+                <div class="row">
+                  <div class="col-lg-7">
+                    <input ng-model="searchQuery3" ng-change="searchOrders3()" class="form-control"
+                      placeholder="Tìm đơn hàng" style="
+                                    width: 950px;
+                                    margin-left: -30px;
+                                    font-weight: bold;
+                                    height: 40px;
+                                  " />
+                  </div>
+                  <div class="col-lg-5">
+                    <button class="btn btn-primary" style="margin-left: 315px" ng-click="searchOrders3()">
+                      Tìm kiếm
+                    </button>
+                  </div>
+                </div>
+                <br>
+                <div class="card overflow-hidden" style="left: -30px; width: 1100px " ng-repeat="item in listDonHang2">
+                  <div class="card-body p-4">
+                    <h6 style="
+            font-weight: bold;
+            height: 10px;
+            padding-left: 705px;
+            padding-bottom: 10px;
+        ">
+                      <span ng-if="item.trangThaiHoaDon === '1'">Đơn hàng đang chờ xác nhận | CHỜ XÁC NHẬN</span>
+                      <span ng-if="item.trangThaiHoaDon === '2'">Đơn hàng đã được xác nhận | XÁC NHẬN</span>
+                      <span ng-if="item.trangThaiHoaDon === '3'">Đơn hàng đã giao cho đơn vị vận chuyển | CHỜ GIAO
+                        HÀNG</span>
+                      <span ng-if="item.trangThaiHoaDon === '4'">Đơn hàng đang trên đường giao cho bạn | ĐANG GIAO
+                        HÀNG</span>
+                      <span ng-if="item.trangThaiHoaDon === '5'">Đơn hàng đã được giao thành công | THÀNH CÔNG</span>
+                      <span ng-if="item.trangThaiHoaDon === '6'">Đơn hàng đã hủy | ĐÃ HỦY</span>
+                      <span ng-if="item.trangThaiHoaDon === '7'">Đơn hàng hoàn trả | TRẢ HÀNG</span>
+                    </h6>
+                    {{item.tongSoLuong}} sản phẩm <br>
+                    <table class="table">
+                      <tbody class="table">
+                        <tr>
+                          <td style="width: 150px">
+                            <img src="/assets/ảnh giày/{{item.tenImage}}" alt="" width="200px" />
+                          </td>
+                          <td style="padding-top: 50px">
+                            <h6 style="
+                                  font-size: 15px;
+                                  font-weight: bold;
+                                  height: 10px;
+                                ">
+                              {{item.tenSanPham}}
+                              <br />
+                              Size: {{item.size}}
+                              <br />
+                              Chất liệu: {{item.tenChatLieu}}
+                              <br />
+                              Màu sắc: {{item.tenMauSac}}
+                              <br>
+                              x{{item.soLuong}}
+                            </h6>
+                          </td>
+                          <td>
+                            <h6 style="color: crimson; padding-top: 90px">
+                          <td style="padding-top: 80px">
+                            <div ng-show="item.donGiaSauGiam != null">
+                              {{item.donGiaSauGiam| number}}đ
+                              <span style="text-decoration: line-through;color: crimson">{{item.donGia| number}}đ</span>
+                            </div>
+                            <div ng-show="item.donGiaSauGiam == null">
+                              {{item.donGia| number}}đ
+                            </div>
+                          </td>
+                          </h6>
+                          </td>
+                        </tr>
+                      </tbody>
+                      <hr />
+                    </table>
+                    <div class="row">
+                      <a href="#/don-hang-chi-tiet/{{item.idHoaDon}}"
+                        style="text-align: center;text-decoration: none; color: rgb(125, 143, 143);"> Xem thêm
+                        sản phẩm </a>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-3">
+                        <!-- Nhét id vào đây nhé @Hiếu // item.idHoaDon -->
+                        <a href="#/don-hang-chi-tiet/{{item.idHoaDon}}"
+                          style="color: rgb(121, 112, 112);text-decoration: none;"
+                          class="btn btn-outline-danger m-1">Chi tiết</a>
+                        <!-- close -->
+                      </div>
+                      <div class="col-lg-4"></div>
+                      <div class="col-lg-5">
+                        <h6 style="
+                              padding-top: 27px;
+                              margin-left: 275px;
+                            ">
+                          Tổng tiền: {{item.thanhTien}}đ
+                        </h6>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li class="tab-content tab-content-5 typography">
+                <!-- search  -->
+                <div class="row">
+                  <div class="col-lg-7">
+                    <input ng-model="searchQuery4" ng-change="searchOrders4()" class="form-control"
+                      placeholder="Tìm đơn hàng" style="
+                                  width: 950px;
+                                  margin-left: -30px;
+                                  font-weight: bold;
+                                  height: 40px;
+                                " />
+                  </div>
+                  <div class="col-lg-5">
+                    <button class="btn btn-primary" style="margin-left: 315px" ng-click="searchOrders4()">
+                      Tìm kiếm
+                    </button>
+                  </div>
+                </div>
+                <br>
+                <div class="card overflow-hidden" style="left: -30px; width: 1100px " ng-repeat="item in listDonHang2">
+                  <div class="card-body p-4">
+                    <h6 style="
+            font-weight: bold;
+            height: 10px;
+            padding-left: 705px;
+            padding-bottom: 10px;
+        ">
+                      <span ng-if="item.trangThaiHoaDon === '1'">Đơn hàng đang chờ xác nhận | CHỜ XÁC NHẬN</span>
+                      <span ng-if="item.trangThaiHoaDon === '2'">Đơn hàng đã được xác nhận | XÁC NHẬN</span>
+                      <span ng-if="item.trangThaiHoaDon === '3'">Đơn hàng đã giao cho đơn vị vận chuyển | CHỜ GIAO
+                        HÀNG</span>
+                      <span ng-if="item.trangThaiHoaDon === '4'">Đơn hàng đang trên đường giao cho bạn | ĐANG GIAO
+                        HÀNG</span>
+                      <span ng-if="item.trangThaiHoaDon === '5'">Đơn hàng đã được giao thành công | THÀNH CÔNG</span>
+                      <span ng-if="item.trangThaiHoaDon === '6'">Đơn hàng đã hủy | ĐÃ HỦY</span>
+                      <span ng-if="item.trangThaiHoaDon === '7'">Đơn hàng hoàn trả | TRẢ HÀNG</span>
+                    </h6>
+                    {{item.tongSoLuong}} sản phẩm <br>
+                    <table class="table">
+                      <tbody class="table">
+                        <tr>
+                          <td style="width: 150px">
+                            <img src="/assets/ảnh giày/{{item.tenImage}}" alt="" width="200px" />
+                          </td>
+                          <td style="padding-top: 50px">
+                            <h6 style="
+                                  font-size: 15px;
+                                  font-weight: bold;
+                                  height: 10px;
+                                ">
+                              {{item.tenSanPham}}
+                              <br />
+                              Size: {{item.size}}
+                              <br />
+                              Chất liệu: {{item.tenChatLieu}}
+                              <br />
+                              Màu sắc: {{item.tenMauSac}}
+                              <br>
+                              x{{item.soLuong}}
+                            </h6>
+                          </td>
+                          <td>
+                            <h6 style="color: crimson; padding-top: 90px">
+                          <td style="padding-top: 80px">
+                            <div ng-show="item.donGiaSauGiam != null">
+                              {{item.donGiaSauGiam| number}}đ
+                              <span style="text-decoration: line-through;color: crimson">{{item.donGia| number}}đ</span>
+                            </div>
+                            <div ng-show="item.donGiaSauGiam == null">
+                              {{item.donGia| number}}đ
+                            </div>
+                          </td>
+                          </h6>
+                          </td>
+                        </tr>
+                      </tbody>
+                      <hr />
+                    </table>
+                    <div class="row">
+                      <a href="#/don-hang-chi-tiet/{{item.idHoaDon}}"
+                        style="text-align: center;text-decoration: none; color: rgb(125, 143, 143);"> Xem thêm
+                        sản phẩm </a>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-3">
+                        <!-- Nhét id vào đây nhé @Hiếu // item.idHoaDon -->
+                        <a href="#/don-hang-chi-tiet/{{item.idHoaDon}}"
+                          style="color: rgb(121, 112, 112);text-decoration: none;"
+                          class="btn btn-outline-danger m-1">Chi tiết</a>
+                        <!-- close -->
+                      </div>
+                      <div class="col-lg-4"></div>
+                      <div class="col-lg-5">
+                        <h6 style="
+                              padding-top: 27px;
+                              margin-left: 275px;
+                            ">
+                          Tổng tiền: {{item.thanhTien}}đ
+                        </h6>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li class="tab-content tab-content-6 typography">
+                <!-- search  -->
+                <div class="row">
+                  <div class="col-lg-7">
+                    <input ng-model="searchQuery5" ng-change="searchOrders5()" class="form-control"
+                      placeholder="Tìm đơn hàng" style="
+                                    width: 950px;
+                                    margin-left: -30px;
+                                    font-weight: bold;
+                                    height: 40px;
+                                  " />
+                  </div>
+                  <div class="col-lg-5">
+                    <button class="btn btn-primary" style="margin-left: 315px" ng-click="searchOrders5()">
+                      Tìm kiếm
+                    </button>
+                  </div>
+                </div>
+                <br>
+                <div class="card overflow-hidden" style="left: -30px; width: 1100px " ng-repeat="item in listDonHang2">
+                  <div class="card-body p-4">
+                    <h6 style="
+            font-weight: bold;
+            height: 10px;
+            padding-left: 705px;
+            padding-bottom: 10px;
+        ">
+                      <span ng-if="item.trangThaiHoaDon === '1'">Đơn hàng đang chờ xác nhận | CHỜ XÁC NHẬN</span>
+                      <span ng-if="item.trangThaiHoaDon === '2'">Đơn hàng đã được xác nhận | XÁC NHẬN</span>
+                      <span ng-if="item.trangThaiHoaDon === '3'">Đơn hàng đã giao cho đơn vị vận chuyển | CHỜ GIAO
+                        HÀNG</span>
+                      <span ng-if="item.trangThaiHoaDon === '4'">Đơn hàng đang trên đường giao cho bạn | ĐANG GIAO
+                        HÀNG</span>
+                      <span ng-if="item.trangThaiHoaDon === '5'">Đơn hàng đã được giao thành công | THÀNH CÔNG</span>
+                      <span ng-if="item.trangThaiHoaDon === '6'">Đơn hàng đã hủy | ĐÃ HỦY</span>
+                      <span ng-if="item.trangThaiHoaDon === '7'">Đơn hàng hoàn trả | TRẢ HÀNG</span>
+                    </h6>
+                    {{item.tongSoLuong}} sản phẩm <br>
+                    <table class="table">
+                      <tbody class="table">
+                        <tr>
+                          <td style="width: 150px">
+                            <img src="/assets/ảnh giày/{{item.tenImage}}" alt="" width="200px" />
+                          </td>
+                          <td style="padding-top: 50px">
+                            <h6 style="
+                                  font-size: 15px;
+                                  font-weight: bold;
+                                  height: 10px;
+                                ">
+                              {{item.tenSanPham}}
+                              <br />
+                              Size: {{item.size}}
+                              <br />
+                              Chất liệu: {{item.tenChatLieu}}
+                              <br />
+                              Màu sắc: {{item.tenMauSac}}
+                              <br>
+                              x{{item.soLuong}}
+                            </h6>
+                          </td>
+                          <td>
+                            <h6 style="color: crimson; padding-top: 90px">
+                          <td style="padding-top: 80px">
+                            <div ng-show="item.donGiaSauGiam != null">
+                              {{item.donGiaSauGiam| number}}đ
+                              <span style="text-decoration: line-through;color: crimson">{{item.donGia| number}}đ</span>
+                            </div>
+                            <div ng-show="item.donGiaSauGiam == null">
+                              {{item.donGia| number}}đ
+                            </div>
+                          </td>
+                          </h6>
+                          </td>
+                        </tr>
+                      </tbody>
+                      <hr />
+                    </table>
+                    <div class="row">
+                      <a href="#/don-hang-chi-tiet/{{item.idHoaDon}}"
+                        style="text-align: center;text-decoration: none; color: rgb(125, 143, 143);"> Xem thêm
+                        sản phẩm </a>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-3">
+                        <!-- Nhét id vào đây nhé @Hiếu // item.idHoaDon -->
+                        <a href="#/don-hang-chi-tiet/{{item.idHoaDon}}"
+                          style="color: rgb(121, 112, 112);text-decoration: none;"
+                          class="btn btn-outline-danger m-1">Chi tiết</a>
+                        <!-- close -->
+                      </div>
+                      <div class="col-lg-4"></div>
+                      <div class="col-lg-5">
+                        <h6 style="
+                              padding-top: 27px;
+                              margin-left: 275px;
+                            ">
+                          Tổng tiền: {{item.thanhTien| number}}đ
+                        </h6>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li class="tab-content tab-content-7 typography">
+                <!-- search  -->
+                <div class="row">
+                  <div class="col-lg-7">
+                    <input ng-model="searchQuery6" ng-change="searchOrders6()" class="form-control"
+                      placeholder="Tìm đơn hàng" style="
+                                  width: 950px;
+                                  margin-left: -30px;
+                                  font-weight: bold;
+                                  height: 40px;
+                                " />
+                  </div>
+                  <div class="col-lg-5">
+                    <button class="btn btn-primary" style="margin-left: 315px" ng-click="searchOrders6()">
+                      Tìm kiếm
+                    </button>
+                  </div>
+                </div>
+                <br>
+                <div class="card overflow-hidden" style="left: -30px; width: 1100px " ng-repeat="item in listDonHang2">
+                  <div class="card-body p-4">
+                    <h6 style="
+            font-weight: bold;
+            height: 10px;
+            padding-left: 705px;
+            padding-bottom: 10px;
+        ">
+                      <span ng-if="item.trangThaiHoaDon === '1'">Đơn hàng đang chờ xác nhận | CHỜ XÁC NHẬN</span>
+                      <span ng-if="item.trangThaiHoaDon === '2'">Đơn hàng đã được xác nhận | XÁC NHẬN</span>
+                      <span ng-if="item.trangThaiHoaDon === '3'">Đơn hàng đã giao cho đơn vị vận chuyển | CHỜ GIAO
+                        HÀNG</span>
+                      <span ng-if="item.trangThaiHoaDon === '4'">Đơn hàng đang trên đường giao cho bạn | ĐANG GIAO
+                        HÀNG</span>
+                      <span ng-if="item.trangThaiHoaDon === '5'">Đơn hàng đã được giao thành công | THÀNH CÔNG</span>
+                      <span ng-if="item.trangThaiHoaDon === '6'">Đơn hàng đã hủy | ĐÃ HỦY</span>
+                      <span ng-if="item.trangThaiHoaDon === '7'">Đơn hàng hoàn trả | TRẢ HÀNG</span>
+                    </h6>
+                    {{item.tongSoLuong}} sản phẩm <br>
+                    <table class="table">
+                      <tbody class="table">
+                        <tr>
+                          <td style="width: 150px">
+                            <img src="/assets/ảnh giày/{{item.tenImage}}" alt="" width="200px" />
+                          </td>
+                          <td style="padding-top: 50px">
+                            <h6 style="
+                                  font-size: 15px;
+                                  font-weight: bold;
+                                  height: 10px;
+                                ">
+                              {{item.tenSanPham}}
+                              <br />
+                              Size: {{item.size}}
+                              <br />
+                              Chất liệu: {{item.tenChatLieu}}
+                              <br />
+                              Màu sắc: {{item.tenMauSac}}
+                              <br>
+                              x{{item.soLuong}}
+                            </h6>
+                          </td>
+                          <td>
+                            <h6 style="color: crimson; padding-top: 90px">
+                          <td style="padding-top: 80px">
+                            <div ng-show="item.donGiaSauGiam != null">
+                              {{item.donGiaSauGiam| number}}đ
+                              <span style="text-decoration: line-through;color: crimson">{{item.donGia| number}}đ</span>
+                            </div>
+                            <div ng-show="item.donGiaSauGiam == null">
+                              {{item.donGia| number}}đ
+                            </div>
+                          </td>
+                          </h6>
+                          </td>
+                        </tr>
+                      </tbody>
+                      <hr />
+                    </table>
+                    <div class="row">
+                      <a href="#/don-hang-chi-tiet/{{item.idHoaDon}}"
+                        style="text-align: center;text-decoration: none; color: rgb(125, 143, 143);"> Xem thêm
+                        sản phẩm </a>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-3">
+                        <!-- Nhét id vào đây nhé @Hiếu // item.idHoaDon -->
+                        <a href="#/don-hang-chi-tiet/{{item.idHoaDon}}"
+                          style="color: rgb(121, 112, 112);text-decoration: none;"
+                          class="btn btn-outline-danger m-1">Chi tiết</a>
+                        <!-- close -->
+                      </div>
+                      <div class="col-lg-4"></div>
+                      <div class="col-lg-5">
+                        <h6 style="
+                              padding-top: 27px;
+                              margin-left: 275px;
+                            ">
+                          Tổng tiền: {{item.thanhTien| number}}đ
+                        </h6>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li class="tab-content tab-content-8 typography">
+                <!-- search  -->
+                <div class="row">
+                  <div class="col-lg-7">
+                    <input ng-model="searchQuery7" ng-change="searchOrders7()" class="form-control"
+                      placeholder="Tìm đơn hàng" style="
+                            width: 950px;
+                            margin-left: -30px;
+                            font-weight: bold;
+                            height: 40px;
+                          " />
+                  </div>
+                  <div class="col-lg-5">
+                    <button class="btn btn-primary" style="margin-left: 315px" ng-click="searchOrders7()">
+                      Tìm kiếm
+                    </button>
+                  </div>
+                </div>
+                <br>
+                <div class="card overflow-hidden" style="left: -30px; width: 1100px " ng-repeat="item in listDonHang2">
+                  <div class="card-body p-4">
+                    <h6 style="
+            font-weight: bold;
+            height: 10px;
+            padding-left: 705px;
+            padding-bottom: 10px;
+        ">
+                      <span ng-if="item.trangThaiHoaDon === '1'">Đơn hàng đang chờ xác nhận | CHỜ XÁC NHẬN</span>
+                      <span ng-if="item.trangThaiHoaDon === '2'">Đơn hàng đã được xác nhận | XÁC NHẬN</span>
+                      <span ng-if="item.trangThaiHoaDon === '3'">Đơn hàng đã giao cho đơn vị vận chuyển | CHỜ GIAO
+                        HÀNG</span>
+                      <span ng-if="item.trangThaiHoaDon === '4'">Đơn hàng đang trên đường giao cho bạn | ĐANG GIAO
+                        HÀNG</span>
+                      <span ng-if="item.trangThaiHoaDon === '5'">Đơn hàng đã được giao thành công | THÀNH CÔNG</span>
+                      <span ng-if="item.trangThaiHoaDon === '6'">Đơn hàng đã hủy | ĐÃ HỦY</span>
+                      <span ng-if="item.trangThaiHoaDon === '7'">Đơn hàng hoàn trả | TRẢ HÀNG</span>
+                    </h6>
+                    {{item.tongSoLuong}} sản phẩm <br>
+                    <table class="table">
+                      <tbody class="table">
+                        <tr>
+                          <td style="width: 150px">
+                            <img src="/assets/ảnh giày/{{item.tenImage}}" alt="" width="200px" />
+                          </td>
+                          <td style="padding-top: 50px">
+                            <h6 style="
+                                  font-size: 15px;
+                                  font-weight: bold;
+                                  height: 10px;
+                                ">
+                              {{item.tenSanPham}}
+                              <br />
+                              Size: {{item.size}}
+                              <br />
+                              Chất liệu: {{item.tenChatLieu}}
+                              <br />
+                              Màu sắc: {{item.tenMauSac}}
+                              <br>
+                              x{{item.soLuong}}
+                            </h6>
+                          </td>
+                          <td>
+                            <h6 style="color: crimson; padding-top: 90px">
+                          <td style="padding-top: 80px">
+                            <div ng-show="item.donGiaSauGiam != null">
+                              {{item.donGiaSauGiam| number}}đ
+                              <span style="text-decoration: line-through;color: crimson">{{item.donGia| number}}đ</span>
+                            </div>
+                            <div ng-show="item.donGiaSauGiam == null">
+                              {{item.donGia| number}}đ
+                            </div>
+                          </td>
+                          </h6>
+                          </td>
+                        </tr>
+                      </tbody>
+                      <hr />
+                    </table>
+                    <div class="row">
+                      <a href="#/don-hang-chi-tiet/{{item.idHoaDon}}"
+                        style="text-align: center;text-decoration: none; color: rgb(125, 143, 143);"> Xem thêm
+                        sản phẩm </a>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-3">
+                        <!-- Nhét id vào đây nhé @Hiếu // item.idHoaDon -->
+                        <a href="#/don-hang-chi-tiet/{{item.idHoaDon}}"
+                          style="color: rgb(121, 112, 112);text-decoration: none;"
+                          class="btn btn-outline-danger m-1">Chi tiết</a>
+                        <!-- close -->
+                      </div>
+                      <div class="col-lg-4"></div>
+                      <div class="col-lg-5">
+                        <h6 style="
+                              padding-top: 27px;
+                              margin-left: 275px;
+                            ">
+                          Tổng tiền: {{item.thanhTien| number}}đ
+                        </h6>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+              </li>
+              <!-- close ng show  -->
+            </ul>
+          </div>
+          <!--/ tabs -->
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

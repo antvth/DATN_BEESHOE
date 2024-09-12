@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    .btn {
+      text-transform: none;
+      /* Đảm bảo chữ không bị in hoa */
+      background-color: unset;
+      border-radius: 8px;
+      height: 35px;
+      display: flex;
+      /* Sử dụng Flexbox để căn giữa nội dung */
+      align-items: center;
+      /* Căn giữa chiều dọc */
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-2">
+        <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6"
+          data-sidebartype="full" data-sidebar-position="fixed" data-header-position="fixed">
+          <div>
+            <div class="brand-logo d-flex align-items-center justify-content-between">
+              <a href="" class="text-nowrap logo-img">
+                <img src="/assets/images/z4754468708043_e3218b27549165452a995a7d4cbe6705_preview_rev_1.png" width="130"
+                  alt="" />
+              </a>
+              <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
+                <i class="ti ti-x fs-8"></i>
+              </div>
+            </div>
+            <br>
+            <nav class="sidebar-nav scroll-sidebar" data-simplebar="">
+              <ul id="sidebarnav">
+                <li class="sidebar-item">
+                  <a class="sidebar-link" href="#/dia-chi" aria-expanded="false">
+                    <span>
+                      <img src="/assets/images/Medical-Profile-Patiant-3--Streamline-Ultimate.png" width="180" alt=""
+                        style="width: 21px; height: 21px" />
+                    </span>
+                    <span class="hide-menu">Thông tin cá nhân</span>
+                  </a>
+                </li>
+                <li class="sidebar-item">
+                  <a class="sidebar-link" href="#/don-hang" aria-expanded="false">
+                    <span>
+                      <img src="/assets/images/donhang.png" width="180" alt="" style="width: 21px; height: 21px" />
+                    </span>
+                    <span class="hide-menu">Đơn hàng</span>
+                  </a>
+                </li>
+                <li class="sidebar-item">
+                  <a class="sidebar-link" href="#/home" aria-expanded="false">
+                    <span>
+                      <img src="/assets/images/Move-Back--Streamline-Ultimate.png" width="180" alt=""
+                        style="width: 21px; height: 21px" />
+                    </span>
+                    <span class="hide-menu">Về trang chủ</span>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-10">
+        <div class="content">
+          <div class="view-account">
+            <h1 class="text-center">Thông tin cá nhân</h1>
+            <br>
+            <br>
+            <div class="form-switch mb-3 row">
+              <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" ng-model="editMode" />
+              <label class="form-check-label" style="margin-top: 25px;" for="flexSwitchCheckDefault">Chỉnh sửa thông
+                tin</label>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <div class="form-group">
+                  <label for="username">Tài khoản</label>
+                  <input type="text" class="form-control" id="username" ng-model="taiKhoan.username" disabled />
+                </div>
+              </div>
+              <div class="col-md-6 mb-3">
+                <div class="form-group">
+                  <label for="hoTen">Họ và Tên</label>
+                  <input type="text" class="form-control" id="hoTen" ng-model="taiKhoan.hoTen" ng-disabled="!editMode" />
+                </div>
+              </div>
+              <div class="col-md-6 mb-3">
+                <div class="form-group">
+                  <label for="soDienThoai">Số điện thoại</label>
+                  <input type="text" class="form-control" id="soDienThoai" ng-model="taiKhoan.soDienThoai"
+                    ng-disabled="!editMode" />
+                </div>
+              </div>
+              <div class="col-md-6 mb-3">
+                <div class="form-group">
+                  <label for="email">Email</label>
+                  <input type="email" class="form-control" id="email" ng-model="taiKhoan.email" ng-disabled="!editMode" />
+                </div>
+              </div>
+              <div class="col-md-6 mb-3">
+                <div class="form-group">
+                  <label for="ngaySinh">Ngày sinh</label>
+                  <input type="date" class="form-control" id="ngaySinh" ng-model="taiKhoan.ngaySinh"
+                    ng-disabled="!editMode" />
+                </div>
+              </div>
+              <div class="col-md-6 mb-3">
+                <div class="form-group d-flex align-items-center">
+                  <label>Giới tính</label> <br />
+                  <div class="form-check form-check-inline ms-3">
+                    <input class="form-check-input" type="radio" name="gioitinh" id="namRadio" ng-model="taiKhoan.gioiTinh"
+                      ng-value="true" ng-disabled="!editMode" />
+                    <br>
+                    <label class="form-check-label" for="namRadio">Nam</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="gioitinh" id="nuRadio" ng-model="taiKhoan.gioiTinh"
+                      ng-value="false" ng-disabled="!editMode" />
+                    <br>
+                    <label class="form-check-label" for="nuRadio">Nữ</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-12">
+              <button class="btn btn-info" style="color: black;" ng-show="editMode" ng-click="updateProfile()">Lưu</button>
+              <button class="btn btn-danger" style="color: black;" ng-show="editMode" ng-click="cancelUpdate()">Hủy</button>
+            </div>
+
+            <div class="mt-5">
+              <h3>Địa chỉ</h3>
+              <div class="text-right mb-3">
+                <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addAddressModal">Thêm địa
+                  chỉ</button>
+              </div>
+
+              <div class="row">
+                <div class="col-md-12" ng-repeat="diaChi in diaChiList">
+                  <div class="card mb-3">
+                    <div class="card-body d-flex justify-content-between align-items-start">
+                      <div>
+                        <h5 class="card-title">{{ diaChi.fullName }}</h5>
+                        <p class="card-text">{{ diaChi.soDienThoai }}</p>
+                        <p class="card-text">{{ diaChi.diaChi }}</p>
+                        <button class="btn btn-danger" ng-if="diaChi.trangThai == 1" disabled>Địa chỉ mặc định</button>
+                      </div>
+                      <div>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateAddressModal"
+                          ng-click="prepareUpdateAddress(diaChi)">Cập nhật</button>
+                        <button class="btn btn-outline-secondary" ng-click="setAsDefault(diaChi)">Đặt mặc định</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="addAddressModal" tabindex="-1" aria-labelledby="addAddressModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="addAddressModalLabel">Thêm địa chỉ mới</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="addressName">Địa chỉ cụ thể</label> <span ng-show="!isDiaChiValid" style="color: red;"> (Nhập
+                địa chỉ cụ thể)</span>
+              <input type="text" class="form-control" id="addressName" ng-model="addressName" />
+            </div>
+          </div>
+          <div class="modal-footer row">
+            <button type="button" class="btn btn-danger" style="width: 75px;  justify-content: center; color: black;"
+              data-bs-dismiss="modal">Đóng</button>
+            <button type="submit" ng-click="submitAddress()" style="width: 75px;  justify-content: center;"
+              class="btn btn-primary">Lưu</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="updateAddressModal" tabindex="-1" aria-labelledby="updateAddressModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="updateAddressModalLabel">Cập nhật địa chỉ</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="updateAddressName">Địa chỉ cụ thể</label> <span ng-show="!isDiaChiValid2" style="color: red;">
+                (Nhập địa chỉ cụ thể)</span>
+              <input type="text" class="form-control" id="updateAddressName" ng-model="updateAddressName" />
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" style="color: black;" data-bs-dismiss="modal">Đóng</button>
+            <button type="submit" class="btn btn-primary" ng-disabled="updateAddressForm.$invalid"
+              ng-click="updateAddress()">Lưu cập nhật</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</body>
+
+</html>

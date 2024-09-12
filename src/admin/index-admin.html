@@ -47,17 +47,17 @@
               </a>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" href="#" aria-expanded="false">
+              <a class="sidebar-link" href="#/order" aria-expanded="false">
                 <span>
                   <img src="/assets/images/receipt.png" width="180" alt="" style="width: 21px; height: 21px" />
                 </span>
-                <span class="hide-menu">Hóa đơn</span>
+                <span class="hide-menu">Quản lý đơn hàng</span>
               </a>
             </li>
             <li class="sidebar-item">
               <a class="sidebar-link" href="#/promotion" aria-expanded="false">
                 <span>
-                  <img src="/assets/images/shopping-bag.png" width="180" alt="" style="width: 21px; height: 21px" />
+                  <i class="ti ti-discount-2"></i>
                 </span>
                 <span class="hide-menu">Đợt giảm giá</span>
               </a>
@@ -65,7 +65,7 @@
             <li class="sidebar-item">
               <a class="sidebar-link" href="#/voucher" aria-expanded="false">
                 <span>
-                  <img src="/assets/images/ticket.png" width="180" alt="" style="width: 21px; height: 21px" />
+                  <i class="ti ti-gift"></i>
                 </span>
                 <span class="hide-menu">Phiếu giảm giá</span>
               </a>
@@ -82,7 +82,15 @@
               <a href="#pageSubmenu" class="dropdown-toggle collapsed sidebar-link" data-bs-toggle="collapse"
                 data-bs-target="#pageSubmenu1">
                 <span>
-                  <img src="/assets/images/product.png" width="180" style="width: 21px; height: 21px" />
+                  <i class="ti ti-shoe" style="font-family: tabler-icons !important;
+                   speak: none;
+                   font-style: normal;
+                   font-weight: normal;
+                   font-variant: normal;
+                   text-transform: none;
+                   line-height: 1;
+                   -webkit-font-smoothing: antialiased;
+                   font-size: 21px;"></i>
                 </span>
                 <span class="hide-menu">Quản lý sản phẩm</span>
               </a>
@@ -90,18 +98,52 @@
                 <li class="sidebar-item" style="margin-left: 37px">
                   <a class="sidebar-link" href="#/product" style="font-weight: bold;">Sản phẩm</a>
                 </li>
-             
+                <li class="sidebar-item" style="margin-left: 37px">
+                  <a class="sidebar-link" href="#/size" style="font-weight: bold;">Size</a>
+                </li>
+                <li class="sidebar-item" style="margin-left: 37px">
+                  <a class="sidebar-link" href="#/material" style="font-weight: bold;">Chất liệu</a>
+                </li>
+                <li class="sidebar-item" style="margin-left: 37px">
+                  <a class="sidebar-link" href="#/color" style="font-weight: bold;">Màu sắc</a>
+                </li>
+                <li class="sidebar-item" style="margin-left: 37px">
+                  <a class="sidebar-link" href="#/category" style="font-weight: bold;">Danh mục</a>
+                </li>
+                <li class="sidebar-item" style="margin-left: 37px">
+                  <a class="sidebar-link" href="#/brand" style="font-weight: bold;">Thương hiệu</a>
+                </li>
+                <li class="sidebar-item" style="margin-left: 37px">
+                  <a class="sidebar-link" href="#/origin" style="font-weight: bold;">Xuất xứ</a>
+                </li>
+                <li class="sidebar-item" style="margin-left: 37px">
+                  <a class="sidebar-link" href="#/sole" style="font-weight: bold;">Kiểu đế</a>
+                </li>
               </ul>
             </li>
             <li class="sidebar-item">
               <a href="#pageSubmenu" class="dropdown-toggle collapsed sidebar-link" data-bs-toggle="collapse"
                 data-bs-target="#pageSubmenu">
                 <span>
-                  <img src="/assets/images/group.png" width="180" style="width: 21px; height: 21px" />
+                  <i class="ti ti-users" style="font-family: tabler-icons !important;
+                                                  speak: none;
+                                                  font-style: normal;
+                                                  font-weight: normal;
+                                                  font-variant: normal;
+                                                  text-transform: none;
+                                                  line-height: 1;
+                                                  -webkit-font-smoothing: antialiased;
+                                                  font-size: 21px;"></i>
                 </span>
                 <span class="hide-menu">Quản lý tài khoản</span>
               </a>
-          
+              <ul class="list-unstyled collapse" id="pageSubmenu">
+                <li class="sidebar-item" style="margin-left: 37px">
+                  <a class="sidebar-link" href="#/staff" style="font-weight: bold;">Nhân viên</a>
+                </li>
+                <li class="sidebar-item" style="margin-left: 37px">
+                  <a class="sidebar-link" href="#/customer" style="font-weight: bold;">Khách hàng</a>
+                </li>
               </ul>
             </li>
             
@@ -154,23 +196,51 @@
   <!-- Cấu hình -->
 
   <!-- Controlller -->
-
-  <script src="controller/ban-tai-quay-controller.js"></script>
   <script src="controller/san-pham-chi-tiet-controller.js"></script>
+  <script src="controller/login-controller.js"></script>
+  <script src="controller/ban-tai-quay-controller.js"></script>
+  <script src="controller/hoa-don-controller.js"></script>
+  <script src="controller/hoa-don-chi-tiet.js"></script>
+  <script src="controller/giam-gia-controller.js"></script>
+  <script src="controller/VoucherController.js"></script>
+  <script src="controller/voucher-chi-tiet.js"></script>
+  <script src="controller/khach-hang-controller.js"></script>
+  <script src="controller/nhan-vien-controller.js"></script>
+  <script src="controller/giamgiachitiet.js"></script>
+  <script src="controller/chat-lieu-controller.js"></script>
+  <script src="controller/danh-muc-controller.js"></script>
+  <script src="controller/kieu-de-controller.js"></script>
+  <script src="controller/mau-sac-controller.js"></script>
+  <script src="controller/size-controller.js"></script>
+  <script src="controller/thuong-hieu-controller.js"></script>
+  <script src="controller/xuat-xu-controller.js"></script>
   <script src="controller/san-pham-controller.js"></script>
+  <script src="controller/voucher-history.js"></script>
   <script src="controller/san-pham-update-controller.js"></script>
+  <script src="controller/giam-gia-history.js"></script>
   <script src="controller/san-pham-history.js"></script>
+  <script src="controller/size-history.js"></script>
+  <script src="controller/chat-lieu-history.js"></script>
+  <script src="controller/mau-sac.history.js"></script>
+  <script src="controller/danh-muc-history.js"></script>
+  <script src="controller/thuong-hieu-history.js"></script>
+  <script src="controller/xuat-xu-history.js"></script>
+  <script src="controller/kieu-de-history.js"></script>
+  <script src="controller/update-khach-hang.js"></script>
+  <script src="controller/khach-hang-history.js"></script>
+  <script src="controller/nhan-vien-history.js"></script>
+  <script src="controller/update-nhanvien.js"></script>
+  <script src="controller/khuyen-mai-chi-tiet.js"></script>
+  <script src="controller/dashboard.js"></script>
   <script src="controller/create-sanphamchitiet-controller.js"></script>
-  ////
- 
-  
+  <script src="controller/hoa-don-history.js"></script>
 
   <!-- Controlller -->
 
   <!-- Service -->
-  
+  <script src="service/transaction-service.js"></script>
   <script src="service/ban-tai-quay-service.js"></script>
-  
+  <script src="service/hoa-don-service.js"></script>
   <!-- Service -->
   <script src="/js/custom/create-km.js"></script>
   <script src="/js/custom/modal.js"></script>
